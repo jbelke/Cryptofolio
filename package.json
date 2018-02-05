@@ -1,0 +1,20 @@
+{
+  "name": "crypto-app",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": "https://github.com/tomtrasmontero/Cryptofolio.git",
+  "author": "tomtrasmontero <tomtrasmontero@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node scripts/start.js",
+    "client": "cd client && yarn start",
+    "server": "node server/server.js",
+    "start-dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+  },
+  "dependencies": {
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.1"
+  }
+}
