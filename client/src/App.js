@@ -3,15 +3,15 @@ import './App.css';
 
 class App extends Component {
   state = {
-  response: ''
-};
+    response: '',
+  };
 
-componentDidMount() {
-  // test backend working with client
-  this.callApi()
-    .then(res => this.setState({ response: res.express }))
-    .catch(err => console.log(err));
-}
+  componentDidMount() {
+    // test backend working with client
+    this.callApi()
+      .then(res => this.setState({ response: res.express }))
+      .catch(err => console.log(err));
+  }
 
   callApi = async () => {
     const response = await fetch('/api');
@@ -19,13 +19,14 @@ componentDidMount() {
 
     if (response.status !== 200) throw Error(body.message);
 
-  return body;
-};
+    return body;
+  };
 
   render() {
     return (
       <div className="App">
         <p>{this.state.response}</p>
+        <p>t</p>
       </div>
     );
   }

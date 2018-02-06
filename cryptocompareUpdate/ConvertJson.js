@@ -23,7 +23,15 @@ const coinList = require('./file.json');
 
 // baseUrl for image and link to cryptocompare
 const baseUrl = coinList.BaseImageUrl;
-const cryptoCoinDataArray = coinList.Data;
 const cryptoCoinNameArray = Object.keys(coinList.Data);
+const cryptoCoinImageUrls = {};
+const cryptoCoinFullName = {};
+const cryptoCoinSymbol = {};
 
-console.log(cryptoCoinNameArray);
+cryptoCoinNameArray.forEach((coin) => {
+  cryptoCoinImageUrls[coin] = `${baseUrl}${coinList.Data[coin].ImageUrl}`;
+  cryptoCoinFullName[coin] = coinList.Data[coin].FullName;
+  cryptoCoinSymbol[coin] = coinList.Data[coin].Symbol;
+});
+
+console.log(cryptoCoinFullName);

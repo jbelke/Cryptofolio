@@ -8,7 +8,7 @@ const port = process.env.PORT || 5000;
 app.use(express.static(path.join(__dirname, 'client/index.js')));
 
 app.get('/api', (req, res) => {
-  res.send({ express: 'Hello'})
+  res.send({ express: 'Hello' });
 });
 
 //  any other routes will send error 404
