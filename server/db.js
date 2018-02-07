@@ -3,6 +3,8 @@ const Sequelize = require('sequelize');
 const db = new Sequelize(process.env.DATABASE_URL ||
    'postgres://localhost/cryptoDB', {
   logging: false,
+  // fix deprecation warning for query string
+  operatorsAliases: Sequelize.Op,
 });
 
 const Users = db.define('user', {
@@ -13,7 +15,7 @@ const Users = db.define('user', {
   },
   firebaseUID: {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: true,
     unique: true,
   },
   email: {
