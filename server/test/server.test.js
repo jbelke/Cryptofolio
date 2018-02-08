@@ -2,7 +2,6 @@ const { expect } = require('chai');
 const client = require('supertest');
 const db = require('../db');
 const app = require('../server');
-const coinDataUpdate = require('../../cryptocompareUpdate/UpdateCoinDB');
 
 // helper methods
 const createUser = (name, id, email = null) => {
