@@ -1,49 +1,33 @@
 import React, { Component } from 'react';
-import classes from './App.scss';
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
+import Layout from './hoc/Layout/Layout';
+import Aux from './hoc/Aux/Aux';
+import HomePage from './containers/HomePage/HomePage';
+import Coins from './containers/Coins/Coins';
 
 class App extends Component {
-  state = {
-    response: '',
-    trx: [],
-  };
-
   componentDidMount() {
-    // test backend working with client
-    this.callApi()
-      .then((res) => {
-        this.setState({ response: res.body[0].name });
-        this.setState({ trx: res.trxbody });
-      })
-      .catch(err => console.log(err));
+    console.log('component App is mounted');
   }
 
-  callApi = async () => {
-    // fetch user 1
-    const response = await fetch('/api/user/1');
-    const trx = await fetch('/api/transactions/1');
-    const body = await response.json();
-    const trxbody = await trx.json();
-    if (response.status !== 200) throw Error(response.message);
-
-    return { body, trxbody };
-  };
-
   render() {
+    const routes = (
+      <Switch>
+        <Route path="/" exact component={HomePage} />
+        <Route path="/coins" exact component={Coins} />
+        <Redirect to="/" />
+      </Switch>
+    );
+
     return (
-      <div className={classes.App}>
-        <p>{this.state.response}</p>
-        <div>{this.state.trx.map(transaction => (
-          <div key={transaction.id}>
-            <p>{transaction.coinName}</p>
-            <p>{transaction.coinAmount}</p>
-            <p>{transaction.buyPrice}</p>
-          </div>
-          ))}
-        </div>
-        <p>testing</p>
-      </div>
+      <Aux>
+        <Layout>
+          {routes}
+        </Layout>
+      </Aux>
     );
   }
 }
 
-export default App;
+
+export default withRouter(App);

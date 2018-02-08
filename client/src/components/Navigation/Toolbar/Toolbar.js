@@ -35,6 +35,13 @@ class Toolbar extends Component {
         <Responsive
           as={Menu.Item}
           minWidth={500}
+          name="coins"
+          active={activeItem === 'coins'}
+          onClick={this.handleItemClick}
+        />
+        <Responsive
+          as={Menu.Item}
+          minWidth={500}
           position="right"
           name="logout"
           active={activeItem === 'logout'}
@@ -47,30 +54,6 @@ class Toolbar extends Component {
       <Aux>
         { toolbar }
       </Aux>
-      // <Menu pointing secondary size="massive" className={classes.Toolbar}>
-      //   <Responsive
-      //     as={Menu.Item}
-      //     maxWidth={499}
-      //     name="menu"
-      //     active={activeItem === 'menu'}
-      //     onClick={this.handleItemClick}
-      //   />
-      //   <Responsive
-      //     as={Menu.Item}
-      //     minWidth={500}
-      //     name="home"
-      //     active={activeItem === 'home'}
-      //     onClick={this.handleItemClick}
-      //   />
-      //   <Responsive
-      //     as={Menu.Item}
-      //     minWidth={500}
-      //     position="right"
-      //     name="logout"
-      //     active={activeItem === 'logout'}
-      //     onClick={this.handleItemClick}
-      //   />
-      // </Menu>
     );
   }
 }
