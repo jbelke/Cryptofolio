@@ -10,6 +10,7 @@
     "jest": true
   },
   "rules": {
+    "no-console": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "valid-jsdoc": ["error", {
       "requireReturn": true,
@@ -18,11 +19,16 @@
       "requireReturnDescription": true
     }],
     "require-jsdoc": ["error", {
-        "require": {
-            "FunctionDeclaration": false,
-            "MethodDefinition": false,
-            "ClassDeclaration": false
-        }
-    }]
+      "require": {
+          "FunctionDeclaration": false,
+          "MethodDefinition": false,
+          "ClassDeclaration": false
+      }
+    }],
+    # #### Turn on to check for unnecessary console.log before prod
+    # "no-restricted-syntax": ["error", {
+    #     "selector": "CallExpression[callee.object.name='console'][callee.property.name=/^(log|warn|error|info|trace)$/]",
+    #     "message": "Unexpected property on console object was called"
+    # }]
   }
 }

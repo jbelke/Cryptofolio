@@ -30,7 +30,7 @@ if (process.env.SYNC === 'true') {
     .then(() => seedData.seed())
     .catch(err => console.log(err));
 }
-console.log(process.env.DATABASE_URL);
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 // for testing purposes
