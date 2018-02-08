@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from './App.scss';
 
 class App extends Component {
   state = {
@@ -30,7 +30,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className={classes.App}>
         <p>{this.state.response}</p>
         <div>{this.state.trx.map(transaction => (
           <div key={transaction.id}>
