@@ -10,6 +10,9 @@
 # production
 /client/build
 
+# env variable & api keys
+/server/env
+
 # misc
 .DS_Store
 .env.local

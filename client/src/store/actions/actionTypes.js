@@ -1,0 +1,2 @@
+export const GET_CURRENT_NEWS = 'GET_CURRENT_NEWS';
+export const GET_TOP_COINS = 'GET_TOP_COINS';

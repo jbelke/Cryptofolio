@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Grid, Container, Segment } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import getTopTenCoins from '../../store/actions/coins';
 
 class Coins extends Component {
   state = {
@@ -19,15 +22,19 @@ class Coins extends Component {
     ],
   }
 
+  componentDidMount() {
+    this.props.getCoins();
+  }
+
 
   render() {
     const coins = (
-      <Grid stackable={2}>
+      <Grid stackable columns={2} >
         {this.state.topTenCoins.map(coin => (
           <Grid.Column
             key={coin.id}
-            mobile={16}
-            computer={4}
+            // mobile={16}
+            // computer={5}
           >
             <Segment>
               <p>{coin.coinName}</p>
@@ -46,4 +53,14 @@ class Coins extends Component {
   }
 }
 
-export default Coins;
+// PropTypes here
+Coins.propTypes = {
+  getCoins: PropTypes.func.isRequired,
+};
+
+
+const mapDispatchToProps = dispatch => ({
+  getCoins: () => dispatch(getTopTenCoins()),
+});
+
+export default connect(null, mapDispatchToProps)(Coins);
