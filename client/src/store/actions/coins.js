@@ -6,7 +6,7 @@ const getTopTenCoins = () => {
 
   return async (dispatch) => {
     const request = await axios.get(url);
-    console.log(request);
+
     dispatch({
       type: actionTypes.GET_TOP_COINS,
       payload: request,

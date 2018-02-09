@@ -5,40 +5,22 @@ import PropTypes from 'prop-types';
 import getTopTenCoins from '../../store/actions/coins';
 
 class Coins extends Component {
-  state = {
-    topTenCoins: [
-      {
-        id: 1, coinName: 'btc', price: 45, symbol: 'BTC',
-      },
-      {
-        id: 2, coinName: 'btc2', price: 44, symbol: 'BTC2',
-      },
-      {
-        id: 3, coinName: 'btc3', price: 455, symbol: 'BTC3',
-      },
-      {
-        id: 4, coinName: 'btc4', price: 455, symbol: 'BTC4',
-      },
-    ],
-  }
-
   componentDidMount() {
     this.props.getCoins();
   }
 
-
   render() {
     const coins = (
       <Grid stackable columns={2} >
-        {this.state.topTenCoins.map(coin => (
+        {this.props.topCoins.map(coin => (
           <Grid.Column
             key={coin.id}
-            // mobile={16}
-            // computer={5}
           >
             <Segment>
-              <p>{coin.coinName}</p>
-              <p>Price: {coin.price}</p>
+              <p>Rank: {coin.rank}</p>
+              <p>Symbol: {coin.symbol}</p>
+              <p>{coin.name}</p>
+              <p>Price: {coin.price_usd}</p>
             </Segment>
           </Grid.Column>
         ))}
@@ -56,11 +38,15 @@ class Coins extends Component {
 // PropTypes here
 Coins.propTypes = {
   getCoins: PropTypes.func.isRequired,
+  topCoins: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
+const mapStateToProps = state => ({
+  topCoins: state.coin.topTen,
+});
 
 const mapDispatchToProps = dispatch => ({
   getCoins: () => dispatch(getTopTenCoins()),
 });
 
-export default connect(null, mapDispatchToProps)(Coins);
+export default connect(mapStateToProps, mapDispatchToProps)(Coins);

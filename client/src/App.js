@@ -13,9 +13,9 @@ class App extends Component {
   render() {
     const routes = (
       <Switch>
-        <Route path="/" exact component={HomePage} />
+        <Route path="/home" exact component={HomePage} />
         <Route path="/coins" exact component={Coins} />
-        <Redirect to="/" />
+        <Redirect to="/home" />
       </Switch>
     );
 

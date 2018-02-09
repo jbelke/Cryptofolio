@@ -1,31 +1,37 @@
 import React, { Component } from 'react';
 import { Menu, Responsive } from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import classes from './Toolbar.scss';
 import Aux from '../../../hoc/Aux/Aux';
 
 class Toolbar extends Component {
   state = {
-    activeItem: 'home',
+    activeItem: '',
   };
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+  componentDidMount = () => {
+    const [, ...activeAddress] = this.props.history.location.pathname.split('');
+    this.setState({ activeItem: activeAddress.join('') });
+  }
+
+  handleItemClick = (e, data) => {
+    this.setState({ activeItem: data.name });
+    this.props.history.push(data.address);
+  };
 
   render() {
     const { activeItem } = this.state;
-
     const toolbar = (
-      // <Responsive>
-      //   <Menu
-      // </Responsive>
       <Menu pointing secondary size="massive" className={classes.Toolbar}>
         <Responsive
           as={Menu.Item}
           maxWidth={499}
-          name="Menu"
-          active={activeItem === 'menu'}
-          onClick={this.handleItemClick}
+          name="menu"
+          onClick={this.props.clicked}
         />
         <Responsive
+          address="/"
           as={Menu.Item}
           minWidth={500}
           name="home"
@@ -33,6 +39,7 @@ class Toolbar extends Component {
           onClick={this.handleItemClick}
         />
         <Responsive
+          address="/coins"
           as={Menu.Item}
           minWidth={500}
           name="coins"
@@ -40,11 +47,12 @@ class Toolbar extends Component {
           onClick={this.handleItemClick}
         />
         <Responsive
+          address="/signin"
           as={Menu.Item}
           minWidth={500}
           position="right"
-          name="logout"
-          active={activeItem === 'logout'}
+          name="signin"
+          active={activeItem === 'signin'}
           onClick={this.handleItemClick}
         />
       </Menu>
@@ -58,4 +66,14 @@ class Toolbar extends Component {
   }
 }
 
-export default Toolbar;
+Toolbar.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    }),
+  }).isRequired,
+  clicked: PropTypes.func.isRequired,
+};
+
+export default withRouter(Toolbar);
