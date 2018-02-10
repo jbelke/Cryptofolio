@@ -25,6 +25,12 @@
           "ClassDeclaration": false
       }
     }],
+    "jsx-a11y/anchor-is-valid": [ "error", {
+    # showing Link component is an error and need an valid address, off
+    # due to using react router
+        "components": [ "AddNameOfComponentToCheck" ],
+        "specialLink": [ "hrefLeft", "hrefRight" ],
+    }]
     # #### Turn on to check for unnecessary console.log before prod
     # "no-restricted-syntax": ["error", {
     #     "selector": "CallExpression[callee.object.name='console'][callee.property.name=/^(log|warn|error|info|trace)$/]",

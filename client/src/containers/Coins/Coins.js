@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Grid, Container, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import * as actions from '../../store/actions/index';
 
 class Coins extends Component {
@@ -16,12 +17,14 @@ class Coins extends Component {
           <Grid.Column
             key={coin.id}
           >
-            <Segment>
-              <p>Rank: {coin.rank}</p>
-              <p>Symbol: {coin.symbol}</p>
-              <p>{coin.name}</p>
-              <p>Price: {coin.price_usd}</p>
-            </Segment>
+            <Link to={`/coins/detail/${coin.symbol}`}>
+              <Segment>
+                <p>Rank: {coin.rank}</p>
+                <p>Symbol: {coin.symbol}</p>
+                <p>{coin.name}</p>
+                <p>Price: {coin.price_usd}</p>
+              </Segment>
+            </Link>
           </Grid.Column>
         ))}
       </Grid>

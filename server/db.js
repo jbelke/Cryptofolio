@@ -34,6 +34,10 @@ const Coins = db.define('coin', {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  coinId: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
   cryptoCoinFullName: {
     type: Sequelize.STRING,
     allowNull: false,

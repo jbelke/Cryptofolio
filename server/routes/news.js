@@ -6,9 +6,9 @@ const newsapi = new NewsAPI(key);
 
 router.get('/topHeadlines', (req, res, next) => {
   const options = {
-    q: req.body.coinName || 'crypto currency',
+    q: req.body.coinName || 'crypto',
     language: 'en',
-    pageSize: req.body.numArticles || 10,
+    pageSize: 10,
   };
 
   newsapi.v2.topHeadlines(options)

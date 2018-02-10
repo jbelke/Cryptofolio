@@ -27,11 +27,13 @@ const cryptoCoinNameArray = Object.keys(coinList.Data);
 const cryptoCoinImageUrls = {};
 const cryptoCoinFullName = {};
 const cryptoCoinSymbol = {};
+const cryptoCoinId = {};
 
 // load to database fn. coin@string
 const createCoinEntry = (coin) => {
   const coinData = {
     coinName: coin || 'N/A',
+    coinId: cryptoCoinId[coin] || 'N/A',
     symbol: cryptoCoinSymbol[coin] || 'N/A',
     cryptoCoinFullName: cryptoCoinFullName[coin] || 'N/A',
     imageUrl: cryptoCoinImageUrls[coin] || 'N/A',
@@ -46,6 +48,7 @@ const updateCoinDB = () => {
     cryptoCoinImageUrls[coin] = `${baseUrl}${coinList.Data[coin].ImageUrl}`;
     cryptoCoinFullName[coin] = coinList.Data[coin].FullName;
     cryptoCoinSymbol[coin] = coinList.Data[coin].Symbol;
+    cryptoCoinId[coin] = coinList.Data[coin].Id;
 
     // create entry in database
     db.models.Coins.create(createCoinEntry(coin));
