@@ -1,17 +1,17 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
 
-export const getTopTenCoins = () => {
-  const url = 'https://api.coinmarketcap.com/v1/ticker/?limit=10';
+export const getTopHeadlines = () => {
+  const url = '/api/news/topHeadlines';
 
   return async (dispatch) => {
     const request = await axios.get(url);
 
     dispatch({
-      type: actionTypes.GET_TOP_COINS,
+      type: actionTypes.GET_CURRENT_NEWS,
       payload: request,
     });
   };
 };
 
-export default getTopTenCoins;
+export default getTopHeadlines;

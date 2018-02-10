@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Grid, Container, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import getTopTenCoins from '../../store/actions/coins';
+import * as actions from '../../store/actions/index';
 
 class Coins extends Component {
   componentDidMount() {
@@ -46,7 +46,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getCoins: () => dispatch(getTopTenCoins()),
+  getCoins: () => dispatch(actions.getTopTenCoins()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Coins);

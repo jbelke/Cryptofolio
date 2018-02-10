@@ -1,49 +1,46 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Container } from 'semantic-ui-react';
 import classes from './HomePage.scss';
+import * as actions from '../../store/actions/index';
 
 class HomePage extends Component {
-  state = {
-    response: '',
-    trx: [],
-  };
-
   componentDidMount() {
-    // test backend working with client
-    this.callApi()
-      .then((res) => {
-        this.setState({ response: res.body[0].name });
-        this.setState({ trx: res.trxbody });
-      })
-      .catch(err => console.log(err));
+    this.props.getHeadline();
   }
-
-  callApi = async () => {
-    // fetch user 1
-    const response = await fetch('/api/user/1');
-    const trx = await fetch('/api/transactions/1');
-    const body = await response.json();
-    const trxbody = await trx.json();
-    if (response.status !== 200) throw Error(response.message);
-
-    return { body, trxbody };
-  };
 
   render() {
     return (
-      <div className={classes.HomePage}>
-        <p>{this.state.response}</p>
-        <div>{this.state.trx.map(transaction => (
-          <div key={transaction.id}>
-            <p>{transaction.coinName}</p>
-            <p>{transaction.coinAmount}</p>
-            <p>{transaction.buyPrice}</p>
-          </div>
-          ))}
-        </div>
-        <p>testing</p>
-      </div>
+      <Container className={classes.HomePage}>
+        <h1>news</h1>
+        {this.props.currentTopTenNews.map(news => (
+          <Container key={`${news.url}${news.publishedAt}`}>
+            <h2>{news.title}</h2>
+            <div>
+              <img src={news.urlToImage} alt="current news" />
+            </div>
+            <p>{news.author}</p>
+            <p>{news.description}</p>
+          </Container>
+        ))}
+      </Container>
     );
   }
 }
 
-export default HomePage;
+// PropTypes
+HomePage.propTypes = {
+  getHeadline: PropTypes.func.isRequired,
+  currentTopTenNews: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+const mapStateToProps = state => ({
+  currentTopTenNews: state.news.topTenNews,
+});
+
+const mapDispatchToProps = dispatch => ({
+  getHeadline: () => dispatch(actions.getTopHeadlines()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

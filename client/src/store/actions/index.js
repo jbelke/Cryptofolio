@@ -1,3 +1,7 @@
-// export {
-//
-// } from './coins';
+export {
+  getTopTenCoins,
+} from './coins';
+
+export {
+  getTopHeadlines,
+} from './news';

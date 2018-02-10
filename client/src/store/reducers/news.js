@@ -1,15 +1,15 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-  address: null,
+  topTenNews: [],
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.GET_TOP_COINS:
+    case actionTypes.GET_CURRENT_NEWS:
       return {
         ...initialState,
-        topTen: [...action.payload.data],
+        topTenNews: [...action.payload.data.articles],
       };
 
     default:
