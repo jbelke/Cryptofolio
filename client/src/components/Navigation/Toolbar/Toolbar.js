@@ -11,14 +11,15 @@ class Toolbar extends Component {
   };
 
   componentDidMount = () => {
-    const [, ...activeAddress] = this.props.history.location.pathname.split('');
-    this.setState({ activeItem: activeAddress.join('') });
+    const activeAddress = this.props.history.location.pathname.split('/')[1];
+    this.setState({ activeItem: activeAddress });
   }
 
   handleItemClick = (e, data) => {
     this.setState({ activeItem: data.name });
     this.props.history.push(data.address);
   };
+
 
   render() {
     const { activeItem } = this.state;

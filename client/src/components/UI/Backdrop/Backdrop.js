@@ -11,12 +11,16 @@ const backdrop = (props) => {
     />
   );
 
-  return props.show ? background : null;
+  return props.visible ? background : null;
 };
 
 backdrop.propTypes = {
-  show: PropTypes.bool.isRequired,
+  show: PropTypes.bool,
   clicked: PropTypes.func.isRequired,
+};
+
+backdrop.defaultProps = {
+  show: false,
 };
 
 export default backdrop;

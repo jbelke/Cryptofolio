@@ -3,7 +3,6 @@ import { Container } from 'semantic-ui-react';
 import ReactHighstock from 'react-highcharts/ReactHighstock';
 import PropTypes from 'prop-types';
 
-
 const chart = (props) => {
   const config = {
     rangeSelector: {
@@ -11,6 +10,10 @@ const chart = (props) => {
     },
     title: {
       text: props.text,
+    },
+    loading: {
+      hideDuration: 1000,
+      showDuration: 1000,
     },
     series: [{
       name: props.symbol,

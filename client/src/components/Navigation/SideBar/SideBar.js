@@ -7,70 +7,72 @@ import {
   Icon,
 } from 'semantic-ui-react';
 import Aux from '../../../hoc/Aux/Aux';
+import Backdrop from '../../UI/Backdrop/Backdrop';
 
-const SidebarLeftOverlay = (props) => {
-  const { visible } = props;
-  return (
-    <Aux>
-      <Sidebar.Pushable as={Aux}>
-        <Sidebar
-          as={Menu}
-          animation="overlay"
-          width="thin"
-          visible={visible}
-          icon="labeled"
-          vertical
-          inverted
+const sidebarLeftOverlay = props => (
+  <Aux>
+    <Backdrop
+      clicked={props.clicked}
+      visible={props.visible}
+    />
+    <Sidebar.Pushable as={Aux}>
+      <Sidebar
+        as={Menu}
+        animation="overlay"
+        width="thin"
+        visible={props.visible}
+        icon="labeled"
+        vertical
+        inverted
+      >
+        <Menu.Item
+          name="home"
+          as={Link}
+          to="/home"
+          onClick={props.clicked}
         >
-          <Menu.Item
-            name="home"
-            as={Link}
-            to="/home"
-            onClick={props.clicked}
-          >
-            <Icon name="home" />
-            Home
-          </Menu.Item>
+          <Icon name="home" />
+          Home
+        </Menu.Item>
 
-          <Menu.Item
-            name="coins"
-            as={Link}
-            to="/coins"
-            onClick={props.clicked}
-          >
-            <Icon name="bitcoin" />
+        <Menu.Item
+          name="coins"
+          as={Link}
+          to="/coins"
+          onClick={props.clicked}
+        >
+          <Icon name="bitcoin" />
             Coins
-          </Menu.Item>
+        </Menu.Item>
 
-          <Menu.Item
-            name="login"
-            as={Link}
-            to="/singin"
-            onClick={props.clicked}
-          >
-            <Icon name="sign in" />
-            LogIn
-          </Menu.Item>
+        <Menu.Item
+          name="login"
+          as={Link}
+          to="/singin"
+          onClick={props.clicked}
+        >
+          <Icon name="sign in" />
+          LogIn
+        </Menu.Item>
 
-        </Sidebar>
+      </Sidebar>
 
-        <Sidebar.Pusher>
-          {props.children}
-        </Sidebar.Pusher>
+      <Sidebar.Pusher>
+        {props.children}
+      </Sidebar.Pusher>
 
-      </Sidebar.Pushable>
-    </Aux>
-  );
-};
+    </Sidebar.Pushable>
+  </Aux>
+);
 
-SidebarLeftOverlay.propTypes = {
+sidebarLeftOverlay.propTypes = {
   visible: PropTypes.bool,
   children: PropTypes.shape({}).isRequired,
   clicked: PropTypes.func.isRequired,
 };
 
-SidebarLeftOverlay.defaultProps = {
-  visible: false,
+sidebarLeftOverlay.defaultProps = {
+  visible: null,
 };
 
-export default SidebarLeftOverlay;
+export default sidebarLeftOverlay;

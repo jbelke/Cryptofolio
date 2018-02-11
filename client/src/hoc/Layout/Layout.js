@@ -4,7 +4,6 @@ import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 import Aux from '../Aux/Aux';
 import Footer from '../../components/Footer/Footer';
 import SideBar from '../../components/Navigation/SideBar/SideBar';
-import Backdrop from '../../components/UI/Backdrop/Backdrop';
 
 class Layout extends Component {
   state = {
@@ -16,8 +15,9 @@ class Layout extends Component {
   render() {
     return (
       <Aux>
-        <Toolbar clicked={() => this.toggleVisibility()} />
-        <Backdrop show={this.state.visible} clicked={() => this.toggleVisibility()} />
+        <Toolbar
+          clicked={() => this.toggleVisibility()}
+        />
         <SideBar
           clicked={() => this.toggleVisibility()}
           visible={this.state.visible}
@@ -33,5 +33,6 @@ class Layout extends Component {
 Layout.propTypes = {
   children: PropTypes.shape({}).isRequired,
 };
+
 
 export default Layout;

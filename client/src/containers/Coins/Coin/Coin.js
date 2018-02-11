@@ -11,8 +11,8 @@ class Coin extends Component {
   }
 
   render() {
-    console.log('coin.js', this.props.coinDetail);
     const coinDescription = ReactHtmlParser(this.props.coinDetail.Description);
+
     return (
       <div>
         <Chart
