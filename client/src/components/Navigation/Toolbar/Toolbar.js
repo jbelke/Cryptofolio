@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Menu, Responsive } from 'semantic-ui-react';
+import { Menu, Responsive, Icon } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import classes from './Toolbar.scss';
 import Aux from '../../../hoc/Aux/Aux';
 
 class Toolbar extends Component {
@@ -24,13 +23,16 @@ class Toolbar extends Component {
   render() {
     const { activeItem } = this.state;
     const toolbar = (
-      <Menu pointing secondary size="massive" className={classes.Toolbar}>
+      <Menu pointing secondary size="massive">
         <Responsive
           as={Menu.Item}
           maxWidth={499}
           name="menu"
           onClick={this.props.clicked}
-        />
+          icon
+        >
+          <Icon size="large" name="ellipsis vertical" />
+        </Responsive>
         <Responsive
           address="/"
           as={Menu.Item}
@@ -48,7 +50,7 @@ class Toolbar extends Component {
           onClick={this.handleItemClick}
         />
         <Responsive
-          address="/signin"
+          address="/signup"
           as={Menu.Item}
           minWidth={500}
           position="right"

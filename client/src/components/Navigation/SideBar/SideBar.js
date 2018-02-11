@@ -46,13 +46,13 @@ const sidebarLeftOverlay = props => (
         </Menu.Item>
 
         <Menu.Item
-          name="login"
+          name="signup"
           as={Link}
-          to="/singin"
+          to="/signup"
           onClick={props.clicked}
         >
           <Icon name="sign in" />
-          LogIn
+          SignIn
         </Menu.Item>
 
       </Sidebar>
