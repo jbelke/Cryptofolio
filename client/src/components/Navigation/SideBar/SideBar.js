@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import {
   Sidebar,
   Menu,
@@ -21,18 +22,36 @@ const SidebarLeftOverlay = (props) => {
           vertical
           inverted
         >
-          <Menu.Item name="home">
+          <Menu.Item
+            name="home"
+            as={Link}
+            to="/home"
+            onClick={props.clicked}
+          >
             <Icon name="home" />
             Home
           </Menu.Item>
-          <Menu.Item name="gamepad">
-            <Icon name="gamepad" />
-            Games
+
+          <Menu.Item
+            name="coins"
+            as={Link}
+            to="/coins"
+            onClick={props.clicked}
+          >
+            <Icon name="bitcoin" />
+            Coins
           </Menu.Item>
-          <Menu.Item name="camera">
-            <Icon name="camera" />
-            Channels
+
+          <Menu.Item
+            name="login"
+            as={Link}
+            to="/singin"
+            onClick={props.clicked}
+          >
+            <Icon name="sign in" />
+            LogIn
           </Menu.Item>
+
         </Sidebar>
 
         <Sidebar.Pusher>
@@ -47,6 +66,7 @@ const SidebarLeftOverlay = (props) => {
 SidebarLeftOverlay.propTypes = {
   visible: PropTypes.bool,
   children: PropTypes.shape({}).isRequired,
+  clicked: PropTypes.func.isRequired,
 };
 
 SidebarLeftOverlay.defaultProps = {
