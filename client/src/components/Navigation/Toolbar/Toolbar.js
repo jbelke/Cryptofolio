@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Menu, Responsive, Icon } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import * as actions from '../../../store/actions/index';
+
 import Aux from '../../../hoc/Aux/Aux';
 
 class Toolbar extends Component {
@@ -15,7 +18,14 @@ class Toolbar extends Component {
   }
 
   handleItemClick = (e, data) => {
-    this.setState({ activeItem: data.name });
+    // logout
+    if (data.name === 'logout') {
+      this.props.logout();
+      this.setState({ activeItem: 'home' });
+    } else {
+      this.setState({ activeItem: data.name });
+    }
+
     this.props.history.push(data.address);
   };
 
@@ -49,15 +59,28 @@ class Toolbar extends Component {
           active={activeItem === 'coins'}
           onClick={this.handleItemClick}
         />
-        <Responsive
-          address="/signup"
-          as={Menu.Item}
-          minWidth={500}
-          position="right"
-          name="signin"
-          active={activeItem === 'signin'}
-          onClick={this.handleItemClick}
-        />
+
+        {this.props.authenticated
+          ?
+            <Responsive
+              address="/"
+              as={Menu.Item}
+              minWidth={500}
+              position="right"
+              name="logout"
+              onClick={this.handleItemClick}
+            />
+          :
+            <Responsive
+              address="/signup"
+              as={Menu.Item}
+              minWidth={500}
+              position="right"
+              name="signin"
+              active={activeItem === 'signin'}
+              onClick={this.handleItemClick}
+            />
+        }
       </Menu>
     );
 
@@ -77,6 +100,16 @@ Toolbar.propTypes = {
     }),
   }).isRequired,
   clicked: PropTypes.func.isRequired,
+  authenticated: PropTypes.bool.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
-export default withRouter(Toolbar);
+const mapStateToProps = state => ({
+  authenticated: state.auth.authenticated,
+});
+
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch(actions.authLogout()),
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Toolbar));

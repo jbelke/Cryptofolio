@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, '../client')));
 // use for testing purposes
 app.use(require('body-parser').json());
 
-app.use('/api', require('./routes'));
+app.use('/api', require('./routes/index'));
 
 app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../client/public/index.html')));
 
@@ -22,6 +22,7 @@ app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../client/public/i
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, './public/index.html'));
 });
+
 
 // sync database before starting server
 if (process.env.SYNC === 'true') {

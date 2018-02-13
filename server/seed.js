@@ -4,7 +4,7 @@ const createUser = (num) => {
   const userData = {
     name: `blog foo ${num}`,
     firebaseUID: `1234567${num}`,
-    email: 'test@test.com',
+    email: `test${num}@test.com`,
   };
 
   return userData;

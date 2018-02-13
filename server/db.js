@@ -10,7 +10,7 @@ const db = new Sequelize(process.env.DATABASE_URL ||
 const Users = db.define('user', {
   name: {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: true,
     unique: true,
   },
   firebaseUID: {
@@ -20,7 +20,7 @@ const Users = db.define('user', {
   },
   email: {
     type: Sequelize.STRING,
-    allowNull: true,
+    allowNull: false,
   },
 });
 

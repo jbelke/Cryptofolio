@@ -1,15 +1,24 @@
 import React, { Component } from 'react';
-import { Field, reduxForm, propTypes } from 'redux-form';
+import { Field, reduxForm, propTypes, SubmissionError } from 'redux-form';
 import { connect } from 'react-redux';
+import * as actions from '../../store/actions/index';
+import Aux from '../../hoc/Aux/Aux';
+import LogIn from './LogIn/Login';
 // import PropTypes from 'prop-types';
 
 class SignUp extends Component {
-  handleSubmit = (values) => {
-    console.log(values, this.props);
-    // reset field
+  handleSignin = async (values) => {
+    await this.props.onAuth(values);
+
+    // handle firebase error on reduxForm. if there is an error, code will not
+    // pass this error handler
+    if (Object.keys(this.props.authError).length > 0) {
+      throw new SubmissionError({ _error: this.props.authError.message });
+    }
+
     this.props.reset();
   }
-  // redux-form === prevent default hoc
+
   renderField = ({
     input, label, type, meta: { touched, error, warning },
   }) => (
@@ -25,44 +34,75 @@ class SignUp extends Component {
   );
 
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, error } = this.props;
+
     return (
-      <form onSubmit={handleSubmit(this.handleSubmit)}>
+      <Aux>
         <div>
-          <p>UserName</p>
-          <Field name="inputName" component={this.renderField} type="text" label="Name" />
+          <form onSubmit={handleSubmit(this.handleSignin)}>
+            <div>
+              <p>Sign Up</p>
+              <Field name="emailSignUp" component={this.renderField} type="email" label="E-Mail" />
+            </div>
+            <div>
+              <Field name="usernameSignUp" component={this.renderField} type="text" label="Username" />
+            </div>
+            <div>
+              <Field name="passwordSignUp" component={this.renderField} type="password" label="Password" />
+            </div>
+            <button type="submit" onClick={() => console.log(this.props)}>Sign Up</button>
+            <span>{error}</span>
+            <div>authenticated: {this.props.isAuthenticated.toString()}</div>
+          </form>
         </div>
+
+        <br />
+
+        <LogIn />
         <div>
-          <Field name="password" component={this.renderField} type="password" label="Password" />
+          <button onClick={() => this.props.logout()} >Log Out</button>
         </div>
-        <p>error :</p>
-        <button type="submit" onClick={() => console.log(this.props)}>Submit</button>
-      </form>
+      </Aux>
     );
   }
 }
 
 // PropTypes here
 SignUp.propTypes = {
+  // Redux-form proptypes
   ...propTypes,
 };
 
-// validation func here
+// validation front end.
 const validate = (values) => {
   const errors = {};
-  if (!values.inputName) {
-    errors.inputName = 'User Name is Required';
+  if (!values.emailSignUp) {
+    errors.emailSignUp = 'User Email is Required';
   }
 
-  if (!values.password) {
-    errors.password = 'Please Enter Comment';
+  if (!values.passwordSignUp) {
+    errors.passwordSignUp = 'Please Enter Password';
+  }
+
+  if (!values.usernameSignUp) {
+    errors.usernameSignUp = 'Please Enter a Username';
   }
 
   return errors;
 };
 
+const mapStateToProps = state => ({
+  authError: state.auth.errors,
+  isAuthenticated: state.auth.authenticated,
+});
+
+const mapDispatchToProps = dispatch => ({
+  onAuth: values => dispatch(actions.auth(values)),
+  logout: () => dispatch(actions.authLogout()),
+});
+
 export default reduxForm({
   validate,
   // name the form component
   form: 'SignUpForm',
-})(connect(null, null)(SignUp));
+})(connect(mapStateToProps, mapDispatchToProps)(SignUp));

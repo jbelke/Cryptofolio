@@ -7,3 +7,10 @@ export {
 export {
   getTopHeadlines,
 } from './news';
+
+export {
+  auth,
+  authLogin,
+  authLogout,
+  authCheckState,
+} from './auth';
