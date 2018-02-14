@@ -12,3 +12,14 @@ export const transformToChartData = (histCoinDataArray) => {
 
   return transformedData;
 };
+
+export const transformToSearchList = (coins) => {
+  const searchListArray = coins.map(coin => ({
+    key: coin.coinId,
+    name: coin.cryptoCoinFullName,
+    imageurl: coin.imageUrl,
+    symbol: coin.symbol,
+  }));
+
+  return searchListArray;
+};

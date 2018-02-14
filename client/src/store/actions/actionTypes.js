@@ -1,6 +1,7 @@
 export const GET_CURRENT_NEWS = 'GET_CURRENT_NEWS';
 export const GET_TOP_COINS = 'GET_TOP_COINS';
 export const GET_COIN_DETAIL = 'GET_COIN_DETAIL';
+export const GET_COIN_LIST = 'GET_COIN_LIST';
 export const GET_ACTIVE_PAGE = 'GET_ACTIVE_PAGE';
 
 export const SIGN_UP_USER = 'SIGN_UP_USER';

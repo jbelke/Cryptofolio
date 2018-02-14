@@ -4,6 +4,7 @@ const initialState = {
   topTen: [],
   coinDetail: {},
   coinChartData: [],
+  coinSearchList: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -12,6 +13,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...initialState,
         topTen: [...action.payload.data],
+      };
+
+    case actionTypes.GET_COIN_LIST:
+      return {
+        ...initialState,
+        coinSearchList: [...action.payload],
       };
 
     case actionTypes.GET_COIN_DETAIL:

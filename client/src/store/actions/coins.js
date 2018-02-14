@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as actionTypes from './actionTypes';
 import * as utilityFunc from '../utility';
 
-export const getTopTenCoins = (numCoinLookup = 50) => {
+export const getTopCoins = (numCoinLookup = 50) => {
   const url = `https://api.coinmarketcap.com/v1/ticker/?limit=${numCoinLookup}`;
 
   return async (dispatch) => {
@@ -11,6 +11,20 @@ export const getTopTenCoins = (numCoinLookup = 50) => {
     dispatch({
       type: actionTypes.GET_TOP_COINS,
       payload: request,
+    });
+  };
+};
+
+export const getCoinList = () => {
+  const url = '/api/coins';
+
+  return async (dispatch) => {
+    const request = await axios.get(url);
+    const transformedData = utilityFunc.transformToSearchList(request.data);
+
+    dispatch({
+      type: actionTypes.GET_COIN_LIST,
+      payload: transformedData,
     });
   };
 };

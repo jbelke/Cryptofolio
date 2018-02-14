@@ -1,7 +1,7 @@
 export {
-  getTopTenCoins,
+  getTopCoins,
   getCryptoCoinDetail,
-  getCryptoChartData,
+  getCoinList,
 } from './coins';
 
 export {
