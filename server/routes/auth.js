@@ -22,7 +22,9 @@ router.post('/signup', (req, res, next) => {
 
       // save it in the back end, then send the firebase response to frontend on success
       return db.Users.create(data)
-        .then(result => res.send(result.data))
+        .then((result) => {
+          res.send(result);
+        })
         .catch((err) => {
           console.log(err);
           next();
@@ -37,10 +39,10 @@ router.post('/signup', (req, res, next) => {
 
 router.post('/login', (req, res, next) => {
   const url = `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${key}`;
-  const { emailLogin, passwordLogin } = req.body.values;
+  const { email, password } = req.body.values;
   const authData = {
-    email: emailLogin,
-    password: passwordLogin,
+    email,
+    password,
     returnSecureToken: true,
   };
 

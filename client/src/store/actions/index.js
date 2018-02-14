@@ -14,3 +14,9 @@ export {
   authLogout,
   authCheckState,
 } from './auth';
+
+export {
+  addTransaction,
+  getTransactions,
+  clearTransactions,
+} from './transaction';

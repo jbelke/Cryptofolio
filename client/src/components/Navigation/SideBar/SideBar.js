@@ -46,14 +46,37 @@ const sidebarLeftOverlay = props => (
         </Menu.Item>
 
         <Menu.Item
-          name="signup"
+          name="portfolio"
           as={Link}
-          to="/signup"
+          to="/portfolio"
           onClick={props.clicked}
         >
-          <Icon name="sign in" />
-          SignIn
+          <Icon name="calculator" />
+            Portfolio
         </Menu.Item>
+
+        {props.isAuthenticated
+          ?
+            <Menu.Item
+              name="logout"
+              as={Link}
+              to="/home"
+              onClick={props.logout}
+            >
+              <Icon name="sign out" />
+              Log Out
+            </Menu.Item>
+          :
+            <Menu.Item
+              name="signup"
+              as={Link}
+              to="/signup"
+              onClick={props.clicked}
+            >
+              <Icon name="sign in" />
+              SignIn
+            </Menu.Item>
+        }
 
       </Sidebar>
 
@@ -69,6 +92,8 @@ sidebarLeftOverlay.propTypes = {
   visible: PropTypes.bool,
   children: PropTypes.shape({}).isRequired,
   clicked: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 sidebarLeftOverlay.defaultProps = {

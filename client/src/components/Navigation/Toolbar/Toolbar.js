@@ -59,6 +59,14 @@ class Toolbar extends Component {
           active={activeItem === 'coins'}
           onClick={this.handleItemClick}
         />
+        <Responsive
+          address="/portfolio"
+          as={Menu.Item}
+          minWidth={500}
+          name="portfolio"
+          active={activeItem === 'portfolio'}
+          onClick={this.handleItemClick}
+        />
 
         {this.props.authenticated
           ?

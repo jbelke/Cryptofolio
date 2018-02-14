@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Field, reduxForm, propTypes, SubmissionError } from 'redux-form';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import * as actions from '../../store/actions/index';
 import Aux from '../../hoc/Aux/Aux';
 import LogIn from './LogIn/Login';
 // import PropTypes from 'prop-types';
 
 class SignUp extends Component {
-  handleSignin = async (values) => {
+  handleSignUp = async (values) => {
     await this.props.onAuth(values);
 
     // handle firebase error on reduxForm. if there is an error, code will not
@@ -17,6 +18,12 @@ class SignUp extends Component {
     }
 
     this.props.reset();
+    this.props.history.push('/portfolio');
+  }
+
+  handleLogOut = () => {
+    this.props.logout();
+    this.props.history.push('/home');
   }
 
   renderField = ({
@@ -39,7 +46,7 @@ class SignUp extends Component {
     return (
       <Aux>
         <div>
-          <form onSubmit={handleSubmit(this.handleSignin)}>
+          <form onSubmit={handleSubmit(this.handleSignUp)}>
             <div>
               <p>Sign Up</p>
               <Field name="emailSignUp" component={this.renderField} type="email" label="E-Mail" />
@@ -60,7 +67,7 @@ class SignUp extends Component {
 
         <LogIn />
         <div>
-          <button onClick={() => this.props.logout()} >Log Out</button>
+          <button onClick={() => this.props.handleLogOut} >Log Out</button>
         </div>
       </Aux>
     );
@@ -105,4 +112,4 @@ export default reduxForm({
   validate,
   // name the form component
   form: 'SignUpForm',
-})(connect(mapStateToProps, mapDispatchToProps)(SignUp));
+})(withRouter(connect(mapStateToProps, mapDispatchToProps)(SignUp)));

@@ -6,7 +6,7 @@ html {
 
 body {
   /* bottom footer height = 21px  */
-  margin: 0 0 21px;
+  margin: 0;
   padding: 0;
   font-family: 'Rubik', sans-serif;
 }

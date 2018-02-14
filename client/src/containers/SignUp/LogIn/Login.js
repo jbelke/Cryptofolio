@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Field, reduxForm, propTypes, SubmissionError } from 'redux-form';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import * as actions from '../../../store/actions/index';
 
 class LogIn extends Component {
@@ -14,6 +15,7 @@ class LogIn extends Component {
     }
 
     this.props.reset();
+    this.props.history.push('/portfolio');
   }
 
   renderField = ({
@@ -38,10 +40,10 @@ class LogIn extends Component {
         <form onSubmit={handleSubmit(this.handleLogin)}>
           <div>
             <p>Log In</p>
-            <Field name="emailLogin" component={this.renderField} type="email" label="E-Mail" />
+            <Field name="email" component={this.renderField} type="email" label="E-Mail" />
           </div>
           <div>
-            <Field name="passwordLogin" component={this.renderField} type="password" label="Password" />
+            <Field name="password" component={this.renderField} type="password" label="Password" />
           </div>
           <button type="submit" onClick={() => console.log(this.props)}>Log In</button>
           <span>{error}</span>
@@ -61,12 +63,12 @@ LogIn.propTypes = {
 // validation front end.
 const validate = (values) => {
   const errors = {};
-  if (!values.emailLogin) {
-    errors.emailLogin = 'User Email is Required';
+  if (!values.email) {
+    errors.email = 'User Email is Required';
   }
 
-  if (!values.passwordLogin) {
-    errors.passwordSignUp = 'Please Enter Password';
+  if (!values.password) {
+    errors.password = 'Please Enter Password';
   }
 
   return errors;
@@ -85,4 +87,4 @@ export default reduxForm({
   validate,
   // name the form component
   form: 'LogInForm',
-})(connect(mapStateToProps, mapDispatchToProps)(LogIn));
+})(withRouter(connect(mapStateToProps, mapDispatchToProps)(LogIn)));

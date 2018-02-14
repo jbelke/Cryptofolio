@@ -12,8 +12,7 @@ const createUser = (num) => {
 
 const createTransaction = (coin, coinAmount, price) => {
   const trxData = {
-    userId: 1,
-    coinId: 1,
+    firebaseUID: 12345672,
     coinName: coin,
     coinAmount,
     buyPrice: price,

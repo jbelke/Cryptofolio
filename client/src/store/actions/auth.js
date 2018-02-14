@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
+import { clearTransactions } from './index';
 
 export const authStart = () => ({
   type: actionTypes.AUTH_START,
@@ -14,13 +15,14 @@ export const authSuccess = (authData, fromStorage) => {
   }
 
   // save data to localstorage if data is not there;
-  localStorage.setItem('tokenId', authData.data.localId);
+  localStorage.setItem('tokenId', authData.data.localId || authData.data.firebaseUID);
 
   return {
     type: actionTypes.AUTH_SUCCESS,
     payload: authData.data,
   };
 };
+
 
 export const authCheckState = () => {
   const authData = {};
@@ -37,12 +39,17 @@ export const authFail = error => ({
   payload: error,
 });
 
+export const clearItemsOnLogout = () => ({
+  type: actionTypes.AUTH_LOGOUT,
+});
+
 export const authLogout = () => {
   // remove tokenId
   localStorage.removeItem('tokenId');
 
-  return {
-    type: actionTypes.AUTH_LOGOUT,
+  return (dispatch) => {
+    dispatch(clearItemsOnLogout());
+    dispatch(clearTransactions());
   };
 };
 

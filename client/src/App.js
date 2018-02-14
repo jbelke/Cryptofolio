@@ -11,12 +11,12 @@ import HomePage from './containers/HomePage/HomePage';
 import Coins from './containers/Coins/Coins';
 import Coin from './containers/Coins/Coin/Coin';
 import SignUp from './containers/SignUp/SignUp';
+import Portfolio from './containers/Portfolio/Portfolio';
 
 
 class App extends Component {
   componentDidMount() {
     this.props.checkState();
-    console.log('component App is mounted');
   }
 
   render() {
@@ -25,6 +25,7 @@ class App extends Component {
         <Route path="/home" exact component={HomePage} />
         <Route path="/coins" exact component={Coins} />
         <Route path="/signup" exact component={SignUp} />
+        <Route path="/portfolio" exact component={Portfolio} />
         <Route path="/coins/detail/:coinSymbol" component={Coin} />
         <Redirect to="/home" />
       </Switch>
@@ -32,7 +33,7 @@ class App extends Component {
 
     return (
       <Aux>
-        <Layout>
+        <Layout isAuthenticated={this.props.authenticated}>
           {routes}
         </Layout>
       </Aux>
@@ -42,6 +43,7 @@ class App extends Component {
 
 App.propTypes = {
   checkState: PropTypes.func.isRequired,
+  authenticated: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({

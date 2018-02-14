@@ -1,25 +1,47 @@
 const router = require('express').Router();
 const db = require('../db').models;
+const utility = require('../utility/utility');
 
-router.get('/:userId', (req, res, next) => {
-  db.UserTransactions.findAll({ where: { userId: req.params.userId } })
-    .then(transactions => res.send(transactions))
+router.get('/:firebaseUID', (req, res, next) => {
+  Promise.all([utility.getUserId(req.params.firebaseUID)])
+    .then((result) => {
+      db.UserTransactions.findAll({ where: { userId: result[0].id } })
+        .then(transactions => res.send(transactions))
+        .catch(next);
+    })
     .catch(next);
 });
 
 // create transaction
 router.post('/create', (req, res, next) => {
-  db.UserTransactions.create({
-    coinName: req.body.coinName,
-    coinAmount: req.body.coinAmount,
-    buyPrice: req.body.buyPrice,
-    sellPrice: req.body.sellPrice,
-    userId: req.body.userId,
-    coinId: req.body.coinId,
-  })
-    .then(transaction => res.send(transaction))
+  Promise.all([
+    utility.getCryptoCompareId(req.body.coinName),
+    utility.getUserId(req.body.firebaseUID),
+  ])
+    .then(([coinData, userData]) => {
+      // save transaction to the database
+      const saveTrx = db.UserTransactions.create({
+        coinName: coinData.symbol,
+        coinAmount: req.body.coinAmount,
+        buyPrice: req.body.buyPrice,
+        sellPrice: req.body.sellPrice,
+        userId: userData.id,
+        coinId: coinData.id,
+        imageUrl: coinData.imageUrl,
+      });
+
+      return saveTrx
+        .then((result) => {
+          // return the full list of the transaction
+          db.UserTransactions.findAll({ where: { userId: result.userId } })
+            .then(transactions => res.send(transactions))
+            .catch(next);
+        })
+        .catch(next);
+    })
     .catch(next);
 });
+
 
 // delete transaction
 router.delete('/:id', (req, res, next) => {
@@ -32,7 +54,5 @@ router.delete('/:id', (req, res, next) => {
     .catch(next);
 });
 
-
-// update transactions
 
 module.exports = router;

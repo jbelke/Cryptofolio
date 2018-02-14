@@ -13,6 +13,7 @@ class HomePage extends Component {
   render() {
     return (
       <Container className={classes.HomePage}>
+        <div>Top Performers</div>
         <h1>news</h1>
         {this.props.currentTopTenNews.map(news => (
           <Container key={`${news.url}${news.publishedAt}`}>

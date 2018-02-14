@@ -19,7 +19,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...initialState,
         authenticated: true,
-        firebaseUID: action.payload.localId,
+        firebaseUID: action.payload.localId || action.payload.firebaseUID,
         errors: {},
         loading: false,
       };
