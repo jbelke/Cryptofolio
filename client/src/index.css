@@ -1,13 +1,14 @@
 html {
-  min-height: 100%;
-  position: relative;
+  height: 100%;
   box-sizing: border-box;
 }
 
 body {
+  position: relative;
   /* bottom footer height = 21px  */
   margin: 0;
-  padding: 0;
+  padding-bottom: 6rem;
+  min-height: 100%;
   font-family: 'Rubik', sans-serif;
 }
 

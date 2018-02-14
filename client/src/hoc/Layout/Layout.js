@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
-import Aux from '../Aux/Aux';
 import Footer from '../../components/Footer/Footer';
 import SideBar from '../../components/Navigation/SideBar/SideBar';
 import * as actions from '../../store/actions/index';
+import classes from './Layout.scss';
 
 
 class Layout extends Component {
@@ -22,7 +22,7 @@ class Layout extends Component {
 
   render() {
     return (
-      <Aux>
+      <div className={classes.Layout}>
         <Toolbar
           clicked={() => this.toggleVisibility()}
         />
@@ -35,7 +35,7 @@ class Layout extends Component {
           {this.props.children}
         </SideBar>
         <Footer />
-      </Aux>
+      </div>
     );
   }
 }

@@ -51,7 +51,7 @@ const sidebarLeftOverlay = props => (
           to="/portfolio"
           onClick={props.clicked}
         >
-          <Icon name="calculator" />
+          <Icon name="bar chart" />
             Portfolio
         </Menu.Item>
 
@@ -74,7 +74,7 @@ const sidebarLeftOverlay = props => (
               onClick={props.clicked}
             >
               <Icon name="sign in" />
-              SignIn
+              Sign In
             </Menu.Item>
         }
 

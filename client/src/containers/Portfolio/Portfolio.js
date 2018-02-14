@@ -8,7 +8,7 @@ import TransactionList from '../../components/Transaction/TransactionList';
 
 class Portfolio extends Component {
   state = {
-    activeIndex: 0,
+    activeIndex: null,
   }
 
   componentDidMount() {
@@ -41,7 +41,12 @@ class Portfolio extends Component {
           <Accordion>
             <Accordion.Title active={activeIndex === 0} index={0} onClick={this.handleClick}>
               <div>
-                <Icon name="add square" size="big" color="green" />
+                { this.state.activeIndex === 0
+                  ?
+                    <Icon name="minus square" size="big" />
+                  :
+                    <Icon name="add square" size="big" />
+                }
                 <span>Add Transaction</span>
               </div>
             </Accordion.Title>
