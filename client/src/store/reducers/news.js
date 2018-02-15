@@ -8,7 +8,7 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.GET_CURRENT_NEWS:
       return {
-        ...initialState,
+        ...state,
         topTenNews: [...action.payload.data.articles],
       };
 

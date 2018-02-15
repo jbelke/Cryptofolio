@@ -2,6 +2,7 @@ export {
   getTopCoins,
   getCryptoCoinDetail,
   getCoinList,
+  getCoinSnapShot,
 } from './coins';
 
 export {

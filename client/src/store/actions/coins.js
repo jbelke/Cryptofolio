@@ -29,6 +29,18 @@ export const getCoinList = () => {
   };
 };
 
+export const getCoinSnapShot = (symbol) => {
+  const url = `https://min-api.cryptocompare.com/data/generateAvg?fsym=${symbol}&tsym=USD&e=CCCAGG`;
+
+  return async (dispatch) => {
+    const request = await axios.get(url);
+    dispatch({
+      type: actionTypes.GET_COIN_CURR_SUMMARY,
+      payload: request,
+    });
+  };
+};
+
 export const getCryptoCoinDetail = (symbol) => {
   const url = `/api/coins/detail/${symbol}`;
   const chartUrl = `https://min-api.cryptocompare.com/data/histoday?fsym=${symbol}&tsym=USD&aggregate=1&e=CCCAGG&allData=1`;

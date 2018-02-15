@@ -1,4 +1,5 @@
 const coinList = require('./file.json');
+const cmcList = require('./coinmarketcap.json');
 const db = require('../server/db');
 // *** add data and save it to database -  sample Data below
 /*
@@ -20,7 +21,11 @@ const db = require('../server/db');
 "Sponsored": false
 */
 
-
+const cmcImgUrls = {};
+cmcList.forEach((coin) => {
+  cmcImgUrls[coin.symbol] = `https://files.coinmarketcap.com/static/img/coins/64x64/${coin.id}.png`;
+});
+// https://files.coinmarketcap.com/static/img/coins/64x64/bitcoin.png
 // baseUrl for image and link to cryptocompare. relevant data
 const baseUrl = coinList.BaseImageUrl;
 const cryptoCoinNameArray = Object.keys(coinList.Data);
@@ -36,7 +41,7 @@ const createCoinEntry = (coin) => {
     coinId: cryptoCoinId[coin] || 'N/A',
     symbol: cryptoCoinSymbol[coin] || 'N/A',
     cryptoCoinFullName: cryptoCoinFullName[coin] || 'N/A',
-    imageUrl: cryptoCoinImageUrls[coin] || 'N/A',
+    imageUrl: cmcImgUrls[coin] || cryptoCoinImageUrls[coin] || 'N/A',
   };
 
   return coinData;

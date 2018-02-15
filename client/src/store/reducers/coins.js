@@ -5,25 +5,32 @@ const initialState = {
   coinDetail: {},
   coinChartData: [],
   coinSearchList: [],
+  coinSnapShot: {},
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.GET_TOP_COINS:
       return {
-        ...initialState,
+        ...state,
         topTen: [...action.payload.data],
       };
 
     case actionTypes.GET_COIN_LIST:
       return {
-        ...initialState,
+        ...state,
         coinSearchList: [...action.payload],
+      };
+
+    case actionTypes.GET_COIN_CURR_SUMMARY:
+      return {
+        ...state,
+        coinSnapShot: { ...action.payload.data.DISPLAY },
       };
 
     case actionTypes.GET_COIN_DETAIL:
       return {
-        ...initialState,
+        ...state,
         coinDetail: { ...action.payload.data.Data.General },
         coinChartData: [...action.chartPayload],
       };

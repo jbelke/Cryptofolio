@@ -6,5 +6,7 @@ https://creativecommons.org/licenses/by-nc/3.0/
 curl "https://min-api.cryptocompare.com/data/all/coinlist" > file.json
 
 TODO:
-setup server
-save coin data to database
+put active state on redux
+lazy load charts on search
+rename coins to coin explorer
+add more error handlers - try catch blocks

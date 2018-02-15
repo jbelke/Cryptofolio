@@ -14,7 +14,10 @@ class Coins extends Component {
   shouldComponentUpdate(nextProps) {
     if (nextProps.list.length > 1) {
       return false;
+    } if (Object.keys(nextProps.coinSummary).length > 0) {
+      return false;
     }
+
     return true;
   }
 
@@ -50,6 +53,7 @@ Coins.propTypes = {
 const mapStateToProps = state => ({
   topCoins: state.coin.topTen,
   list: state.coin.coinSearchList,
+  coinSummary: state.coin.coinSnapShot,
 });
 
 const mapDispatchToProps = dispatch => ({

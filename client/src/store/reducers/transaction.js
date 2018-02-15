@@ -10,13 +10,13 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.GET_TRANSACTIONS:
       return {
-        ...initialState,
+        ...state,
         transactions: [...action.payload.data],
       };
 
     case actionTypes.CLEAR_TRANSACTION:
       return {
-        ...initialState,
+        ...state,
         transactions: [],
         error: {},
         transactionItems: [],
@@ -24,7 +24,7 @@ const reducer = (state = initialState, action) => {
 
     case actionTypes.FAILED_TRANSACTION:
       return {
-        ...initialState,
+        ...state,
         error: [...action.payload],
       };
 

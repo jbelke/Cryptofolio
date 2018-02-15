@@ -4,6 +4,9 @@ import ReactHighstock from 'react-highcharts/ReactHighstock';
 import PropTypes from 'prop-types';
 
 const chart = (props) => {
+  const areaData = props.dataSet[0];
+  const barData = props.dataSet[1];
+
   const config = {
     rangeSelector: {
       selected: 1,
@@ -15,13 +18,62 @@ const chart = (props) => {
       hideDuration: 1000,
       showDuration: 1000,
     },
+    yAxis: [{
+      labels: {
+        align: 'right',
+        x: -3,
+      },
+      title: {
+        text: 'Price',
+      },
+      height: '60%',
+      lineWidth: 2,
+      resize: {
+        enabled: true,
+      },
+    }, {
+      labels: {
+        align: 'right',
+        x: -3,
+      },
+      title: {
+        text: 'Volume',
+      },
+      top: '65%',
+      height: '35%',
+      offset: 0,
+      lineWidth: 2,
+    }],
+    tooltip: {
+      split: true,
+    },
     series: [{
       name: props.symbol,
-      data: props.dataSet,
+      data: areaData,
       tooltip: {
-        valueDecimals: 2,
+        valueDecimals: 3,
       },
+    }, {
+      type: 'column',
+      name: 'volume',
+      data: barData,
+      tooltip: {
+        valueDecimals: 3,
+      },
+      yAxis: 1,
     }],
+    responsive: {
+      rules: [{
+        condition: {
+          maxWidth: 500,
+        },
+        chartOptions: {
+          navigator: {
+            enabled: false,
+          },
+        },
+      }],
+    },
   };
 
   return (

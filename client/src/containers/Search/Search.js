@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { Search, Label } from 'semantic-ui-react';
+import { Search, Label, Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import Aux from '../../hoc/Aux/Aux';
+import classes from './Search.scss';
 
+// require value and clicked handler to get Data
+// clickhandler (event , data)
 class SearchCoins extends Component {
   state = {
     isLoading: false,
@@ -35,12 +38,15 @@ class SearchCoins extends Component {
       if (this.state.value.length < 1) return this.resetComponent();
 
       const match = this.props.list.filter((coin) => {
-        const matchResult = coin.symbol.includes(value.toUpperCase());
-        return matchResult;
+        // match name
+        const matchName = coin.name.toUpperCase().includes(value.toUpperCase());
+
+        return matchName;
       });
 
-      if (match.length > 5) {
-        match.splice(5);
+      // limit to 6 search result
+      if (match.length > 6) {
+        match.splice(6);
       }
 
       return this.setState({
@@ -50,12 +56,20 @@ class SearchCoins extends Component {
     }, 500);
   }
 
-  handleResultRenderer = ({ symbol, price }) => <Label>{symbol} price:{price}</Label>
+  handleResultRenderer = ({ symbol, name, id }) => (
+    <Label className={classes.SearchResult}>
+      {/* <Image size="mini" src={imageUrl} /> */}
+      <Image size="mini" src={`https://files.coinmarketcap.com/static/img/coins/16x16/${id}.png`} />
+      {symbol}
+      <Label.Detail>{name}</Label.Detail>
+    </Label>
+  )
 
   render() {
     return (
       <Aux>
         <Search
+          fluid
           // make input field take 100% of container, pass an object fluid:true
           input={{ fluid: true }}
           loading={this.state.isLoading}
