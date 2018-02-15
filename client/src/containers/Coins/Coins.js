@@ -4,12 +4,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import TopCoinsList from '../../components/TopCoinsList/TopCoinsList';
 import * as actions from '../../store/actions/index';
-import SearchCoins from '../Search/Search';
+import CoinExplorer from './CoinExplorer/CoinExplorer';
 
 class Coins extends Component {
   componentDidMount() {
     this.props.getCoins();
-    this.props.getList();
   }
 
   shouldComponentUpdate(nextProps) {
@@ -26,11 +25,12 @@ class Coins extends Component {
       </Grid>
     );
 
-
     return (
       <Container>
-        <SearchCoins list={this.props.list} />
+        <CoinExplorer />
+
         <Divider />
+
         <Segment>
           <Header>Top 50 Coins</Header>
           {coins}
@@ -45,7 +45,6 @@ Coins.propTypes = {
   getCoins: PropTypes.func.isRequired,
   topCoins: PropTypes.arrayOf(PropTypes.object).isRequired,
   list: PropTypes.arrayOf(PropTypes.object).isRequired,
-  getList: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -55,7 +54,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getCoins: () => dispatch(actions.getTopCoins()),
-  getList: () => dispatch(actions.getCoinList()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Coins);

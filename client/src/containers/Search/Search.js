@@ -1,13 +1,25 @@
 import React, { Component } from 'react';
-import { Segment, Grid, Search, Label } from 'semantic-ui-react';
+import { Search, Label } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import * as actions from '../../store/actions/index';
+import Aux from '../../hoc/Aux/Aux';
 
 class SearchCoins extends Component {
   state = {
     isLoading: false,
     value: '',
     result: [],
+  }
+
+  componentDidMount() {
+    this.props.getList();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.value !== this.state.value) {
+      this.setState({ value: nextProps.value });
+    }
   }
 
   resetComponent = () => this.setState({ isLoading: false, result: [], value: '' })
@@ -42,39 +54,40 @@ class SearchCoins extends Component {
 
   render() {
     return (
-      <Segment as={Grid} divided columns={2} stackable >
-        <Grid.Row centered>
-          <Grid.Column mobile={16} computer={8} >
-            <Search
-              fluid
-              loading={this.state.isLoading}
-              results={this.state.result}
-              value={this.state.value}
-              onResultSelect={this.handleResultSelect}
-              onSearchChange={this.handleSearchChange}
-              resultRenderer={this.handleResultRenderer}
-              minCharacters={2}
-              onFocus={this.handleOnFocus}
-              size="large"
-              // {...this.props}
-            />
-          </Grid.Column>
-          <Grid.Column mobile={16} computer={8} >
-            <p>value: {this.state.value}</p>
-            <p>isLoading: {this.state.isLoading.toString()}</p>
-          </Grid.Column>
-        </Grid.Row>
-      </Segment>
+      <Aux>
+        <Search
+          // make input field take 100% of container, pass an object fluid:true
+          input={{ fluid: true }}
+          loading={this.state.isLoading}
+          results={this.state.result}
+          value={this.state.value}
+          onResultSelect={this.props.clicked}
+          onSearchChange={this.handleSearchChange}
+          resultRenderer={this.handleResultRenderer}
+          minCharacters={2}
+          onFocus={this.handleOnFocus}
+          size="large"
+          list={this.props.list}
+        />
+      </Aux>
     );
   }
 }
 
 SearchCoins.propTypes = {
   list: PropTypes.arrayOf(PropTypes.object).isRequired,
+  getList: PropTypes.func.isRequired,
+  clicked: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };
+
 
 const mapStateToProps = state => ({
   list: state.coin.coinSearchList,
 });
 
-export default connect(mapStateToProps)(SearchCoins);
+const mapDispatchToProps = dispatch => ({
+  getList: () => dispatch(actions.getCoinList()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchCoins);
