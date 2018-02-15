@@ -31,13 +31,13 @@ class CoinExplorer extends Component {
     return (
       <Segment as={Grid} divided columns={2} stackable >
         <Grid.Row centered>
-          <Grid.Column mobile={16} computer={4} >
+          <Grid.Column mobile={16} computer={5} >
             <SearchCoins
               clicked={this.clickedHandler}
               value={this.state.value}
             />
           </Grid.Column>
-          <Grid.Column mobile={16} computer={12} >
+          <Grid.Column mobile={16} computer={11} >
             Data: {this.props.coinSummary.PRICE}
             {summary}
           </Grid.Column>

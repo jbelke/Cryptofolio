@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Search, Label, Image } from 'semantic-ui-react';
+import { Search } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
@@ -56,19 +56,20 @@ class SearchCoins extends Component {
     }, 500);
   }
 
-  handleResultRenderer = ({ symbol, name, id }) => (
-    <Label className={classes.SearchResult}>
-      {/* <Image size="mini" src={imageUrl} /> */}
-      <Image size="mini" src={`https://files.coinmarketcap.com/static/img/coins/16x16/${id}.png`} />
-      {symbol}
-      <Label.Detail>{name}</Label.Detail>
-    </Label>
+  handleResultRenderer = ({ name }) => (
+    <div>
+      {/* <Image avatar size="mini" src={imageurl} alt="@" /> */}
+      <span>
+        {name}
+      </span>
+    </div>
   )
 
   render() {
     return (
       <Aux>
         <Search
+          className={classes.SearchResult}
           fluid
           // make input field take 100% of container, pass an object fluid:true
           input={{ fluid: true }}

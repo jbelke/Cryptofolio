@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, Segment } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import classes from './TopCoinsList.scss';
 
 
 const topCoinsList = (props) => {
@@ -9,7 +10,7 @@ const topCoinsList = (props) => {
       key={coin.id}
     >
       <Link to={`/coins/detail/${coin.symbol}`}>
-        <Segment>
+        <Segment className={classes.Coin} >
           <p>Rank: {coin.rank}</p>
           <p>Symbol: {coin.symbol}</p>
           <p>{coin.name}</p>

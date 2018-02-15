@@ -1,3 +1,12 @@
-.SearchResult {
-  background-color: white !important;
+.SearchResult div.results {
+    // background: #0e3c6a !important;
+    background: black !important;
+}
+
+#root > div > div.pusher > div > div.ui.stackable.divided.two.column.grid.ui.segment > div > div.five.wide.computer.sixteen.wide.mobile.column > div > div.results.transition.visible > div:nth-child(1) {
+  background: black !important;
+}
+
+.SearchResult.ui.search>.results .result:hover {
+  background: black !important;
 }
