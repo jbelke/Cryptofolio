@@ -69,6 +69,7 @@ class SearchCoins extends Component {
     return (
       <Aux>
         <Search
+          placeholder="Search Coins"
           className={classes.SearchResult}
           fluid
           // make input field take 100% of container, pass an object fluid:true

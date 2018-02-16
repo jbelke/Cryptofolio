@@ -6,6 +6,7 @@ const initialState = {
   coinChartData: [],
   coinSearchList: [],
   coinSnapShot: {},
+  globalMarketData: {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -20,6 +21,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         coinSearchList: [...action.payload],
+      };
+
+    case actionTypes.GET_GLOBAL_MARKET_DATA:
+      return {
+        ...state,
+        globalMarketData: { ...action.payload.data },
       };
 
     case actionTypes.GET_COIN_CURR_SUMMARY:

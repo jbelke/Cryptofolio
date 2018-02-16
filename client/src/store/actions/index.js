@@ -3,6 +3,7 @@ export {
   getCryptoCoinDetail,
   getCoinList,
   getCoinSnapShot,
+  getGlobalMarketData,
 } from './coins';
 
 export {

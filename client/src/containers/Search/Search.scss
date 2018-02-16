@@ -1,6 +1,9 @@
-.SearchResult div.results {
+.SearchResult > div.result {
+  background: black !important;
+  &:hover div.result{
     // background: #0e3c6a !important;
-    background: black !important;
+    background: blue !important;
+  }
 }
 
 #root > div > div.pusher > div > div.ui.stackable.divided.two.column.grid.ui.segment > div > div.five.wide.computer.sixteen.wide.mobile.column > div > div.results.transition.visible > div:nth-child(1) {

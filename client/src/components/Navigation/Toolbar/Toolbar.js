@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
+import classes from './Toolbar.scss';
 
 import Aux from '../../../hoc/Aux/Aux';
 
@@ -33,7 +34,7 @@ class Toolbar extends Component {
   render() {
     const { activeItem } = this.state;
     const toolbar = (
-      <Menu pointing secondary size="massive">
+      <Menu pointing secondary size="massive" className={classes.Toolbar} >
         <Responsive
           as={Menu.Item}
           maxWidth={499}

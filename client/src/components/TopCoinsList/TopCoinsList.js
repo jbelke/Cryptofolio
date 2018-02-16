@@ -10,7 +10,7 @@ const topCoinsList = (props) => {
       key={coin.id}
     >
       <Link to={`/coins/detail/${coin.symbol}`}>
-        <Segment className={classes.Coin} >
+        <Segment raised className={classes.Coin} >
           <p>Rank: {coin.rank}</p>
           <p>Symbol: {coin.symbol}</p>
           <p>{coin.name}</p>

@@ -57,3 +57,16 @@ export const getCryptoCoinDetail = (symbol) => {
     });
   };
 };
+
+export const getGlobalMarketData = () => {
+  const url = 'https://api.coinmarketcap.com/v1/global/';
+
+  return async (dispatch) => {
+    const request = await axios.get(url);
+
+    dispatch({
+      type: actionTypes.GET_GLOBAL_MARKET_DATA,
+      payload: request,
+    });
+  };
+};

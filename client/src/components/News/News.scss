@@ -1,0 +1,10 @@
+.News {
+  padding-bottom: 3rem;
+  &:hover .NewsArticle {
+    background-color: rgba(24, 54, 201, 0.10196078431372549) !important;
+  }
+}
+
+.News a {
+  color: #212121;
+}
