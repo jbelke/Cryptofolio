@@ -8,19 +8,21 @@ const currentNews = (props) => {
     <Container className={classes.News} key={`${news.url}${news.publishedAt}`}>
       <Grid as="a" href={news.url} target="_blank" stackable stretched relaxed>
         <Grid.Row as={Segment} className={classes.NewsArticle} >
-          <Grid.Column width={4}>
+          <Grid.Column stretched width={4}>
             { news.urlToImage === null
               ?
                 <Image
                   size="medium"
                   src={newsPlaceholder}
                   alt="News"
+                  centered
                 />
               :
                 <Image
                   size="medium"
                   src={news.urlToImage}
                   alt="News"
+                  centered
                 />
             }
           </Grid.Column>

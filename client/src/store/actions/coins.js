@@ -4,7 +4,6 @@ import * as utilityFunc from '../utility';
 
 export const getTopCoins = (numCoinLookup = 50) => {
   const url = `https://api.coinmarketcap.com/v1/ticker/?limit=${numCoinLookup}`;
-
   return async (dispatch) => {
     const request = await axios.get(url);
 
@@ -70,3 +69,7 @@ export const getGlobalMarketData = () => {
     });
   };
 };
+
+export const clearCoinSummary = () => ({
+  type: actionTypes.CLEAR_COIN_SUMMARY,
+});

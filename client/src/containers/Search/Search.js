@@ -80,7 +80,7 @@ class SearchCoins extends Component {
           onResultSelect={this.props.clicked}
           onSearchChange={this.handleSearchChange}
           resultRenderer={this.handleResultRenderer}
-          minCharacters={2}
+          minCharacters={1}
           onFocus={this.handleOnFocus}
           size="large"
           list={this.props.list}

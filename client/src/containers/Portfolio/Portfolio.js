@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import TransactionForm from './TransactionForm/TransactionForm';
 import * as actions from '../../store/actions/index';
 import TransactionList from '../../components/Transaction/TransactionList';
+import Aux from '../../hoc/Aux/Aux';
+import PortfolioSummary from '../Portfolio/PortfolioSummary/PortfolioSummary';
 
 class Portfolio extends Component {
   state = {
@@ -35,31 +37,32 @@ class Portfolio extends Component {
     const { activeIndex } = this.state;
 
     return (
-      <Container as={Segment.Group} raised>
-        <Segment>
+      <Aux>
+        <PortfolioSummary />
+        <Container as={Segment.Group} raised>
+          <Segment>
 
-          <Accordion>
-            <Accordion.Title active={activeIndex === 0} index={0} onClick={this.handleClick}>
-              <div>
-                { this.state.activeIndex === 0
-                  ?
-                    <Icon name="minus square" size="big" />
-                  :
-                    <Icon name="add square" size="big" />
-                }
-                <span>Add Transaction</span>
-              </div>
-            </Accordion.Title>
-            <Accordion.Content active={activeIndex === 0} >
-              <TransactionForm firebaseUID={this.props.firebaseUID} />
-            </Accordion.Content>
-          </Accordion>
+            <Accordion>
+              <Accordion.Title active={activeIndex === 0} index={0} onClick={this.handleClick}>
+                <div>
+                  { this.state.activeIndex === 0
+                    ?
+                      <Icon name="minus square" size="big" />
+                    :
+                      <Icon name="add square" size="big" />
+                  }
+                  <span>Add Transaction</span>
+                </div>
+              </Accordion.Title>
+              <Accordion.Content active={activeIndex === 0} >
+                <TransactionForm firebaseUID={this.props.firebaseUID} />
+              </Accordion.Content>
+            </Accordion>
 
-          <TransactionList transactions={this.props.transactionList} />
-
-        </Segment>
-
-      </Container>
+            <TransactionList transactions={this.props.transactionList} />
+          </Segment>
+        </Container>
+      </Aux>
     );
   }
 }

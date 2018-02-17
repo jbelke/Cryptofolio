@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Segment, Grid } from 'semantic-ui-react';
+import { Segment, Grid, Responsive, Statistic } from 'semantic-ui-react';
 import * as actions from '../../../store/actions/index';
 import SearchCoins from '../../Search/Search';
+import classes from './CoinExplorer.scss';
 
 class CoinExplorer extends Component {
   state = {
     value: '',
+  }
+
+  componentWillUnmount() {
+    this.props.clearCoinSummary();
   }
 
   clickedHandler = (event, data) => {
@@ -17,19 +22,37 @@ class CoinExplorer extends Component {
   }
 
   render() {
+    const { OPEN24HOUR, HIGH24HOUR, LOW24HOUR } = this.props.coinSummary;
     let summary = null;
 
-    if (!this.props.coinSummary) {
+    if (Object.keys(this.props.coinSummary).length !== 0) {
       summary = (
-        <div>
-          Data: {this.props.coinSummary.PRICE}
-        </div>
+        <Statistic.Group as={Grid} container columns={3} size="mini" >
+          <Statistic>
+            <Statistic.Value>{OPEN24HOUR}</Statistic.Value>
+            <Statistic.Label>24H Open</Statistic.Label>
+          </Statistic>
+          <Statistic>
+            <Statistic.Value>{HIGH24HOUR}</Statistic.Value>
+            <Statistic.Label>24H High</Statistic.Label>
+          </Statistic>
+          <Statistic>
+            <Statistic.Value>{LOW24HOUR}</Statistic.Value>
+            <Statistic.Label>24 Low</Statistic.Label>
+          </Statistic>
+        </Statistic.Group>
       );
     }
 
 
     return (
-      <Segment as={Grid} divided columns={2} stackable >
+      <Segment
+        as={Grid}
+        divided
+        columns={2}
+        stackable
+        className={classes.CoinExplorer}
+      >
         <Grid.Row centered>
           <Grid.Column mobile={16} computer={5} >
             <SearchCoins
@@ -37,10 +60,9 @@ class CoinExplorer extends Component {
               value={this.state.value}
             />
           </Grid.Column>
-          <Grid.Column mobile={16} computer={11} >
-            Data: {this.props.coinSummary.PRICE}
+          <Responsive minWidth={992} as={Grid.Column} mobile={16} computer={11} >
             {summary}
-          </Grid.Column>
+          </Responsive>
         </Grid.Row>
       </Segment>
     );
@@ -50,10 +72,20 @@ class CoinExplorer extends Component {
 CoinExplorer.propTypes = {
   getCoinSummary: PropTypes.func.isRequired,
   coinSummary: PropTypes.shape({
-    PRICE: PropTypes.string,
+    OPEN24HOUR: PropTypes.string,
+    HIGH24HOUR: PropTypes.string,
+    LOW24HOUR: PropTypes.string,
   }).isRequired,
+  clearCoinSummary: PropTypes.func.isRequired,
 };
 
+CoinExplorer.defaultProp = {
+  coinSummary: PropTypes.shape({
+    OPEN24HOUR: 0,
+    HIGH24HOUR: 0,
+    LOW24HOUR: 0,
+  }),
+};
 
 const mapStateToProps = state => ({
   coinSummary: state.coin.coinSnapShot,
@@ -61,6 +93,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getCoinSummary: symbol => dispatch(actions.getCoinSnapShot(symbol)),
+  clearCoinSummary: () => dispatch(actions.clearCoinSummary()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CoinExplorer);

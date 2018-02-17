@@ -21,6 +21,7 @@
     "newsapi": "^2.2.0",
     "pg": "^7.4.1",
     "pg-hstore": "^2.3.2",
+    "react-infinite-scroll-component": "^3.0.2",
     "sequelize": "^4.32.6"
   },
   "devDependencies": {

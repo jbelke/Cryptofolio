@@ -17,6 +17,12 @@ const reducer = (state = initialState, action) => {
         topTen: [...action.payload.data],
       };
 
+    case actionTypes.CLEAR_COIN_SUMMARY:
+      return {
+        ...state,
+        coinSnapShot: {},
+      };
+
     case actionTypes.GET_COIN_LIST:
       return {
         ...state,

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Menu, Responsive, Icon } from 'semantic-ui-react';
+import { Menu, Responsive, Icon, Image } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import classes from './Toolbar.scss';
+import Logo from '../../../assets/logoCoin.png';
 
 import Aux from '../../../hoc/Aux/Aux';
 
@@ -35,9 +36,10 @@ class Toolbar extends Component {
     const { activeItem } = this.state;
     const toolbar = (
       <Menu pointing secondary size="massive" className={classes.Toolbar} >
+        {/* mobile toolbar */}
         <Responsive
           as={Menu.Item}
-          maxWidth={499}
+          maxWidth={767}
           name="menu"
           onClick={this.props.clicked}
           icon
@@ -45,9 +47,18 @@ class Toolbar extends Component {
           <Icon size="large" name="ellipsis vertical" />
         </Responsive>
         <Responsive
+          as={Menu.Item}
+          maxWidth={767}
+          position="right"
+          className={classes.LogoMobile}
+        >
+          <Image src={Logo} size="mini" />
+        </Responsive>
+
+        <Responsive
           address="/"
           as={Menu.Item}
-          minWidth={500}
+          minWidth={768}
           name="home"
           active={activeItem === 'home'}
           onClick={this.handleItemClick}
@@ -55,7 +66,7 @@ class Toolbar extends Component {
         <Responsive
           address="/coins"
           as={Menu.Item}
-          minWidth={500}
+          minWidth={768}
           name="coins"
           active={activeItem === 'coins'}
           onClick={this.handleItemClick}
@@ -63,18 +74,25 @@ class Toolbar extends Component {
         <Responsive
           address="/portfolio"
           as={Menu.Item}
-          minWidth={500}
+          minWidth={768}
           name="portfolio"
           active={activeItem === 'portfolio'}
           onClick={this.handleItemClick}
         />
-
+        {/* <Responsive
+          as={Menu.Item}
+          minWidth={768}
+          position="right"
+        >
+          <strong>Hodl & Stake</strong>
+          <Image src={Logo} size="mini" />
+        </Responsive> */}
         {this.props.authenticated
           ?
             <Responsive
               address="/"
               as={Menu.Item}
-              minWidth={500}
+              minWidth={768}
               position="right"
               name="logout"
               onClick={this.handleItemClick}
@@ -83,7 +101,7 @@ class Toolbar extends Component {
             <Responsive
               address="/signup"
               as={Menu.Item}
-              minWidth={500}
+              minWidth={768}
               position="right"
               name="signin"
               active={activeItem === 'signin'}
