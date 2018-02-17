@@ -27,3 +27,23 @@ export const transformToSearchList = (coins) => {
 
   return searchListArray;
 };
+
+export const transformToPieData = (arrData) => {
+  const dataHolder = {};
+  let transformedData = [];
+  arrData.forEach((trx) => {
+    let totalAmount = trx.coinAmount * Math.max(trx.sellPrice, trx.buyPrice);
+    if (trx.sellPrice) {
+      totalAmount *= -1;
+    }
+
+    if (!dataHolder[trx.coinName]) {
+      dataHolder[trx.coinName] = totalAmount;
+    } else {
+      dataHolder[trx.coinName] += totalAmount;
+    }
+  });
+
+  transformedData = Object.entries(dataHolder);
+  return transformedData;
+};

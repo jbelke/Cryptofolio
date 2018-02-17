@@ -67,6 +67,10 @@ const UserTransactions = db.define('transactions', {
     type: Sequelize.INTEGER,
     allowNull: true,
   },
+  transactionDate: {
+    type: Sequelize.DATE,
+    allowNull: true,
+  },
 });
 
 // DB association

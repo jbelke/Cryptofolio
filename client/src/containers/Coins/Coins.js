@@ -17,7 +17,6 @@ class Coins extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    console.log(nextProps, this.state.currentCoinCount);
     if (nextProps.list.length !== this.props.list.length) {
       return false;
     }

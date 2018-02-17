@@ -79,14 +79,14 @@ class Toolbar extends Component {
           active={activeItem === 'portfolio'}
           onClick={this.handleItemClick}
         />
-        {/* <Responsive
+        <Responsive
           as={Menu.Item}
           minWidth={768}
           position="right"
         >
           <strong>Hodl & Stake</strong>
           <Image src={Logo} size="mini" />
-        </Responsive> */}
+        </Responsive>
         {this.props.authenticated
           ?
             <Responsive

@@ -1,49 +1,100 @@
 import React, { Component } from 'react';
 import { Field, reduxForm, propTypes } from 'redux-form';
 import { connect } from 'react-redux';
+import { Form, Message, Button, Segment, Tab, Header, Container } from 'semantic-ui-react';
 import * as actions from '../../../store/actions/index';
+import classes from './TransactionForm.scss';
 
 class TransactionForm extends Component {
   addTransactionHandler = async (values) => {
+    console.log(values);
     const data = { ...values, firebaseUID: this.props.firebaseUID };
     await this.props.addTransaction(data);
     this.props.reset();
   }
 
   renderField = ({
-    input, label, type, meta: { touched, error, warning },
+    placeholder, input, label, type, meta: { touched, error, warning },
   }) => (
-    <div>
-      <input {...input} placeholder={label} type={type} />
+    <Form.Field>
+      <Form.Input
+        {...input}
+        required
+        fluid
+        label={label}
+        type={type}
+        placeholder={placeholder}
+      />
       {
         touched && (
-          (error && <span>{error}</span>) || (warning && <span>{warning}</span>)
+          (error && <Message error content={error} />)
+          || (warning && <Message warning content={warning} />)
         )
       }
-      {this.props.errorMessage}
-    </div>
+      <Message error content={this.props.errorMessage} />
+    </Form.Field>
   );
 
   render() {
     const { handleSubmit, error } = this.props;
+    const buyForm = (
+      <Form onSubmit={handleSubmit(this.addTransactionHandler)}>
+        <Form.Group widths="equal">
+          <Field name="coinName" component={this.renderField} type="input" label="Coin" />
+          <Field name="buyPrice" component={this.renderField} type="number" label="Price" />
+          <Field name="coinAmount" component={this.renderField} type="number" label="Amount" />
+          <Field
+            name="date"
+            component={this.renderField}
+            type="date"
+            label="Transaction Date"
+            placeholder="MMDDYYYY"
+          />
+        </Form.Group>
+        <Container textAlign="center">
+          <Button positive type="submit" className={classes.Button} >Add Buy Transaction</Button>
+          {!error ? <Message error header={error} /> : null}
+        </Container>
+      </Form>
+    );
+
+    const sellForm = (
+      <Form onSubmit={handleSubmit(this.addTransactionHandler)}>
+        <Form.Group widths="equal">
+          <Field name="coinName" component={this.renderField} type="input" label="Coin" />
+          <Field name="sellPrice" component={this.renderField} type="number" label="Price" />
+          <Field name="coinAmount" component={this.renderField} type="number" label="Amount" />
+          <Field
+            name="date"
+            component={this.renderField}
+            type="date"
+            label="Transaction Date"
+            placeholder="MMDDYYYY"
+          />
+        </Form.Group>
+        <Container textAlign="center" >
+          <Button negative type="submit" >Add Sell Transaction</Button>
+          {!error ? <Message error header={error} /> : null}
+        </Container>
+      </Form>
+    );
+
+    const panes = [
+      { menuItem: 'Buy', render: () => <Tab.Pane color="green">{buyForm}</Tab.Pane> },
+      { menuItem: 'Sell', render: () => <Tab.Pane color="red">{sellForm}</Tab.Pane> },
+    ];
 
     return (
-      <div>
-        <form onSubmit={handleSubmit(this.addTransactionHandler)}>
-          <div>
-            <Field name="coinName" component={this.renderField} type="input" label="Coin" />
-          </div>
-          <div>
-            <Field name="buyPrice" component={this.renderField} type="number" label="Buy Price" />
-          </div>
-          <div>
-            <Field name="coinAmount" component={this.renderField} type="number" label="Amount Purchased" />
-          </div>
-          <button type="submit" >Add Transaction</button>
-          <span>{error}</span>
-          <div>authenticated: {this.props.isAuthenticated.toString()}</div>
-        </form>
-      </div>
+      <Segment color="black" raised>
+        <Header textAlign="center" >Enter Transaction</Header>
+        <Tab
+          className={classes.TabMenu}
+          menu={{
+            pointing: true, fluid: true, widths: 2,
+          }}
+          panes={panes}
+        />
+      </Segment>
     );
   }
 }

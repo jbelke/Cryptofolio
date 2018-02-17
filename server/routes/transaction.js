@@ -27,7 +27,7 @@ router.post('/create', (req, res, next) => {
         sellPrice: req.body.sellPrice,
         userId: userData.id,
         coinId: coinData.id,
-        imageUrl: coinData.imageUrl,
+        transactionDate: req.body.date,
       });
 
       return saveTrx

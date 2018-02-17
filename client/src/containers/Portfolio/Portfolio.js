@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Segment, Accordion, Icon } from 'semantic-ui-react';
+import { Container, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import TransactionForm from './TransactionForm/TransactionForm';
@@ -34,31 +34,14 @@ class Portfolio extends Component {
   }
 
   render() {
-    const { activeIndex } = this.state;
-
     return (
       <Aux>
         <PortfolioSummary />
+        <Container>
+          <TransactionForm firebaseUID={this.props.firebaseUID} />
+        </Container>
         <Container as={Segment.Group} raised>
-          <Segment>
-
-            <Accordion>
-              <Accordion.Title active={activeIndex === 0} index={0} onClick={this.handleClick}>
-                <div>
-                  { this.state.activeIndex === 0
-                    ?
-                      <Icon name="minus square" size="big" />
-                    :
-                      <Icon name="add square" size="big" />
-                  }
-                  <span>Add Transaction</span>
-                </div>
-              </Accordion.Title>
-              <Accordion.Content active={activeIndex === 0} >
-                <TransactionForm firebaseUID={this.props.firebaseUID} />
-              </Accordion.Content>
-            </Accordion>
-
+          <Segment inverted color="grey" >
             <TransactionList transactions={this.props.transactionList} />
           </Segment>
         </Container>
@@ -75,10 +58,12 @@ Portfolio.propTypes = {
   transactionList: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
+
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.authenticated,
   transactionList: state.transaction.transactions,
   firebaseUID: state.auth.firebaseUID,
+  pieData: state.transaction.pieData,
 });
 
 const mapDispatchToProps = dispatch => ({
