@@ -5,7 +5,12 @@ const utility = require('../utility/utility');
 router.get('/:firebaseUID', (req, res, next) => {
   Promise.all([utility.getUserId(req.params.firebaseUID)])
     .then((result) => {
-      db.UserTransactions.findAll({ where: { userId: result[0].id } })
+      db.UserTransactions.findAll({
+        where: { userId: result[0].id },
+        include: [{
+          model: db.Coins,
+        }],
+      })
         .then(transactions => res.send(transactions))
         .catch(next);
     })
@@ -33,7 +38,12 @@ router.post('/create', (req, res, next) => {
       return saveTrx
         .then((result) => {
           // return the full list of the transaction
-          db.UserTransactions.findAll({ where: { userId: result.userId } })
+          db.UserTransactions.findAll({
+            where: { userId: result.userId },
+            include: [{
+              model: db.Coins,
+            }],
+          })
             .then(transactions => res.send(transactions))
             .catch(next);
         })

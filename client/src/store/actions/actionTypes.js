@@ -7,6 +7,7 @@ export const CLEAR_COIN_SUMMARY = 'CLEAR_COIN_SUMMARY';
 export const GET_COIN_LIST = 'GET_COIN_LIST';
 export const GET_GLOBAL_MARKET_DATA = 'GET_GLOBAL_MARKET_DATA';
 export const GET_ACTIVE_PAGE = 'GET_ACTIVE_PAGE';
+export const GET_MARKET_VALUE = 'GET_MARKET_VALUE';
 
 export const SIGN_UP_USER = 'SIGN_UP_USER';
 export const AUTH_START = 'AUTH_START';

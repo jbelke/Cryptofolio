@@ -9,10 +9,6 @@ import Aux from '../../hoc/Aux/Aux';
 import PortfolioSummary from '../Portfolio/PortfolioSummary/PortfolioSummary';
 
 class Portfolio extends Component {
-  state = {
-    activeIndex: null,
-  }
-
   componentDidMount() {
     if (this.props.isAuthenticated) {
       this.props.getTransactions(this.props.firebaseUID);
@@ -26,13 +22,6 @@ class Portfolio extends Component {
     }
   }
 
-  handleClick = (e, titleProps) => {
-    const { index } = titleProps;
-    const { activeIndex } = this.state;
-    const newIndex = activeIndex === index ? -1 : index;
-    this.setState({ activeIndex: newIndex });
-  }
-
   render() {
     return (
       <Aux>
@@ -41,9 +30,7 @@ class Portfolio extends Component {
           <TransactionForm firebaseUID={this.props.firebaseUID} />
         </Container>
         <Container as={Segment.Group} raised>
-          <Segment inverted color="grey" >
-            <TransactionList transactions={this.props.transactionList} />
-          </Segment>
+          <TransactionList transactions={this.props.transactionList} />
         </Container>
       </Aux>
     );

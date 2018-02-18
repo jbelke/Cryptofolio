@@ -47,3 +47,28 @@ export const transformToPieData = (arrData) => {
   transformedData = Object.entries(dataHolder);
   return transformedData;
 };
+
+export const numFormat = (number) => {
+  let isNegative = '';
+  let dec = '';
+  let numToStr = number.toString().split('.');
+  let formatNum = '';
+  if (number < 0) {
+    isNegative = '-';
+    numToStr = number.toString().substr(1).split('.');
+  }
+  if (numToStr[1]) {
+    dec = `.${numToStr[1].toString()}`;
+  }
+
+  const int = numToStr[0];
+
+  for (let i = 0; i < int.length; i += 1) {
+    let substring = int[int.length - i - 1];
+    if ((i + 1) % 3 === 0 && i > 0 && i !== int.length - 1) {
+      substring = `,${substring}`;
+    }
+    formatNum = substring + formatNum;
+  }
+  return [isNegative, formatNum, dec].join('');
+};

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Statistic, Loader, Grid } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import { numFormat } from '../../store/utility';
 
 const globalMarketSummary = (props) => {
   const {
@@ -8,20 +9,6 @@ const globalMarketSummary = (props) => {
     total_24h_volume_usd: currentVolume,
     total_market_cap_usd: marketCap,
   } = props.data;
-
-  const numFormat = (number) => {
-    const numToStr = number.toString();
-    let formatNum = '';
-
-    for (let i = 0; i < numToStr.length; i += 1) {
-      let substring = numToStr[numToStr.length - i - 1];
-      if ((i + 1) % 3 === 0 && i > 0 && i !== numToStr.length - 1) {
-        substring = `,${substring}`;
-      }
-      formatNum = substring + formatNum;
-    }
-    return formatNum;
-  };
 
   let btcDom = <Loader active inline />;
   let volume = <Loader active inline />;

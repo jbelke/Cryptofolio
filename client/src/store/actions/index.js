@@ -5,6 +5,7 @@ export {
   getCoinSnapShot,
   getGlobalMarketData,
   clearCoinSummary,
+  getMarketValues,
 } from './coins';
 
 export {

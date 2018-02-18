@@ -1,15 +1,7 @@
-.SearchResult > div.result {
-  background: black !important;
-  &:hover div.result{
-    // background: #0e3c6a !important;
-    background: blue !important;
-  }
-}
-
-#root > div > div.pusher > div > div.ui.stackable.divided.two.column.grid.ui.segment > div > div.five.wide.computer.sixteen.wide.mobile.column > div > div.results.transition.visible > div:nth-child(1) {
-  background: black !important;
-}
-
-.SearchResult.ui.search>.results .result:hover {
-  background: black !important;
+.SearchBox input {
+  border-style: none !important;
+  border-bottom-width: 2px !important;
+  border-bottom-style: double !important;
+  border-radius: 0px !important;
+  text-align: center !important;
 }

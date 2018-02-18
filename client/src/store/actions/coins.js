@@ -73,3 +73,24 @@ export const getGlobalMarketData = () => {
 export const clearCoinSummary = () => ({
   type: actionTypes.CLEAR_COIN_SUMMARY,
 });
+
+export const getMarketValues = (transactionData) => {
+  const dataHolder = {};
+  transactionData.forEach((coin) => {
+    if (!dataHolder[coin.coinName]) {
+      dataHolder[coin.coinName] = coin.coinName;
+    }
+  });
+  const symbolCollection = Object.keys(dataHolder);
+  const symbols = symbolCollection.join(',');
+  const url = `https://min-api.cryptocompare.com/data/pricemulti?fsyms=${symbols}&tsyms=USD`;
+
+  return async (dispatch) => {
+    const request = await axios.get(url);
+
+    dispatch({
+      type: actionTypes.GET_MARKET_VALUE,
+      payload: request,
+    });
+  };
+};

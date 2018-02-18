@@ -13,6 +13,7 @@ class SearchCoins extends Component {
     isLoading: false,
     value: '',
     result: [],
+    placeholder: 'Search Coins',
   }
 
   componentDidMount() {
@@ -27,7 +28,14 @@ class SearchCoins extends Component {
 
   resetComponent = () => this.setState({ isLoading: false, result: [], value: '' })
 
-  handleOnFocus = e => e.target.select();
+  handleOnFocus = (e) => {
+    e.target.select();
+    this.setState({ placeholder: '' });
+  };
+
+  handleOnBlur = () => {
+    this.setState({ placeholder: 'Search Coins' });
+  };
 
   handleResultSelect = (e, { result }) => this.setState({ value: result.symbol })
 
@@ -58,7 +66,6 @@ class SearchCoins extends Component {
 
   handleResultRenderer = ({ name }) => (
     <div>
-      {/* <Image avatar size="mini" src={imageurl} alt="@" /> */}
       <span>
         {name}
       </span>
@@ -69,11 +76,11 @@ class SearchCoins extends Component {
     return (
       <Aux>
         <Search
-          placeholder="Search Coins"
+          placeholder={this.state.placeholder}
           className={classes.SearchResult}
           fluid
           // make input field take 100% of container, pass an object fluid:true
-          input={{ fluid: true }}
+          input={{ fluid: true, className: classes.SearchBox }}
           loading={this.state.isLoading}
           results={this.state.result}
           value={this.state.value}
@@ -82,6 +89,7 @@ class SearchCoins extends Component {
           resultRenderer={this.handleResultRenderer}
           minCharacters={1}
           onFocus={this.handleOnFocus}
+          onBlur={this.handleOnBlur}
           size="large"
           list={this.props.list}
         />

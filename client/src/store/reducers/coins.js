@@ -7,6 +7,7 @@ const initialState = {
   coinSearchList: [],
   coinSnapShot: {},
   globalMarketData: {},
+  coinMarketValue: {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -33,6 +34,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         globalMarketData: { ...action.payload.data },
+      };
+
+    case actionTypes.GET_MARKET_VALUE:
+      return {
+        ...state,
+        coinMarketValue: { ...action.payload.data },
       };
 
     case actionTypes.GET_COIN_CURR_SUMMARY:

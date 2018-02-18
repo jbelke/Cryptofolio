@@ -7,9 +7,12 @@ import classes from './TransactionForm.scss';
 
 class TransactionForm extends Component {
   addTransactionHandler = async (values) => {
-    console.log(values);
     const data = { ...values, firebaseUID: this.props.firebaseUID };
     await this.props.addTransaction(data);
+    this.props.reset();
+  }
+
+  resetForm = () => {
     this.props.reset();
   }
 
@@ -85,12 +88,16 @@ class TransactionForm extends Component {
     ];
 
     return (
-      <Segment color="black" raised>
+      <Segment color="black" raised >
         <Header textAlign="center" >Enter Transaction</Header>
         <Tab
-          className={classes.TabMenu}
+          onTabChange={this.resetForm}
           menu={{
-            pointing: true, fluid: true, widths: 2,
+            fluid: true,
+            widths: 2,
+            pointing: true,
+            inverted: true,
+            color: 'grey',
           }}
           panes={panes}
         />
