@@ -1,78 +1,119 @@
 import React, { Component } from 'react';
 import ReactHighChart from 'react-highcharts';
+import axios from 'axios';
+import PropTypes from 'prop-types';
+import { transformToChartData } from '../../../store/utility';
 
-class PieChart extends Component {
+class AreaChart extends Component {
   state ={
-    pie: {
-      chartData: [
-        ['TRX', 1500, false],
-        ['BTC', 2300, false],
-        ['ETH', 154, false],
-        ['ENJ', 800, false],
-      ],
-    },
+    chartData: [],
   }
 
   componentDidMount() {
-    const chart = this.pie;
-    chart.Highcharts.setOptions({ lang: { thousandsSep: ',' } });
+    this.loadChart(this.props.coin);
   }
 
-  pieConfig = {
-    title: {
-      text: 'Current Assets',
-    },
-    credits: false,
-    tooltip: {
-      pointFormat: '{series.name}: <b>$ {point.y:,1f}</b><br/>',
-    },
-    loading: {
-      hideDuration: 1000,
-      showDuration: 1000,
-    },
-    thousandsSep: ',',
-    series: [{
-      type: 'pie',
-      name: 'Asset',
-      allowPointSelect: true,
-      data: this.state.pie.chartData,
-      // associated with the chart data order
-      keys: ['name', 'y', 'selected', 'sliced'],
-      dataLabels: {
-        enabled: true,
-        format: '<b>{point.percentage:.1f}%</b>',
-        distance: -30,
-        filter: {
-          property: 'percentage',
-          operator: '>',
-          value: 5,
-        },
+  loadChart = async (symbol) => {
+    const chartUrl = `https://min-api.cryptocompare.com/data/histoday?fsym=${symbol}&tsym=USD&limit=7&e=CCCAGG`;
+    const chartRequest = await axios.get(chartUrl);
+    const chartData = await transformToChartData(chartRequest.data.Data);
+    const chart = this.area;
+    chart.Highcharts.setOptions({ lang: { thousandsSep: ',' } });
+
+    this.setState({ chartData });
+  }
+
+
+  render() {
+    let minStart = 0;
+    if (this.state.chartData[0]) {
+      // add thousand ','
+      const chart = this.area;
+      if (chart) {
+        chart.Highcharts.setOptions({ lang: { thousandsSep: ',' } });
+      }
+
+      // set minimum value of the chart to the lowest value of the array dataset
+      let value = this.state.chartData[0][1];
+      this.state.chartData[0].forEach((data) => {
+        if (data[1] < value) {
+          [, value] = data;
+        }
+      });
+      // console.log(value, 'value');
+      minStart = !value ? 0 : (value[1]) - (value[1] * 0.1);
+    }
+
+    const areaConfig = {
+      title: {
+        text: '7 Day Activity',
       },
-      yAxis: 1,
-      showInLegend: true,
-    }],
-    responsive: {
-      rules: [{
-        condition: {
-          maxWidth: 500,
+      yAxis: {
+        title: {
+          text: 'Price',
         },
-        chartOptions: {
-          navigator: {
-            enabled: false,
-          },
+        startOnTick: false,
+        type: 'linear',
+        min: minStart,
+        minPadding: 0.2,
+      },
+      xAxis: {
+        type: 'datetime',
+      },
+      plotOptions: {
+        area: {
           dataLabels: {
             enabled: false,
           },
+          enableMouseTracking: true,
+          animation: false,
         },
+      },
+      chart: {
+        height: 200,
+        animation: false,
+      },
+      credits: false,
+      tooltip: {
+        pointFormat: '<b>$ {point.y:,1f}</b><br/>',
+      },
+      loading: {
+        hideDuration: 1000,
+        showDuration: 1000,
+      },
+      series: [{
+        type: 'area',
+        name: 'Price',
+        data: this.state.chartData[0],
+        showInLegend: false,
       }],
-    },
-  };
+      responsive: {
+        rules: [{
+          condition: {
+            maxWidth: 500,
+          },
+          chartOptions: {
+            navigator: {
+              enabled: false,
+            },
+            dataLabels: {
+              enabled: false,
+            },
+          },
+        }],
+      },
+    };
 
-  render() {
     return (
-      <ReactHighChart config={this.pieConfig} ref={(c) => { this.pie = c; }} />
+      <ReactHighChart config={areaConfig} ref={(c) => { this.area = c; }} />
     );
   }
 }
 
-export default PieChart;
+// PropTypes here
+AreaChart.propTypes = {
+  coin: PropTypes.string.isRequired,
+};
+
+
+export default AreaChart;

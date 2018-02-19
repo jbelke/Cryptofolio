@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as actionTypes from './actionTypes';
 import * as utilityFunc from '../utility';
 
-export const getTopCoins = (numCoinLookup = 50) => {
+export const getTopCoins = (numCoinLookup = 15) => {
   const url = `https://api.coinmarketcap.com/v1/ticker/?limit=${numCoinLookup}`;
   return async (dispatch) => {
     const request = await axios.get(url);
@@ -33,6 +33,7 @@ export const getCoinSnapShot = (symbol) => {
 
   return async (dispatch) => {
     const request = await axios.get(url);
+
     dispatch({
       type: actionTypes.GET_COIN_CURR_SUMMARY,
       payload: request,

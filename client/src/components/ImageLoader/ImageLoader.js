@@ -20,7 +20,7 @@ class ImageLoader extends Component {
   }
 
   render() {
-    const image = <Image src={this.state.imageSrc} avatar />;
+    const image = <Image src={this.state.imageSrc} size={this.props.size} avatar />;
     return (
       image
     );
@@ -28,7 +28,13 @@ class ImageLoader extends Component {
 }
 
 ImageLoader.propTypes = {
-  imageUrl: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string,
+  size: PropTypes.string,
+};
+
+ImageLoader.defaultProps = {
+  imageUrl: undefined,
+  size: undefined,
 };
 
 export default ImageLoader;

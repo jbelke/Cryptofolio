@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Container, Segment, Divider, Header, Button } from 'semantic-ui-react';
+import { Container, Segment, Divider, Header, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import TopCoinsList from '../../components/TopCoinsList/TopCoinsList';
@@ -8,8 +8,7 @@ import CoinExplorer from './CoinExplorer/CoinExplorer';
 
 class Coins extends Component {
   state = {
-    currentCoinCount: 50,
-    isLoading: false,
+    currentCoinCount: 15,
   }
 
   componentDidMount() {
@@ -17,25 +16,30 @@ class Coins extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (nextProps.list.length !== this.props.list.length) {
-      return false;
+    let update = true;
+    if (nextProps.topCoins.length === this.props.topCoins.length) {
+      update = false;
     }
-    return true;
+    return update;
   }
 
+
   loadMoreHandler = async () => {
-    const newCount = this.state.currentCoinCount + 50;
+    const newCount = this.state.currentCoinCount + 15;
     await this.props.getCoins(newCount);
-    this.setState({ currentCoinCount: newCount, isLoading: false });
+    this.setState({ currentCoinCount: newCount });
   }
 
   render() {
-    const coins = (
-      <Grid stackable columns={2} >
-        <TopCoinsList topCoins={this.props.topCoins} />
-      </Grid>
-    );
-
+    let coins = <div><p>Loader...</p></div>;
+    if (this.props.topCoins.length > 0) {
+      coins = (
+        <TopCoinsList
+          topCoins={this.props.topCoins}
+          loader={() => this.isLoadingHandler()}
+        />
+      );
+    }
     return (
       <Container>
         <CoinExplorer />
@@ -50,7 +54,6 @@ class Coins extends Component {
           <Button
             onClick={this.loadMoreHandler}
             fluid
-            loading={this.state.isLoading}
             icon="chevron down"
             size="big"
           />
@@ -64,12 +67,10 @@ class Coins extends Component {
 Coins.propTypes = {
   getCoins: PropTypes.func.isRequired,
   topCoins: PropTypes.arrayOf(PropTypes.object).isRequired,
-  list: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = state => ({
   topCoins: state.coin.topTen,
-  list: state.coin.coinSearchList,
   coinSummary: state.coin.coinSnapShot,
 });
 

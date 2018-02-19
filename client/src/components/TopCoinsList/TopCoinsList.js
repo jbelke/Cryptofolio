@@ -1,26 +1,86 @@
 import React, { Component } from 'react';
-import { Grid, Segment } from 'semantic-ui-react';
+import { Grid, Segment, List, Label, Header } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classes from './TopCoinsList.scss';
+import { numFormat } from '../../store/utility';
+import ImageLoader from '../ImageLoader/ImageLoader';
+import AreaChart from '../Chart/AreaChart/AreaChart';
 
 class TopCoinsList extends Component {
+  state = {
+    columns: 8,
+  }
+
+
   render() {
+    const volume = '24h_volume_usd';
+    const imageBaseUrl = 'https://files.coinmarketcap.com/static/img/coins/32x32/';
     const list = this.props.topCoins.map(coin => (
       <Grid.Column
+        tablet={16}
+        computer={this.state.columns}
         key={coin.id}
       >
         <Link to={`/coins/detail/${coin.symbol}`}>
           <Segment raised className={classes.Coin} >
-            <p>Rank: {coin.rank}</p>
-            <p>Symbol: {coin.symbol}</p>
-            <p>{coin.name}</p>
-            <p>Price: {coin.price_usd}</p>
+            <Label.Group>
+              <Label color="green" size="large" ribbon className={classes.Ribbon}>
+                {coin.rank}
+              </Label>
+              <Label size="large" attached="top">
+                <Header textAlign="center">
+                  <span className={classes.HeaderSpan}>
+                    <ImageLoader imageUrl={`${imageBaseUrl}${coin.id}.png`} />
+                    {coin.name}: {coin.symbol}
+                  </span>
+                </Header>
+              </Label>
+            </Label.Group>
+
+            <Grid stackable className={classes.Card}>
+              <Grid.Column verticalAlign="middle" computer={5} tablet={5} mobile={16}>
+                <List relaxed divided>
+                  <List.Item>
+                    <List.Content>
+                      Price: ${numFormat((coin.price_usd * 1).toFixed(2))}
+                    </List.Content>
+                  </List.Item>
+                  <List.Item>
+                    <List.Content>
+                      Market Cap:
+                      <br />$ {numFormat(parseInt(coin.market_cap_usd, 10).toFixed())}
+                    </List.Content>
+                  </List.Item>
+                  <List.Item>
+                    <List.Content>
+                      24H Change:
+                      <br />{coin.percent_change_7d}%
+                    </List.Content>
+                  </List.Item>
+                  <List.Item>
+                    <List.Content>
+                      24H Volume:
+                      <br />$ {numFormat(parseInt(coin[volume], 10).toFixed())}
+                    </List.Content>
+                  </List.Item>
+                </List>
+              </Grid.Column>
+
+              <Grid.Column computer={11} tablet={11} mobile={16}>
+                <AreaChart coin={coin.symbol} />
+              </Grid.Column>
+
+            </Grid>
           </Segment>
         </Link>
       </Grid.Column>
     ));
-    return list;
+    return (
+      <Grid stackable >
+        {list}
+      </Grid>
+    );
   }
 }
 

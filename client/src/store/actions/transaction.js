@@ -4,11 +4,11 @@ import { transformToPieData } from '../utility';
 
 export const addTransaction = (data) => {
   const url = '/api/transactions/create';
-
+  console.log('before transaction', data);
   return async (dispatch) => {
     const request = await axios.post(url, data);
     const pieData = transformToPieData(request.data);
-
+    console.log('in transaction', request);
     dispatch({
       type: actionTypes.GET_TRANSACTIONS,
       payload: request,

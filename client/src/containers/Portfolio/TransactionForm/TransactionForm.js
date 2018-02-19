@@ -17,7 +17,7 @@ class TransactionForm extends Component {
   }
 
   renderField = ({
-    placeholder, input, label, type, meta: { touched, error, warning },
+    placeholder, pattern, input, label, type, meta: { touched, error, warning },
   }) => (
     <Form.Field>
       <Form.Input
@@ -27,6 +27,7 @@ class TransactionForm extends Component {
         label={label}
         type={type}
         placeholder={placeholder}
+        pattern={pattern}
       />
       {
         touched && (
@@ -51,7 +52,14 @@ class TransactionForm extends Component {
             component={this.renderField}
             type="date"
             label="Transaction Date"
-            placeholder="MMDDYYYY"
+            placeholder="MMDDYYYYHHMM"
+          />
+          <Field
+            name="time"
+            component={this.renderField}
+            type="time"
+            label="Transaction Time"
+            placeholder="HHMM"
           />
         </Form.Group>
         <Container textAlign="center">
@@ -73,6 +81,13 @@ class TransactionForm extends Component {
             type="date"
             label="Transaction Date"
             placeholder="MMDDYYYY"
+          />
+          <Field
+            name="time"
+            component={this.renderField}
+            type="time"
+            label="Transaction Time"
+            placeholder="HHMM"
           />
         </Form.Group>
         <Container textAlign="center" >

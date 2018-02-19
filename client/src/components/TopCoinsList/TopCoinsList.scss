@@ -1,3 +1,20 @@
-.Coin:hover {
-  background-color: rgba(24, 54, 201, 0.10196078431372549);
+.Coin {
+  &:hover {
+    background-color: rgba(24, 54, 201, 0.10196078431372549);
+  }
+  div {
+    font-weight: 100 !important;
+  }
+}
+
+.Card {
+  margin-top: auto !important;
+}
+
+.Ribbon {
+  z-index: 10 !important;
+}
+
+.HeaderSpan {
+  display: inline-block;
 }
