@@ -6,6 +6,16 @@ import * as actions from '../../../store/actions/index';
 import classes from './TransactionForm.scss';
 
 class TransactionForm extends Component {
+  state = {
+    error: null,
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.authError !== this.state.error) {
+      this.setState({ error: nextProps.authError });
+    }
+  }
+
   addTransactionHandler = async (values) => {
     const data = { ...values, firebaseUID: this.props.firebaseUID };
     await this.props.addTransaction(data);
@@ -40,6 +50,21 @@ class TransactionForm extends Component {
   );
 
   render() {
+    let errorMessage = null;
+    if (this.state.error) {
+      errorMessage = (
+        <Segment
+          inverted
+          color="red"
+          size="small"
+        >
+          <div>
+            {this.state.error}
+          </div>
+        </Segment>
+      );
+    }
+
     const { handleSubmit, error } = this.props;
     const buyForm = (
       <Form onSubmit={handleSubmit(this.addTransactionHandler)}>
@@ -116,6 +141,7 @@ class TransactionForm extends Component {
           }}
           panes={panes}
         />
+        { errorMessage }
       </Segment>
     );
   }
@@ -138,6 +164,10 @@ const validate = (values) => {
     errors.buyPrice = 'Please Enter the Price per Coin';
   }
 
+  if (!values.sellPrice) {
+    errors.sellPrice = 'Please Enter the Price per Coin';
+  }
+
   if (!values.coinAmount) {
     errors.coinAmount = 'Please Enter an amount';
   }
@@ -146,13 +176,12 @@ const validate = (values) => {
 };
 
 const mapStateToProps = state => ({
-  authError: state.transaction.errors,
+  authError: state.transaction.error,
   isAuthenticated: state.auth.authenticated,
 });
 
 const mapDispatchToProps = dispatch => ({
   addTransaction: values => dispatch(actions.addTransaction(values)),
-  // removeTransaction
 });
 
 export default reduxForm({

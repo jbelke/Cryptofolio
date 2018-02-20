@@ -12,7 +12,10 @@ Data - CryptoCompare
 News - news api
 
 TODO:
-put active state on redux
-lazy load charts on search
-rename coins to coin explorer
+add search for only active coin
+create async market value for coin portfolio
 add more error handlers - try catch blocks
+
+Name Changes - fix
+MIOTA -> IOTA
+XRB -> NANO

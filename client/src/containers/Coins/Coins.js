@@ -7,6 +7,7 @@ import * as actions from '../../store/actions/index';
 import CoinExplorer from './CoinExplorer/CoinExplorer';
 
 class Coins extends Component {
+  // api limit 15  request per second on certain data
   state = {
     currentCoinCount: 15,
   }

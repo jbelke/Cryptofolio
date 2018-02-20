@@ -22,13 +22,13 @@ class TopCoinsList extends Component {
         computer={this.state.columns}
         key={coin.id}
       >
-        <Link to={`/coins/detail/${coin.symbol}`}>
-          <Segment raised className={classes.Coin} >
-            <Label.Group>
-              <Label color="green" size="large" ribbon className={classes.Ribbon}>
-                {coin.rank}
-              </Label>
-              <Label size="large" attached="top">
+        <Segment raised className={classes.Coin} >
+          <Label.Group>
+            <Label color="green" size="large" ribbon className={classes.Ribbon}>
+              {coin.rank}
+            </Label>
+            <Link to={`/coins/detail/${coin.symbol}`}>
+              <Label size="large" attached="top" className={classes.RibbonHeader}>
                 <Header textAlign="center">
                   <span className={classes.HeaderSpan}>
                     <ImageLoader imageUrl={`${imageBaseUrl}${coin.id}.png`} />
@@ -36,44 +36,44 @@ class TopCoinsList extends Component {
                   </span>
                 </Header>
               </Label>
-            </Label.Group>
+            </Link>
+          </Label.Group>
 
-            <Grid stackable className={classes.Card}>
-              <Grid.Column verticalAlign="middle" computer={5} tablet={5} mobile={16}>
-                <List relaxed divided>
-                  <List.Item>
-                    <List.Content>
-                      Price: ${numFormat((coin.price_usd * 1).toFixed(2))}
-                    </List.Content>
-                  </List.Item>
-                  <List.Item>
-                    <List.Content>
-                      Market Cap:
-                      <br />$ {numFormat(parseInt(coin.market_cap_usd, 10).toFixed())}
-                    </List.Content>
-                  </List.Item>
-                  <List.Item>
-                    <List.Content>
-                      24H Change:
-                      <br />{coin.percent_change_7d}%
-                    </List.Content>
-                  </List.Item>
-                  <List.Item>
-                    <List.Content>
-                      24H Volume:
-                      <br />$ {numFormat(parseInt(coin[volume], 10).toFixed())}
-                    </List.Content>
-                  </List.Item>
-                </List>
-              </Grid.Column>
+          <Grid stackable className={classes.Card}>
+            <Grid.Column verticalAlign="middle" computer={5} tablet={5} mobile={16}>
+              <List relaxed divided>
+                <List.Item>
+                  <List.Content>
+                    Price: ${numFormat((coin.price_usd * 1).toFixed(2))}
+                  </List.Content>
+                </List.Item>
+                <List.Item>
+                  <List.Content>
+                    Market Cap:
+                    <br />$ {numFormat(parseInt(coin.market_cap_usd, 10).toFixed())}
+                  </List.Content>
+                </List.Item>
+                <List.Item>
+                  <List.Content>
+                    24H Change:
+                    <br />{coin.percent_change_7d}%
+                  </List.Content>
+                </List.Item>
+                <List.Item>
+                  <List.Content>
+                    24H Volume:
+                    <br />$ {numFormat(parseInt(coin[volume], 10).toFixed())}
+                  </List.Content>
+                </List.Item>
+              </List>
+            </Grid.Column>
 
-              <Grid.Column computer={11} tablet={11} mobile={16}>
-                <AreaChart coin={coin.symbol} />
-              </Grid.Column>
+            <Grid.Column computer={11} tablet={11} mobile={16}>
+              <AreaChart coin={coin.symbol} />
+            </Grid.Column>
 
-            </Grid>
-          </Segment>
-        </Link>
+          </Grid>
+        </Segment>
       </Grid.Column>
     ));
     return (

@@ -10,7 +10,10 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/detail/:coinSymbol', (req, res, next) => {
-  utility.getCryptoCompareId(req.params.coinSymbol)
+  let symbolIsActive = req.params.coinSymbol;
+  if (symbolIsActive === 'MIOTA') { symbolIsActive = 'IOTA'; }
+  if (symbolIsActive === 'NANO') { symbolIsActive = 'XRB'; }
+  utility.getCryptoCompareId(symbolIsActive)
     .then((data) => {
       const url = `https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id=${data.coinId}`;
 

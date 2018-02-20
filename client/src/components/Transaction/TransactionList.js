@@ -22,7 +22,8 @@ class TransactionList extends Component {
         const image = <ImageLoader imageUrl={transaction.coin.imageUrl} />;
 
         let currentValue = 0;
-        if (Object.keys(this.props.marketValues).length > 0) {
+        if (Object.keys(this.props.marketValues).length > 0
+        && this.props.marketValues[transaction.coinName]) {
           currentValue = this.props.marketValues[transaction.coinName].USD;
         }
         const totalMarketValue = (currentValue * transaction.coinAmount).toFixed(2);

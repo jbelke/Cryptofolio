@@ -4,16 +4,23 @@ import { transformToPieData } from '../utility';
 
 export const addTransaction = (data) => {
   const url = '/api/transactions/create';
-  console.log('before transaction', data);
   return async (dispatch) => {
-    const request = await axios.post(url, data);
-    const pieData = transformToPieData(request.data);
-    console.log('in transaction', request);
-    dispatch({
-      type: actionTypes.GET_TRANSACTIONS,
-      payload: request,
-      pieData,
-    });
+    try {
+      const request = await axios.post(url, data);
+      const pieData = transformToPieData(request.data);
+
+      dispatch({
+        type: actionTypes.GET_TRANSACTIONS,
+        payload: request,
+        pieData,
+      });
+    } catch (err) {
+      const error = 'Unable to Process Transaction.  Discontinued/No Info';
+      dispatch({
+        type: actionTypes.FAILED_TRANSACTION,
+        payload: error,
+      });
+    }
   };
 };
 

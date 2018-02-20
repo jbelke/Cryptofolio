@@ -1,7 +1,4 @@
 .Coin {
-  &:hover {
-    background-color: rgba(24, 54, 201, 0.10196078431372549);
-  }
   div {
     font-weight: 100 !important;
   }
@@ -17,4 +14,15 @@
 
 .HeaderSpan {
   display: inline-block;
+  transition: all .1s ease-in-out;
+}
+
+.RibbonHeader {
+  &:Hover {
+    background: #94cef1;
+
+    .HeaderSpan {
+      transform: scale(0.9);
+    }
+  }
 }

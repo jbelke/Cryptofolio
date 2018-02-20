@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   transactions: [],
-  error: {},
+  error: '',
   pieData: [],
 };
 
@@ -13,6 +13,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         transactions: [...action.payload.data],
         pieData: [...action.pieData],
+        error: '',
       };
 
     case actionTypes.CLEAR_TRANSACTION:
@@ -26,7 +27,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.FAILED_TRANSACTION:
       return {
         ...state,
-        error: [...action.payload],
+        error: action.payload,
       };
 
     default:

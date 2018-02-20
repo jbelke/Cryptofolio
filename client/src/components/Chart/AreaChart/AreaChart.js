@@ -14,7 +14,10 @@ class AreaChart extends Component {
   }
 
   loadChart = async (symbol) => {
-    const chartUrl = `https://min-api.cryptocompare.com/data/histoday?fsym=${symbol}&tsym=USD&limit=7&e=CCCAGG`;
+    let symbolIsActive = symbol;
+    if (symbol === 'MIOTA') { symbolIsActive = 'IOTA'; }
+    if (symbol === 'NANO') { symbolIsActive = 'XRB'; }
+    const chartUrl = `https://min-api.cryptocompare.com/data/histoday?fsym=${symbolIsActive}&tsym=USD&limit=7&e=CCCAGG`;
     const chartRequest = await axios.get(chartUrl);
     const chartData = await transformToChartData(chartRequest.data.Data);
     const chart = this.area;
@@ -50,7 +53,7 @@ class AreaChart extends Component {
       },
       yAxis: {
         title: {
-          text: 'Price',
+          text: 'USD Price',
         },
         startOnTick: false,
         type: 'linear',

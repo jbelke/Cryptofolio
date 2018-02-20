@@ -48,11 +48,20 @@ router.post('/create', (req, res, next) => {
             }],
           })
             .then(transactions => res.send(transactions))
-            .catch(next);
+            .catch((err) => {
+              res.send(err);
+              next();
+            });
         })
-        .catch(next);
+        .catch((err) => {
+          res.send(err);
+          next();
+        });
     })
-    .catch(next);
+    .catch((err) => {
+      res.send(err);
+      next();
+    });
 });
 
 

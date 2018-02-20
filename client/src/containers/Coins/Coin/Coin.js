@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ReactHtmlParser from 'react-html-parser';
+import { Container, Divider, Segment } from 'semantic-ui-react';
 import * as actions from '../../../store/actions/index';
 import Chart from '../../../components/Chart/Chart';
 
@@ -14,17 +15,20 @@ class Coin extends Component {
     const coinDescription = ReactHtmlParser(this.props.coinDetail.Description);
 
     return (
-      <div>
+      <Container>
         <Chart
           dataSet={this.props.chartData}
           text={this.props.coinDetail.H1Text}
           symbol={this.props.match.params.coinSymbol}
         />
-        {coinDescription}
-        <br />
-        {this.props.coinDetail.Feature}
-        <img alt="coin" src={`https://www.cryptocompare.com${this.props.coinDetail.ImageUrl}`} />
-      </div>
+        <Divider />
+        <Segment >
+          <Container text>
+            {coinDescription}
+            {this.props.coinDetail.Feature}
+          </Container>
+        </Segment>
+      </Container>
     );
   }
 }

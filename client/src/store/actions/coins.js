@@ -29,7 +29,10 @@ export const getCoinList = () => {
 };
 
 export const getCoinSnapShot = (symbol) => {
-  const url = `https://min-api.cryptocompare.com/data/generateAvg?fsym=${symbol}&tsym=USD&e=CCCAGG`;
+  let symbolIsActive = symbol;
+  if (symbol === 'MIOTA') { symbolIsActive = 'IOTA'; }
+  if (symbol === 'NANO') { symbolIsActive = 'XRB'; }
+  const url = `https://min-api.cryptocompare.com/data/generateAvg?fsym=${symbolIsActive}&tsym=USD&e=CCCAGG`;
 
   return async (dispatch) => {
     const request = await axios.get(url);
@@ -42,8 +45,11 @@ export const getCoinSnapShot = (symbol) => {
 };
 
 export const getCryptoCoinDetail = (symbol) => {
-  const url = `/api/coins/detail/${symbol}`;
-  const chartUrl = `https://min-api.cryptocompare.com/data/histoday?fsym=${symbol}&tsym=USD&aggregate=1&e=CCCAGG&allData=1`;
+  let symbolIsActive = symbol;
+  if (symbol === 'MIOTA') { symbolIsActive = 'IOTA'; }
+  if (symbol === 'NANO') { symbolIsActive = 'XRB'; }
+  const url = `/api/coins/detail/${symbolIsActive}`;
+  const chartUrl = `https://min-api.cryptocompare.com/data/histoday?fsym=${symbolIsActive}&tsym=USD&aggregate=1&e=CCCAGG&allData=1`;
 
   return async (dispatch) => {
     const request = await axios.get(url);
@@ -78,8 +84,11 @@ export const clearCoinSummary = () => ({
 export const getMarketValues = (transactionData) => {
   const dataHolder = {};
   transactionData.forEach((coin) => {
-    if (!dataHolder[coin.coinName]) {
-      dataHolder[coin.coinName] = coin.coinName;
+    let symbolIsActive = coin.coinName;
+    if (coin.coinName === 'MIOTA') { symbolIsActive = 'IOTA'; }
+    if (coin.coinName === 'NANO') { symbolIsActive = 'XRB'; }
+    if (!dataHolder[symbolIsActive]) {
+      dataHolder[symbolIsActive] = symbolIsActive;
     }
   });
   const symbolCollection = Object.keys(dataHolder);
