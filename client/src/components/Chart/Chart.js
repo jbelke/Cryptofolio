@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container } from 'semantic-ui-react';
 import ReactHighstock from 'react-highcharts/ReactHighstock';
 import PropTypes from 'prop-types';
+import classes from './Chart.scss';
 
 class Chart extends Component {
   componentDidMount() {
@@ -9,9 +10,9 @@ class Chart extends Component {
   }
 
   render() {
-    console.log(this.props);
     const areaData = this.props.dataSet[0];
     const barData = this.props.dataSet[1];
+    const imageUrl = `https://chasing-coins.com/api/v1/std/logo/${this.props.symbol}`;
 
     const config = {
       rangeSelector: {
@@ -20,6 +21,10 @@ class Chart extends Component {
       credits: false,
       title: {
         text: this.props.text,
+      },
+      chart: {
+        plotBackgroundImage: imageUrl,
+        className: classes.Image,
       },
       loading: {
         hideDuration: 1000,
@@ -61,7 +66,7 @@ class Chart extends Component {
           valueDecimals: 3,
         },
       }, {
-        type: 'column',
+        type: 'area',
         name: 'volume',
         data: barData,
         tooltip: {
@@ -83,8 +88,9 @@ class Chart extends Component {
       },
     };
 
+
     return (
-      <Container>
+      <Container id="container" >
         <ReactHighstock config={config} ref={(c) => { this.chart = c; }} />
       </Container>
     );

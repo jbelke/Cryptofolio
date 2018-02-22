@@ -5,12 +5,28 @@ import PropTypes from 'prop-types';
 import { transformToChartData } from '../../../store/utility';
 
 class AreaChart extends Component {
-  state ={
+  state = {
     chartData: [],
+    coin: '',
   }
 
   componentDidMount() {
     this.loadChart(this.props.coin);
+  }
+
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.coin !== this.state.coin) {
+      this.setState({ coin: nextProps.coin });
+      this.loadChart(nextProps.coin);
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState.chartData === this.state.chartData) {
+      return false;
+    }
+    return true;
   }
 
   loadChart = async (symbol) => {
@@ -20,10 +36,10 @@ class AreaChart extends Component {
     const chartUrl = `https://min-api.cryptocompare.com/data/histoday?fsym=${symbolIsActive}&tsym=USD&limit=7&e=CCCAGG`;
     const chartRequest = await axios.get(chartUrl);
     const chartData = await transformToChartData(chartRequest.data.Data);
+    // area is the ref to the Highchart object
     const chart = this.area;
     chart.Highcharts.setOptions({ lang: { thousandsSep: ',' } });
-
-    this.setState({ chartData });
+    this.setState({ chartData, coin: symbolIsActive });
   }
 
 
@@ -49,7 +65,7 @@ class AreaChart extends Component {
 
     const areaConfig = {
       title: {
-        text: '7 Day Activity',
+        text: this.props.title,
       },
       yAxis: {
         title: {
@@ -86,7 +102,7 @@ class AreaChart extends Component {
       },
       series: [{
         type: 'area',
-        name: 'Price',
+        name: this.state.coin,
         data: this.state.chartData[0],
         showInLegend: false,
       }],
@@ -116,6 +132,11 @@ class AreaChart extends Component {
 // PropTypes here
 AreaChart.propTypes = {
   coin: PropTypes.string.isRequired,
+  title: PropTypes.string,
+};
+
+AreaChart.defaultProps = {
+  title: '',
 };
 
 

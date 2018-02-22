@@ -6,6 +6,7 @@ export {
   getGlobalMarketData,
   clearCoinSummary,
   getMarketValues,
+  clearCoinDetail,
 } from './coins';
 
 export {

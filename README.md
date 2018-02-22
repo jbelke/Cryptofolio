@@ -17,5 +17,8 @@ create async market value for coin portfolio
 add more error handlers - try catch blocks
 
 Name Changes - fix
-MIOTA -> IOTA
+MIOTA -> IOTA // CryptoCompare still uses IOT as Symbol
 XRB -> NANO
+
+logo
+https://chasing-coins.com/api/v1/std/logo/BTC

@@ -12,10 +12,9 @@ class TopCoinsList extends Component {
     columns: 8,
   }
 
-
   render() {
     const volume = '24h_volume_usd';
-    const imageBaseUrl = 'https://files.coinmarketcap.com/static/img/coins/32x32/';
+    const imageBaseUrl = 'https://chasing-coins.com/api/v1/std/logo/';
     const list = this.props.topCoins.map(coin => (
       <Grid.Column
         tablet={16}
@@ -23,15 +22,15 @@ class TopCoinsList extends Component {
         key={coin.id}
       >
         <Segment raised className={classes.Coin} >
-          <Label.Group>
-            <Label color="green" size="large" ribbon className={classes.Ribbon}>
-              {coin.rank}
-            </Label>
+          <Label.Group className={classes.RibbonHeader}>
             <Link to={`/coins/detail/${coin.symbol}`}>
-              <Label size="large" attached="top" className={classes.RibbonHeader}>
+              <Label color="green" size="large" ribbon className={classes.Ribbon}>
+                {coin.rank}
+              </Label>
+              <Label size="large" attached="top" className={classes.Header}>
                 <Header textAlign="center">
                   <span className={classes.HeaderSpan}>
-                    <ImageLoader imageUrl={`${imageBaseUrl}${coin.id}.png`} />
+                    <ImageLoader imageurl={`${imageBaseUrl}${coin.symbol}`} avatar />
                     {coin.name}: {coin.symbol}
                   </span>
                 </Header>
@@ -69,7 +68,7 @@ class TopCoinsList extends Component {
             </Grid.Column>
 
             <Grid.Column computer={11} tablet={11} mobile={16}>
-              <AreaChart coin={coin.symbol} />
+              <AreaChart coin={coin.symbol} title="Price History" />
             </Grid.Column>
 
           </Grid>

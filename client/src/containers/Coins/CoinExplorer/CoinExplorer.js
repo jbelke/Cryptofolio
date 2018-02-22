@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Segment, Grid, Responsive, Statistic } from 'semantic-ui-react';
+import { Segment, Grid, Responsive, Statistic, Divider, Header, Icon } from 'semantic-ui-react';
 import * as actions from '../../../store/actions/index';
 import SearchCoins from '../../Search/Search';
 import classes from './CoinExplorer.scss';
+import Aux from '../../../hoc/Aux/Aux';
+import AreaChart from '../../../components/Chart/AreaChart/AreaChart';
 
 class CoinExplorer extends Component {
   state = {
@@ -24,23 +26,48 @@ class CoinExplorer extends Component {
   render() {
     const { OPEN24HOUR, HIGH24HOUR, LOW24HOUR } = this.props.coinSummary;
     let summary = null;
+    // let detail = null;
 
     if (Object.keys(this.props.coinSummary).length !== 0) {
       summary = (
-        <Statistic.Group as={Grid} container columns={3} size="mini" >
-          <Statistic>
-            <Statistic.Value>{OPEN24HOUR}</Statistic.Value>
-            <Statistic.Label>24H Open</Statistic.Label>
-          </Statistic>
-          <Statistic>
-            <Statistic.Value>{HIGH24HOUR}</Statistic.Value>
-            <Statistic.Label>24H High</Statistic.Label>
-          </Statistic>
-          <Statistic>
-            <Statistic.Value>{LOW24HOUR}</Statistic.Value>
-            <Statistic.Label>24 Low</Statistic.Label>
-          </Statistic>
-        </Statistic.Group>
+        <Aux>
+          <Grid.Row>
+            <Statistic.Group as={Grid} container columns={3} size="mini" >
+
+              <Grid.Column mobile={2} verticalAlign="middle" textAlign="center" >
+                <Icon name="info circle" size="large" />
+              </Grid.Column>
+
+              <Grid.Column mobile={14}>
+                <Statistic>
+                  <Statistic.Value text >
+                    {OPEN24HOUR}
+                    <Header color="grey" sub>Open</Header>
+                  </Statistic.Value>
+                </Statistic>
+                <Statistic>
+                  <Statistic.Value text >
+                    {HIGH24HOUR}
+                    <Header color="grey" sub>High</Header>
+                  </Statistic.Value>
+                </Statistic>
+                <Statistic>
+                  <Statistic.Value text >
+                    {LOW24HOUR}
+                    <Header color="grey" sub>Low</Header>
+                  </Statistic.Value>
+                </Statistic>
+              </Grid.Column>
+
+            </Statistic.Group>
+          </Grid.Row>
+          <br />
+          <Divider clearing />
+          <Grid.Row>
+            <AreaChart coin={this.state.value} title={`${this.state.value} Price History`} />
+          </Grid.Row>
+
+        </Aux>
       );
     }
 
@@ -59,8 +86,9 @@ class CoinExplorer extends Component {
               clicked={this.clickedHandler}
               value={this.state.value}
             />
+            <br />
           </Grid.Column>
-          <Responsive minWidth={992} as={Grid.Column} mobile={16} computer={11} >
+          <Responsive as={Grid.Column} mobile={16} computer={11} >
             {summary}
           </Responsive>
         </Grid.Row>

@@ -9,18 +9,29 @@ class ImageLoader extends Component {
   }
 
   componentDidMount() {
-    const newSrc = this.props.imageUrl;
+    const newSrc = this.props.imageurl;
     this.setNewImage(newSrc);
   }
 
-  setNewImage(src) {
+  setNewImage = (src) => {
     if (src) {
       this.setState({ imageSrc: src });
     }
   }
 
   render() {
-    const image = <Image src={this.state.imageSrc} size={this.props.size} avatar />;
+    // const errorSrc = () => {
+    //   this.setNewImage(logo);
+    // };
+
+    const image = (
+      <Image
+        src={this.state.imageSrc}
+        // onError={errorSrc}
+        size={this.props.size}
+        {...this.props}
+      />
+    );
     return (
       image
     );
@@ -28,12 +39,12 @@ class ImageLoader extends Component {
 }
 
 ImageLoader.propTypes = {
-  imageUrl: PropTypes.string,
+  imageurl: PropTypes.string,
   size: PropTypes.string,
 };
 
 ImageLoader.defaultProps = {
-  imageUrl: undefined,
+  imageurl: undefined,
   size: undefined,
 };
 

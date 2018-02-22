@@ -24,6 +24,12 @@ const reducer = (state = initialState, action) => {
         coinSnapShot: {},
       };
 
+    case actionTypes.CLEAR_COIN_DETAIL:
+      return {
+        ...state,
+        coinDetail: {},
+      };
+
     case actionTypes.GET_COIN_LIST:
       return {
         ...state,

@@ -67,7 +67,7 @@ class Toolbar extends Component {
           address="/coins"
           as={Menu.Item}
           minWidth={768}
-          name="coins"
+          name="coin"
           active={activeItem === 'coins'}
           onClick={this.handleItemClick}
         />
@@ -83,9 +83,13 @@ class Toolbar extends Component {
           as={Menu.Item}
           minWidth={768}
           position="right"
+          className={classes.Logo}
         >
-          <strong>Hodl & Stake</strong>
-          <Image src={Logo} size="mini" />
+          <div>
+            <strong>Hodl & Stake
+              <Image src={Logo} size="mini" />
+            </strong>
+          </div>
         </Responsive>
         {this.props.authenticated
           ?

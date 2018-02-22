@@ -19,7 +19,7 @@ class TransactionList extends Component {
       list = this.props.transactions.map((transaction) => {
         const e = new Date(transaction.transactionDate);
         const date = e.toLocaleString('en-US', { hour12: false });
-        const image = <ImageLoader imageUrl={transaction.coin.imageUrl} />;
+        const image = <ImageLoader imageurl={transaction.coin.imageUrl} avatar />;
 
         let currentValue = 0;
         if (Object.keys(this.props.marketValues).length > 0

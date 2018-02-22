@@ -30,7 +30,7 @@ export const getCoinList = () => {
 
 export const getCoinSnapShot = (symbol) => {
   let symbolIsActive = symbol;
-  if (symbol === 'MIOTA') { symbolIsActive = 'IOTA'; }
+  if (symbol === 'MIOTA') { symbolIsActive = 'IOT'; }
   if (symbol === 'NANO') { symbolIsActive = 'XRB'; }
   const url = `https://min-api.cryptocompare.com/data/generateAvg?fsym=${symbolIsActive}&tsym=USD&e=CCCAGG`;
 
@@ -46,7 +46,7 @@ export const getCoinSnapShot = (symbol) => {
 
 export const getCryptoCoinDetail = (symbol) => {
   let symbolIsActive = symbol;
-  if (symbol === 'MIOTA') { symbolIsActive = 'IOTA'; }
+  if (symbol === 'MIOTA') { symbolIsActive = 'IOT'; }
   if (symbol === 'NANO') { symbolIsActive = 'XRB'; }
   const url = `/api/coins/detail/${symbolIsActive}`;
   const chartUrl = `https://min-api.cryptocompare.com/data/histoday?fsym=${symbolIsActive}&tsym=USD&aggregate=1&e=CCCAGG&allData=1`;
@@ -81,11 +81,15 @@ export const clearCoinSummary = () => ({
   type: actionTypes.CLEAR_COIN_SUMMARY,
 });
 
+export const clearCoinDetail = () => ({
+  type: actionTypes.CLEAR_COIN_DETAIL,
+});
+
 export const getMarketValues = (transactionData) => {
   const dataHolder = {};
   transactionData.forEach((coin) => {
     let symbolIsActive = coin.coinName;
-    if (coin.coinName === 'MIOTA') { symbolIsActive = 'IOTA'; }
+    if (coin.coinName === 'MIOTA') { symbolIsActive = 'IOT'; }
     if (coin.coinName === 'NANO') { symbolIsActive = 'XRB'; }
     if (!dataHolder[symbolIsActive]) {
       dataHolder[symbolIsActive] = symbolIsActive;

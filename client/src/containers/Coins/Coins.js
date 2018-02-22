@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Container, Segment, Divider, Header, Button } from 'semantic-ui-react';
+import { Container, Segment, Divider, Header, Button, Responsive, Loader, Dimmer } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import TopCoinsList from '../../components/TopCoinsList/TopCoinsList';
 import * as actions from '../../store/actions/index';
+import GlobalMarketSummary from '../../components/GlobalMarketSummary/GlobalMarketSummary';
 import CoinExplorer from './CoinExplorer/CoinExplorer';
 
 class Coins extends Component {
@@ -14,11 +15,13 @@ class Coins extends Component {
 
   componentDidMount() {
     this.props.getCoins();
+    this.props.getGlobalData();
   }
 
   shouldComponentUpdate(nextProps) {
     let update = true;
-    if (nextProps.topCoins.length === this.props.topCoins.length) {
+    if (nextProps.topCoins.length === this.props.topCoins.length &&
+    nextProps.globalMarketData === this.props.globalMarketData) {
       update = false;
     }
     return update;
@@ -32,7 +35,14 @@ class Coins extends Component {
   }
 
   render() {
-    let coins = <div><p>Loader...</p></div>;
+    let coins = (
+      <div>
+        <br />
+        <Dimmer active inverted >
+          <Loader size="massive"> Loading... </Loader>
+        </Dimmer>
+      </div>
+    );
     if (this.props.topCoins.length > 0) {
       coins = (
         <TopCoinsList
@@ -43,6 +53,13 @@ class Coins extends Component {
     }
     return (
       <Container>
+        <Responsive
+          as={GlobalMarketSummary}
+          data={this.props.globalMarketData}
+          minWidth={768}
+        />
+        <Divider />
+
         <CoinExplorer />
 
         <Divider />
@@ -68,15 +85,19 @@ class Coins extends Component {
 Coins.propTypes = {
   getCoins: PropTypes.func.isRequired,
   topCoins: PropTypes.arrayOf(PropTypes.object).isRequired,
+  getGlobalData: PropTypes.func.isRequired,
+  globalMarketData: PropTypes.shape().isRequired,
 };
 
 const mapStateToProps = state => ({
   topCoins: state.coin.topTen,
   coinSummary: state.coin.coinSnapShot,
+  globalMarketData: state.coin.globalMarketData,
 });
 
 const mapDispatchToProps = dispatch => ({
   getCoins: num => dispatch(actions.getTopCoins(num)),
+  getGlobalData: () => dispatch(actions.getGlobalMarketData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Coins);

@@ -17,7 +17,8 @@ class HomePage extends Component {
   shouldComponentUpdate(nextProps) {
     if (nextProps.currentTopTenNews.length === 0) {
       return false;
-    } if (Object.keys(nextProps.globalMarketData).length === 0) {
+    }
+    if (Object.keys(nextProps.globalMarketData).length === 0) {
       return false;
     }
     return true;
