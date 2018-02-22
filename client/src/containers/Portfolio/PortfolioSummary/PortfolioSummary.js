@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Grid } from 'semantic-ui-react';
 import PieChart from '../../../components/Chart/PieChart/PieChart';
-import TransactionForm from '../../../components/Transaction/TransactionSummary/TransactionSummary';
+import TransactionSummary from '../../../components/Transaction/TransactionSummary/TransactionSummary';
 
 const portfolioSummary = () => (
   <Container as={Grid} divided stackable columns={2} >
@@ -10,7 +10,7 @@ const portfolioSummary = () => (
         <PieChart />
       </Grid.Column>
       <Grid.Column>
-        <TransactionForm />
+        <TransactionSummary />
       </Grid.Column>
     </Grid.Row>
   </Container>

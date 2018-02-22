@@ -50,7 +50,6 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.authenticated,
   transactionList: state.transaction.transactions,
   firebaseUID: state.auth.firebaseUID,
-  pieData: state.transaction.pieData,
 });
 
 const mapDispatchToProps = dispatch => ({

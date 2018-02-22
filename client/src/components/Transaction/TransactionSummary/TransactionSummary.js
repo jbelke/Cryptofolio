@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import AreaChartPortfolio from '../../Chart/AreaChartPortfolio/AreaChartPortfolio';
 
 class TransactionSummary extends Component {
   state = {
@@ -20,6 +21,13 @@ class TransactionSummary extends Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState.chartData.length > 0) {
+      return true;
+    }
+    return false;
+  }
+
   getDayHistory = async (symbol, days) => {
     const url = `https://min-api.cryptocompare.com/data/histoday?fsym=${symbol}&tsym=USD&limit=${days}&e=CCCAGG`;
     const request = await axios.get(url);
@@ -35,7 +43,6 @@ class TransactionSummary extends Component {
 
       // get data history for transactions
       const dataHistory = await this.getDayHistory(trx.coinName, numberDaysSinceTrx);
-      console.log(dataHistory);
       return { ...dataHistory, trxAmount: trx.coinAmount };
     });
 
@@ -44,17 +51,14 @@ class TransactionSummary extends Component {
   }
 
   aggregateChartData = (dataArray) => {
-    console.log(dataArray, 'createChartData');
     const data = [];
     const chartData = {};
     // get time series history of each trx
     Promise.all(dataArray)
       .then((result) => {
-        console.log(result, 'result');
         result.forEach((day) => {
-          console.log(day, 'day');
-          const test = this.createChartData(day);
-          data.push(test);
+          const trxChart = this.createChartData(day);
+          data.push(trxChart);
         });
       })
       .then(() => {
@@ -70,7 +74,11 @@ class TransactionSummary extends Component {
             }
           });
         });
-        const chartDataFormatted = Object.entries(chartData);
+        // convert millisecond string into number & sort for chart to work
+        const rawData = Object.entries(chartData).sort((a, b) => a[0] - b[0]);
+        const chartDataFormatted = rawData.map(entry => [(entry[0] * 1),
+          (entry[1].toFixed(2) * 1)]);
+
         this.setState({ chartData: chartDataFormatted });
       });
   }
@@ -90,9 +98,8 @@ class TransactionSummary extends Component {
 
 
   render() {
-    console.log(this.state.chartData);
     return (
-      <div>test</div>
+      <AreaChartPortfolio data={this.state.chartData} />
     );
   }
 }
