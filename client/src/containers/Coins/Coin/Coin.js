@@ -16,6 +16,7 @@ class Coin extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
+    console.log(nextProps);
     if (nextProps.chartData.length === 0) {
       return false;
     }
@@ -26,6 +27,7 @@ class Coin extends Component {
   }
 
   render() {
+    console.log('render');
     const coinDescription = ReactHtmlParser(this.props.coinDetail.Description);
     return (
       <Aux>

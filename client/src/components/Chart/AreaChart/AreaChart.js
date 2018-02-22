@@ -60,7 +60,7 @@ class AreaChart extends Component {
         }
       });
       // console.log(value, 'value');
-      minStart = !value ? 0 : (value[1]) - (value[1] * 0.1);
+      minStart = !value ? 0 : (value[1]) - (value[1] * 0.2);
     }
 
     const areaConfig = {

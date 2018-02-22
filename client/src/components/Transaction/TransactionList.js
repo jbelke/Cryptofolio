@@ -19,9 +19,11 @@ class TransactionList extends Component {
       list = this.props.transactions.map((transaction) => {
         const e = new Date(transaction.transactionDate);
         const date = e.toLocaleString('en-US', { hour12: false });
-        const image = <ImageLoader imageurl={transaction.coin.imageUrl} avatar />;
+        const imageUrl = `https://chasing-coins.com/api/v1/std/logo/${transaction.coinName}`;
+        const image = <ImageLoader imageurl={imageUrl} avatar />;
 
         let currentValue = 0;
+        // async calculation of marketValues
         if (Object.keys(this.props.marketValues).length > 0
         && this.props.marketValues[transaction.coinName]) {
           currentValue = this.props.marketValues[transaction.coinName].USD;
@@ -50,8 +52,22 @@ class TransactionList extends Component {
               {numFormat(transaction.coinAmount)}
             </Responsive>
             <Responsive as={Table.Cell} minWidth={768}>${numFormat(price)}</Responsive>
-            <Table.Cell>${numFormat(initialcost)}</Table.Cell>
-            <Table.Cell>${numFormat(totalMarketValue)}</Table.Cell>
+            <Responsive as={Table.Cell} minWidth={768}>${numFormat(initialcost)}</Responsive>
+
+            <Responsive as={Table.Cell} maxWidth={767}>
+              ${numFormat((totalMarketValue / 1000).toFixed(2))}K
+            </Responsive>
+            <Responsive as={Table.Cell} minWidth={768}>
+              ${numFormat(totalMarketValue)}
+            </Responsive>
+
+            <Responsive as={Table.Cell} maxWidth={767}>
+              ${numFormat(((totalMarketValue - initialcost) / 1000).toFixed(2))}K {statusIcon}
+            </Responsive>
+            <Responsive as={Table.Cell} minWidth={768}>
+              ${numFormat(totalMarketValue - initialcost)} {statusIcon}
+            </Responsive>
+
             <Table.Cell>{numFormat(delta)}% {statusIcon}</Table.Cell>
           </Table.Row>
         );
@@ -67,9 +83,10 @@ class TransactionList extends Component {
             <Responsive as={Table.HeaderCell} minWidth={768}>Type</Responsive>
             <Responsive as={Table.HeaderCell} minWidth={768}>Amount</Responsive>
             <Responsive as={Table.HeaderCell} minWidth={768}>Price</Responsive>
-            <Table.HeaderCell>Initial Cost</Table.HeaderCell>
+            <Responsive as={Table.HeaderCell} minWidth={768}>Initial Cost</Responsive>
             <Table.HeaderCell>Market Value</Table.HeaderCell>
-            <Table.HeaderCell>Delta</Table.HeaderCell>
+            <Table.HeaderCell>$ Delta</Table.HeaderCell>
+            <Table.HeaderCell>Delta %</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 

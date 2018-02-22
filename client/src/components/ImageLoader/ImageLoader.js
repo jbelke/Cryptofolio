@@ -20,14 +20,14 @@ class ImageLoader extends Component {
   }
 
   render() {
-    // const errorSrc = () => {
-    //   this.setNewImage(logo);
-    // };
+    const errorSrc = () => {
+      this.setNewImage(logo);
+    };
 
     const image = (
       <Image
         src={this.state.imageSrc}
-        // onError={errorSrc}
+        onError={errorSrc}
         size={this.props.size}
         {...this.props}
       />

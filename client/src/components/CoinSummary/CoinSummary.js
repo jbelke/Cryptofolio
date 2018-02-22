@@ -18,7 +18,6 @@ class CoinSummary extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    console.log(nextProps);
     if (nextProps.coinData && this.state.currentData) {
       return true;
     }
@@ -38,7 +37,14 @@ class CoinSummary extends Component {
   }
 
   render() {
-    const { Twitter, AffiliateUrl, Name } = this.props.coinData;
+    const name = this.props.coinData.Name;
+    let { Twitter, AffiliateUrl } = this.props.coinData;
+    if (!Twitter) {
+      Twitter = 'N/A';
+    } else if (!AffiliateUrl) {
+      AffiliateUrl = 'N/A';
+    }
+
     const imageUrl = `https://chasing-coins.com/api/v1/std/logo/${this.props.symbol}`;
     const image = <ImageLoader imageurl={imageUrl} avatar />;
     let currentPrice = 0;
@@ -68,7 +74,7 @@ class CoinSummary extends Component {
                 <Header sub>
                   <a href={AffiliateUrl} target="_blank">
                     {image}
-                    {Name}
+                    {name}
                   </a>
                 </Header>
               </Grid.Row>
