@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const NewsAPI = require('newsapi');
-const key = require('../env/development').NEWS_API;
+// const key = require('../env/development').NEWS_API;
+// prod
+const key = process.env.NEWS_API;
 
 const newsapi = new NewsAPI(key);
 
