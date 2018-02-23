@@ -37,6 +37,7 @@ export const getTransactions = (firebaseUID) => {
   };
 };
 
+
 export const clearTransactions = () => ({
   type: actionTypes.CLEAR_TRANSACTION,
 });

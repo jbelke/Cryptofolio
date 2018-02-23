@@ -32,7 +32,7 @@ export const transformToPieData = (arrData) => {
   const dataHolder = {};
   let transformedData = [];
   arrData.forEach((trx) => {
-    let totalAmount = trx.coinAmount * Math.max(trx.sellPrice, trx.buyPrice);
+    let totalAmount = trx.coinAmount;
     if (trx.sellPrice) {
       totalAmount *= -1;
     }

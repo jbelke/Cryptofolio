@@ -57,10 +57,9 @@ class TransactionForm extends Component {
           inverted
           color="red"
           size="small"
+          textAlign="center"
         >
-          <div>
-            {this.state.error}
-          </div>
+          {this.state.error}
         </Segment>
       );
     }

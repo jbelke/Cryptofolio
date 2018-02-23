@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import AreaChartPortfolio from '../../Chart/AreaChartPortfolio/AreaChartPortfolio';
 
-class TransactionSummary extends Component {
+class TransactionPerformance extends Component {
   state = {
     transactions: [],
     chartData: [],
@@ -41,9 +41,14 @@ class TransactionSummary extends Component {
       const timeDifference = currentDate - new Date(trx.transactionDate);
       const numberDaysSinceTrx = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
 
+      // sell will decrease total amount of portfolio
+      let trxAmount = trx.coinAmount;
+      if (trx.buyPrice === null) {
+        trxAmount *= -1;
+      }
       // get data history for transactions
       const dataHistory = await this.getDayHistory(trx.coinName, numberDaysSinceTrx);
-      return { ...dataHistory, trxAmount: trx.coinAmount };
+      return { ...dataHistory, trxAmount };
     });
 
     // this.setState({ summaryData: aggregateData });
@@ -104,7 +109,7 @@ class TransactionSummary extends Component {
   }
 }
 
-TransactionSummary.propTypes = {
+TransactionPerformance.propTypes = {
   marketValue: PropTypes.objectOf(PropTypes.object).isRequired,
   transactions: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
@@ -114,4 +119,4 @@ const mapStateToProps = state => ({
   marketValue: state.coin.coinMarketValue,
 });
 
-export default connect(mapStateToProps)(TransactionSummary);
+export default connect(mapStateToProps)(TransactionPerformance);

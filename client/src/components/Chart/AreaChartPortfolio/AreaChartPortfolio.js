@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 class AreaChart extends Component {
   shouldComponentUpdate(nextProps) {
-    console.log(nextProps, 'areachart');
     if (nextProps.data.length > 0) {
       return true;
     }
@@ -12,7 +11,6 @@ class AreaChart extends Component {
   }
 
   render() {
-    console.log(this.props.data, 'acp');
     if (this.props.data.length > 0) {
       // add thousand ','
       const chart = this.area;

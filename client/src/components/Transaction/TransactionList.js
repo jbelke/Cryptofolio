@@ -13,8 +13,10 @@ class TransactionList extends Component {
     }
   }
 
+
   render() {
     let list = <Table.Row><Table.Cell colSpan="16" textAlign="center">Add a Transaction</Table.Cell></Table.Row>;
+
     if (this.props.transactions.length > 0) {
       list = this.props.transactions.map((transaction) => {
         const e = new Date(transaction.transactionDate);
@@ -65,7 +67,7 @@ class TransactionList extends Component {
               ${numFormat(((totalMarketValue - initialcost) / 1000).toFixed(2))}K {statusIcon}
             </Responsive>
             <Responsive as={Table.Cell} minWidth={768}>
-              ${numFormat(totalMarketValue - initialcost)} {statusIcon}
+              ${numFormat((totalMarketValue - initialcost).toFixed(2))} {statusIcon}
             </Responsive>
 
             <Table.Cell>{numFormat(delta)}% {statusIcon}</Table.Cell>

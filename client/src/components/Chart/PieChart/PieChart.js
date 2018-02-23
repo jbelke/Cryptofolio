@@ -8,7 +8,36 @@ class PieChart extends Component {
     this.pie.Highcharts.setOptions({ lang: { thousandsSep: ',' } });
   }
 
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.pieData.length === 0 ||
+      Object.keys(nextProps.marketValue).length === 0) {
+      return false;
+    }
+    if (nextProps.marketValue === this.props.marketValue) {
+      return false;
+    }
+    return true;
+  }
+
   render() {
+    let pieData = 0;
+    // update amount to the current data
+    if (this.props.pieData) {
+      const pieFormattedData = [];
+      this.props.pieData.forEach((coin) => {
+        // dont return coin with 0 value; Format to fit chart
+        const [name, coinAmount] = coin;
+        if (coinAmount === 0) {
+          return;
+        }
+        const currentMarketValue = (this.props.marketValue[name].USD * coinAmount);
+
+        pieFormattedData.push([name, currentMarketValue * 1]);
+      });
+
+      pieData = pieFormattedData;
+    }
+
     const pieConfig = {
       title: {
         text: 'Portfolio Breakdown',
@@ -26,7 +55,7 @@ class PieChart extends Component {
         type: 'pie',
         name: 'Asset',
         allowPointSelect: true,
-        data: this.props.pieData,
+        data: pieData,
         // associated with the chart data order
         keys: ['name', 'y', 'sliced'],
         dataLabels: {
@@ -65,10 +94,16 @@ class PieChart extends Component {
 
 PieChart.propTypes = {
   pieData: PropTypes.arrayOf(PropTypes.array).isRequired,
+  marketValue: PropTypes.shape(),
+};
+
+PieChart.defaultProps = {
+  marketValue: {},
 };
 
 const mapStateToProps = state => ({
   pieData: state.transaction.pieData,
+  marketValue: state.coin.coinMarketValue,
 });
 
 export default connect(mapStateToProps)(PieChart);
