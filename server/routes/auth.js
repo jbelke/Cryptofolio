@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const axios = require('axios');
-const { key } = require('../env/development').FIREBASE_API;
+const key = require('../env/development').FIREBASE_API;
 const db = require('../db').models;
 
 router.post('/signup', (req, res, next) => {
