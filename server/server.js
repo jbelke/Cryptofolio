@@ -20,7 +20,7 @@ app.use('/api', require('./routes/index'));
 // dev
 // app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../client/public/index.html')));
 // prod
-app.use('/', (req, res) => res.sendFile(path.join(__dirname, './index.html')));
+app.use('/', (req, res) => res.sendFile(path.join(__dirname, 'build', 'index.html')));
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
@@ -30,7 +30,8 @@ app.use('/', (req, res) => res.sendFile(path.join(__dirname, './index.html')));
 
 // production
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './index.html'));
+  const index = path.join(__dirname, 'build', 'index.html');
+  res.sendFile(index);
 });
 
 // sync database before starting server// dev
