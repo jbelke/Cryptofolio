@@ -21,7 +21,7 @@ app.use('/api', require('./routes/index'));
 // dev
 // app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../client/public/index.html')));
 // prod
-app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../client/build/index.html')));
+// app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../client/build/index.html')));
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
