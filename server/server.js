@@ -10,7 +10,7 @@ const coinDataUpdate = require('../cryptocompareUpdate/UpdateCoinDB');
 // serve the index.js create react app - change in production.  should point to build
 // app.use(express.static(path.join(__dirname, '../client')));
 // prod
-app.use(express.static(path.join(__dirname, '../build')));
+// app.use(express.static(path.join(__dirname, 'build')));
 
 // use for testing purposes
 app.use(require('body-parser').json());
