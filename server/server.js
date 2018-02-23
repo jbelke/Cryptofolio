@@ -10,7 +10,7 @@ const coinDataUpdate = require('../cryptocompareUpdate/UpdateCoinDB');
 // serve the index.js create react app - change in production.  should point to build
 // app.use(express.static(path.join(__dirname, '../client')));
 // prod
-// app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, '../client/build')));
 
 // use for testing purposes
 // dev
@@ -21,7 +21,7 @@ app.use('/api', require('./routes/index'));
 // dev
 // app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../client/public/index.html')));
 // prod
-// app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../client/build/index.html')));
+app.use('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
@@ -30,10 +30,10 @@ app.use('/api', require('./routes/index'));
 // });
 
 // production
-app.get('*', (req, res) => {
-  const index = path.join(__dirname, '../client/build/index.html');
-  res.sendFile(index);
-});
+// app.get('*', (req, res) => {
+//   const index = path.join(__dirname, '../client/build/index.html');
+//   res.sendFile(index);
+// });
 
 // sync database before starting server// dev
 if (process.env.SYNC === 'true') {
