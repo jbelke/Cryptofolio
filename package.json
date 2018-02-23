@@ -9,7 +9,7 @@
     "dev:server": "DATABASE_URL=postgres://localhost/cryptoDB_test nodemon server/server.js",
     "test:server": "DATABASE_URL=postgres://localhost/cryptoDB_test SYNC=false mocha --exit server/test/",
     "test:client": "jest client/ --watch",
-    "start": "node scripts/start.js",
+    "start": "node server/server.js",
     "client": "cd client && yarn start",
     "server": "node server/server.js",
     "start:dev": "SYNC=true concurrently --kill-others-on-fail \"yarn dev:server\" \"yarn client\""

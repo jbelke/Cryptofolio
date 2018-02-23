@@ -8,27 +8,43 @@ const seedData = require('./seed');
 const coinDataUpdate = require('../cryptocompareUpdate/UpdateCoinDB');
 
 // serve the index.js create react app - change in production.  should point to build
-app.use(express.static(path.join(__dirname, '../client')));
+// app.use(express.static(path.join(__dirname, '../client')));
+// prod
+app.use(express.static(path.join(__dirname, '../build')));
 
 // use for testing purposes
 app.use(require('body-parser').json());
 
 app.use('/api', require('./routes/index'));
 
-app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../client/public/index.html')));
+// dev
+// app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../client/public/index.html')));
+// prod
+app.use('/', (req, res) => res.sendFile(path.join(__dirname, './index.html')));
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, './public/index.html'));
+// });
+
+// production
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './public/index.html'));
+  res.sendFile(path.resolve(__dirname, './index.html'));
 });
 
-
-// sync database before starting server
+// sync database before starting server// dev
 if (process.env.SYNC === 'true') {
   db.sync()
     .then(() => Promise.resolve(coinDataUpdate()))
     .then(() => seedData.seed())
+    .catch(err => console.log(err));
+}
+
+// prod
+if (process.env.SYNCPROD === 'true') {
+  db.sync()
+    .then(() => Promise.resolve(coinDataUpdate()))
     .catch(err => console.log(err));
 }
 
