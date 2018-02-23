@@ -13,7 +13,8 @@ const coinDataUpdate = require('../cryptocompareUpdate/UpdateCoinDB');
 // app.use(express.static(path.join(__dirname, 'build')));
 
 // use for testing purposes
-app.use(require('body-parser').json());
+// dev
+// app.use(require('body-parser').json());
 
 app.use('/api', require('./routes/index'));
 
