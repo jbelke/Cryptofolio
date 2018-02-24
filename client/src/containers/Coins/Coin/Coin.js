@@ -23,7 +23,6 @@ class Coin extends Component {
   }
 
   render() {
-    console.log('render');
     const coinDescription = ReactHtmlParser(this.props.coinDetail.Description);
     return (
       <Aux>

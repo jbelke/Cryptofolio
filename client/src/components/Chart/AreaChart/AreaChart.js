@@ -36,9 +36,6 @@ class AreaChart extends Component {
     const chartUrl = `https://min-api.cryptocompare.com/data/histoday?fsym=${symbolIsActive}&tsym=USD&limit=7&e=CCCAGG`;
     const chartRequest = await axios.get(chartUrl);
     const chartData = await transformToChartData(chartRequest.data.Data);
-    // area is the ref to the Highchart object
-    const chart = this.area;
-    chart.Highcharts.setOptions({ lang: { thousandsSep: ',' } });
     this.setState({ chartData, coin: symbolIsActive });
   }
 
@@ -65,7 +62,7 @@ class AreaChart extends Component {
 
     const areaConfig = {
       title: {
-        text: this.props.title,
+        text: `${this.props.title} ($)`,
       },
       yAxis: {
         title: {
@@ -117,6 +114,11 @@ class AreaChart extends Component {
             },
             dataLabels: {
               enabled: false,
+            },
+            yAxis: {
+              title: {
+                text: null,
+              },
             },
           },
         }],

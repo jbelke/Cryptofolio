@@ -5,24 +5,32 @@ import PropTypes from 'prop-types';
 
 class PieChart extends Component {
   componentDidMount() {
-    this.pie.Highcharts.setOptions({ lang: { thousandsSep: ',' } });
+    if (this.pie) {
+      // update chart to show ',' in total amount
+      this.pie.Highcharts.setOptions({ lang: { thousandsSep: ',' } });
+    }
   }
 
   shouldComponentUpdate(nextProps) {
-    if (nextProps.pieData.length === 0 ||
-      Object.keys(nextProps.marketValue).length === 0) {
+    if (nextProps.pieData.length === 0) {
       return false;
     }
     if (nextProps.marketValue === this.props.marketValue) {
       return false;
     }
+    if (Object.keys(nextProps.marketValue).length === 0) {
+      return false;
+    }
+
     return true;
   }
 
   render() {
-    let pieData = 0;
-    // update amount to the current data
-    if (this.props.pieData) {
+    let chart = (
+      <div><p>No Data Available.  Please Add a Transaction</p></div>
+    );
+    // update amount to the current data and create chart once all data is available
+    if (this.props.pieData.length > 0 && Object.keys(this.props.marketValue).length > 0) {
       const pieFormattedData = [];
       this.props.pieData.forEach((coin) => {
         // dont return coin with 0 value; Format to fit chart
@@ -30,65 +38,66 @@ class PieChart extends Component {
         if (coinAmount === 0) {
           return;
         }
-        const currentMarketValue = (this.props.marketValue[name].USD * coinAmount);
+        const currentMarketValue = (this.props.marketValue[name].USD * coinAmount).toFixed(2);
 
         pieFormattedData.push([name, currentMarketValue * 1]);
       });
 
-      pieData = pieFormattedData;
+      // create chart here
+      const pieConfig = {
+        title: {
+          text: 'Portfolio Breakdown',
+        },
+        credits: false,
+        tooltip: {
+          pointFormat: '{series.name}: <b>$ {point.y:,1f}</b><br/><b>{point.percentage:.1f}%</b>',
+        },
+        loading: {
+          hideDuration: 1000,
+          showDuration: 1000,
+        },
+        thousandsSep: ',',
+        series: [{
+          type: 'pie',
+          name: 'Asset',
+          allowPointSelect: true,
+          data: pieFormattedData,
+          // associated with the chart data order
+          keys: ['name', 'y', 'sliced'],
+          dataLabels: {
+            enabled: true,
+            format: '<b>{point.percentage:.1f}%</b>',
+            distance: -30,
+            filter: {
+              property: 'percentage',
+              operator: '>',
+              value: 5,
+            },
+          },
+          yAxis: 1,
+          showInLegend: true,
+        }],
+        responsive: {
+          rules: [{
+            condition: {
+              maxWidth: 500,
+            },
+            chartOptions: {
+              navigator: {
+                enabled: false,
+              },
+              dataLabels: {
+                enabled: false,
+              },
+            },
+          }],
+        },
+      };
+
+      chart = <ReactHighChart config={pieConfig} ref={(c) => { this.pie = c; }} />;
     }
 
-    const pieConfig = {
-      title: {
-        text: 'Portfolio Breakdown',
-      },
-      credits: false,
-      tooltip: {
-        pointFormat: '{series.name}: <b>$ {point.y:,1f}</b><br/><b>{point.percentage:.1f}%</b>',
-      },
-      loading: {
-        hideDuration: 1000,
-        showDuration: 1000,
-      },
-      thousandsSep: ',',
-      series: [{
-        type: 'pie',
-        name: 'Asset',
-        allowPointSelect: true,
-        data: pieData,
-        // associated with the chart data order
-        keys: ['name', 'y', 'sliced'],
-        dataLabels: {
-          enabled: true,
-          format: '<b>{point.percentage:.1f}%</b>',
-          distance: -30,
-          filter: {
-            property: 'percentage',
-            operator: '>',
-            value: 5,
-          },
-        },
-        yAxis: 1,
-        showInLegend: true,
-      }],
-      responsive: {
-        rules: [{
-          condition: {
-            maxWidth: 500,
-          },
-          chartOptions: {
-            navigator: {
-              enabled: false,
-            },
-            dataLabels: {
-              enabled: false,
-            },
-          },
-        }],
-      },
-    };
-
-    return <ReactHighChart config={pieConfig} ref={(c) => { this.pie = c; }} />;
+    return chart;
   }
 }
 

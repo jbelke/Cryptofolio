@@ -36,6 +36,8 @@ export const getCoinSnapShot = (symbol) => {
 
   return async (dispatch) => {
     const request = await axios.get(url);
+    // pass symbol to identify which the summary belongs to
+    request.data.DISPLAY.symbol = symbol;
 
     dispatch({
       type: actionTypes.GET_COIN_CURR_SUMMARY,

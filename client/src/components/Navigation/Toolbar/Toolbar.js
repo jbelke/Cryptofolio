@@ -67,7 +67,7 @@ class Toolbar extends Component {
           address="/coins"
           as={Menu.Item}
           minWidth={768}
-          name="coin"
+          name="coins"
           active={activeItem === 'coins'}
           onClick={this.handleItemClick}
         />
@@ -107,8 +107,8 @@ class Toolbar extends Component {
               as={Menu.Item}
               minWidth={768}
               position="right"
-              name="signin"
-              active={activeItem === 'signin'}
+              name="sign in"
+              active={activeItem === 'sign in'}
               onClick={this.handleItemClick}
             />
         }

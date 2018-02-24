@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Segment } from 'semantic-ui-react';
+import { Container, Segment, Message } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import TransactionForm from './TransactionForm/TransactionForm';
@@ -23,9 +23,17 @@ class Portfolio extends Component {
   }
 
   render() {
+    let summary = (
+      <Container textAlign="center" >
+        <Message>No Data to analyze!</Message>
+      </Container>
+    );
+    if (this.props.transactionList.length > 0) {
+      summary = <PortfolioSummary />;
+    }
     return (
       <Aux>
-        <PortfolioSummary />
+        {summary}
         <Container>
           <TransactionForm firebaseUID={this.props.firebaseUID} />
         </Container>

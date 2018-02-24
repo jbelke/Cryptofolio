@@ -4,8 +4,12 @@ import classes from './Footer.scss';
 
 const footer = () => (
   <footer className={classes.Footer}>
-    <div >
-      <p><Icon inverted color="yellow" name="bitcoin" size="large" />Made by TT 2018</p>
+    <div>
+      <p>
+        <a target="_blank" rel="noopener noreferrer" href="https://github.com/tomtrasmontero/Cryptofolio">
+          <Icon inverted name="github" size="big" />Made by TT 2018
+        </a>
+      </p>
     </div>
   </footer>
 );

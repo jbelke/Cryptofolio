@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { Segment, Grid, Responsive, Statistic, Divider, Header, Icon } from 'semantic-ui-react';
 import * as actions from '../../../store/actions/index';
 import SearchCoins from '../../Search/Search';
@@ -26,19 +27,23 @@ class CoinExplorer extends Component {
   render() {
     const { OPEN24HOUR, HIGH24HOUR, LOW24HOUR } = this.props.coinSummary;
     let summary = null;
-    // let detail = null;
 
-    if (Object.keys(this.props.coinSummary).length !== 0) {
+    if (Object.keys(this.props.coinSummary).length > 0) {
       summary = (
         <Aux>
           <Grid.Row>
             <Statistic.Group as={Grid} container columns={3} size="mini" >
 
-              <Grid.Column mobile={2} verticalAlign="middle" textAlign="center" >
-                <Icon name="info circle" size="large" />
+              <Grid.Column mobile={4} verticalAlign="middle" textAlign="center" >
+                <Link to={`/coins/detail/${this.props.coinSummary.symbol}`} >
+                  <Icon.Group size="huge">
+                    <Icon name="file text outline" />
+                    <Icon corner name="info" />
+                  </Icon.Group>
+                </Link>
               </Grid.Column>
 
-              <Grid.Column mobile={14}>
+              <Grid.Column mobile={12}>
                 <Statistic>
                   <Statistic.Value text >
                     {OPEN24HOUR}
@@ -103,6 +108,7 @@ CoinExplorer.propTypes = {
     OPEN24HOUR: PropTypes.string,
     HIGH24HOUR: PropTypes.string,
     LOW24HOUR: PropTypes.string,
+    symbol: PropTypes.string,
   }).isRequired,
   clearCoinSummary: PropTypes.func.isRequired,
 };

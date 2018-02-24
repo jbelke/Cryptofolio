@@ -6,7 +6,11 @@ import * as actions from '../../../store/actions/index';
 
 class TransactionForm extends Component {
   state = {
-    error: null,
+    error: {},
+  }
+
+  componentDidMount() {
+    this.props.getList();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -20,6 +24,20 @@ class TransactionForm extends Component {
     await this.props.addTransaction(data);
     this.props.reset();
   }
+
+  searchCoin = (symbol) => {
+    let doesCoinExist = false;
+    const match = this.props.list.filter((coin) => {
+      const matchName = coin.name.toUpperCase().includes(symbol.toUpperCase());
+      return matchName;
+    });
+
+    if (match.length > 0) {
+      doesCoinExist = true;
+    }
+
+    return doesCoinExist;
+  };
 
   resetForm = () => {
     this.props.reset();
@@ -49,16 +67,15 @@ class TransactionForm extends Component {
 
   render() {
     let errorMessage = null;
-    if (this.state.error) {
+    if (Object.keys(this.state.error).length > 0) {
       errorMessage = (
-        <Segment
-          inverted
+        <Message
+          inverted="true"
           color="red"
           size="small"
-          textAlign="center"
         >
           {this.state.error}
-        </Segment>
+        </Message>
       );
     }
 
@@ -66,7 +83,7 @@ class TransactionForm extends Component {
     const buyForm = (
       <Form onSubmit={handleSubmit(this.addTransactionHandler)}>
         <Form.Group widths="equal">
-          <Field name="coinName" component={this.renderField} type="input" label="Coin" />
+          <Field name="coinName" component={this.renderField} type="input" label="Symbol" />
           <Field name="buyPrice" component={this.renderField} type="number" label="Price" />
           <Field name="coinAmount" component={this.renderField} type="number" label="Amount" />
           <Field
@@ -94,7 +111,7 @@ class TransactionForm extends Component {
     const sellForm = (
       <Form onSubmit={handleSubmit(this.addTransactionHandler)}>
         <Form.Group widths="equal">
-          <Field name="coinName" component={this.renderField} type="input" label="Coin" />
+          <Field name="coinName" component={this.renderField} type="input" label="Symbol" />
           <Field name="sellPrice" component={this.renderField} type="number" label="Price" />
           <Field name="coinAmount" component={this.renderField} type="number" label="Amount" />
           <Field
@@ -150,6 +167,7 @@ TransactionForm.propTypes = {
   ...propTypes,
 };
 
+
 // validation front end.
 const validate = (values) => {
   const errors = {};
@@ -184,13 +202,16 @@ const validate = (values) => {
   return errors;
 };
 
+
 const mapStateToProps = state => ({
   authError: state.transaction.error,
   isAuthenticated: state.auth.authenticated,
+  list: state.coin.coinSearchList,
 });
 
 const mapDispatchToProps = dispatch => ({
   addTransaction: values => dispatch(actions.addTransaction(values)),
+  getList: () => dispatch(actions.getCoinList()),
 });
 
 export default reduxForm({

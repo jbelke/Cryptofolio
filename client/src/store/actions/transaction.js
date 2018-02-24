@@ -15,7 +15,7 @@ export const addTransaction = (data) => {
         pieData,
       });
     } catch (err) {
-      const error = 'Unable to Process Transaction.  Discontinued/No Info';
+      const error = 'Unable to Process Transaction.  Discontinued/No Info on Crypto';
       dispatch({
         type: actionTypes.FAILED_TRANSACTION,
         payload: error,
