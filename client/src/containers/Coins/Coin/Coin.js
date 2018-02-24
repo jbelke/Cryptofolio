@@ -16,11 +16,7 @@ class Coin extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    console.log(nextProps);
-    if (nextProps.chartData.length === 0) {
-      return false;
-    }
-    if (Object.keys(nextProps.coinDetail).length === 0) {
+    if (nextProps.chartData.length === 0 || Object.keys(nextProps.coinDetail).length === 0) {
       return false;
     }
     return true;

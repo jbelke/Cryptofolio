@@ -3,7 +3,6 @@ import { Field, reduxForm, propTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import { Form, Message, Button, Segment, Tab, Header, Container } from 'semantic-ui-react';
 import * as actions from '../../../store/actions/index';
-import classes from './TransactionForm.scss';
 
 class TransactionForm extends Component {
   state = {
@@ -41,11 +40,10 @@ class TransactionForm extends Component {
       />
       {
         touched && (
-          (error && <Message error content={error} />)
-          || (warning && <Message warning content={warning} />)
+          (error && <Message color="red" size="mini" content={error} />)
+          || (warning && <Message color="yellow" size="mini" content={warning} />)
         )
       }
-      <Message error content={this.props.errorMessage} />
     </Form.Field>
   );
 
@@ -87,8 +85,8 @@ class TransactionForm extends Component {
           />
         </Form.Group>
         <Container textAlign="center">
-          <Button positive type="submit" className={classes.Button} >Add Buy Transaction</Button>
-          {!error ? <Message error header={error} /> : null}
+          <Button positive type="submit" >Add Buy Transaction</Button>
+          {!error ? null : <Message color="red" size="mini" header={error} />}
         </Container>
       </Form>
     );
@@ -161,6 +159,18 @@ const validate = (values) => {
 
   if (!values.buyPrice) {
     errors.buyPrice = 'Please Enter the Price per Coin';
+  }
+
+  if (!values.date) {
+    errors.date = 'Please Enter a Date';
+  }
+
+  if (new Date(values.date) > new Date()) {
+    errors.date = 'Invalid Date';
+  }
+
+  if (!values.time) {
+    errors.time = 'Please Enter the Time';
   }
 
   if (!values.sellPrice) {

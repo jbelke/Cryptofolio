@@ -1,11 +1,10 @@
 const router = require('express').Router();
 const NewsAPI = require('newsapi');
-// const key = require('../env/development').NEWS_API;
+const key = require('../env/development').NEWS_API;
 // prod
-const key = process.env.NEWS_API;
+// const key = process.env.NEWS_API;
 
 const newsapi = new NewsAPI(key);
-
 router.get('/topHeadlines', (req, res, next) => {
   const options = {
     q: req.body.coinName || 'crypto',
@@ -14,7 +13,9 @@ router.get('/topHeadlines', (req, res, next) => {
   };
 
   newsapi.v2.topHeadlines(options)
-    .then(response => res.send(response))
+    .then((response) => {
+      res.send(response);
+    })
     .catch(next);
 });
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Container, Header, Segment, Divider, Responsive } from 'semantic-ui-react';
+import { Container, Header, Divider, Responsive } from 'semantic-ui-react';
 import classes from './HomePage.scss';
 import * as actions from '../../store/actions/index';
 import CurrentNews from '../../components/News/News';
@@ -33,10 +33,10 @@ class HomePage extends Component {
             data={this.props.globalMarketData}
             minWidth={768}
           />
-          <Segment inverted>
-            <Header as="h1" textAlign="center" inverted color="teal">News</Header>
-          </Segment>
         </Container>
+        <div className={classes.NewsHeader}>
+          <Header as="h1" textAlign="center" inverted color="grey">News</Header>
+        </div>
         <Divider className={classes.Divider} />
         <Container fluid className={classes.HomePage}>
           <CurrentNews currentTopTenNews={this.props.currentTopTenNews} />

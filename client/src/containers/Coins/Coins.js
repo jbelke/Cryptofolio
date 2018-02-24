@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Segment, Divider, Header, Button, Responsive, Loader, Dimmer } from 'semantic-ui-react';
+import { Container, Divider, Header, Button, Responsive, Loader, Dimmer } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import TopCoinsList from '../../components/TopCoinsList/TopCoinsList';
@@ -64,18 +64,19 @@ class Coins extends Component {
 
         <Divider />
 
-        <Segment>
+        <Container>
           <Header as="h2" textAlign="center" >Top Coins</Header>
           {coins}
-        </Segment>
-        <div>
+        </Container>
+        <br />
+        <Container>
           <Button
             onClick={this.loadMoreHandler}
             fluid
             icon="chevron down"
             size="big"
           />
-        </div>
+        </Container>
       </Container>
     );
   }

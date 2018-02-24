@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Field, reduxForm, propTypes, SubmissionError } from 'redux-form';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { Container, Form, Message } from 'semantic-ui-react';
 import * as actions from '../../../store/actions/index';
 
 class LogIn extends Component {
@@ -19,37 +20,53 @@ class LogIn extends Component {
   }
 
   renderField = ({
-    input, label, type, meta: { touched, error, warning },
+    input, label, placeholder, type, meta: { touched, error, warning },
   }) => (
-    <div>
-      <input {...input} placeholder={label} type={type} />
+    <Form.Field>
+      <Form.Input
+        {...input}
+        placeholder={placeholder}
+        type={type}
+        label={label}
+        required
+      />
       {
         touched && (
-          (error && <span>{error}</span>) || (warning && <span>{warning}</span>)
+          (error && <Message color="red" size="mini">{error}</Message>)
+          || (warning && <Message color="yellow" size="mini">{warning}</Message>)
         )
       }
-      {this.props.errorMessage}
-    </div>
+    </Form.Field>
   );
 
   render() {
-    const { handleSubmit, error } = this.props;
+    const { handleSubmit, error: serverError } = this.props;
 
     return (
-      <div>
-        <form onSubmit={handleSubmit(this.handleLogin)}>
-          <div>
-            <p>Log In</p>
-            <Field name="email" component={this.renderField} type="email" label="E-Mail" />
-          </div>
-          <div>
-            <Field name="password" component={this.renderField} type="password" label="Password" />
-          </div>
-          <button type="submit" onClick={() => console.log(this.props)}>Log In</button>
-          <span>{error}</span>
-          <div>authenticated: {this.props.isAuthenticated.toString()}</div>
-        </form>
-      </div>
+      <Container>
+        <Form onSubmit={handleSubmit(this.handleLogin)}>
+          <Field
+            name="email"
+            component={this.renderField}
+            type="email"
+            label="E-Mail"
+            placeholder="Email@sample.com"
+          />
+          <Field
+            name="password"
+            component={this.renderField}
+            type="password"
+            label="Password"
+            placeholder="Password"
+          />
+          <Form.Button positive disabled={this.invalid} type="submit" >Log In</Form.Button>
+          { !serverError ?
+            null
+            :
+            <Message color="red" size="mini" >{serverError}</Message>
+          }
+        </Form>
+      </Container>
     );
   }
 }

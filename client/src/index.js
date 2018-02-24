@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import { compose, applyMiddleware } from 'redux';
 import { BrowserRouter } from 'react-router-dom';
 import { createStore, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import './index.css';
 import App from './App';
-// import registerServiceWorker from './registerServiceWorker';
+import registerServiceWorker from './registerServiceWorker';
 import rootReducer from './store/reducers/index';
 
 // track actions in development remove in Dev
@@ -28,4 +27,4 @@ const app = (
 );
 
 ReactDOM.render(app, document.getElementById('root'));
-// registerServiceWorker();
+registerServiceWorker();

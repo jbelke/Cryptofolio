@@ -18,10 +18,10 @@ class CoinSummary extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (nextProps.coinData && this.state.currentData) {
-      return true;
+    if (Object.keys(nextProps.coinData).length === 0) {
+      return false;
     }
-    return false;
+    return true;
   }
 
   componentWillUnmount() {

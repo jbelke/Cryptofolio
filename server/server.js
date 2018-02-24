@@ -8,26 +8,26 @@ const seedData = require('./seed');
 const coinDataUpdate = require('../cryptocompareUpdate/UpdateCoinDB');
 
 // serve the index.js create react app - change in production.  should point to build
-// app.use(express.static(path.join(__dirname, '../client')));
+app.use(express.static(path.join(__dirname, '../client')));
 // prod
-app.use(express.static(path.join(__dirname, '../client/build')));
+// app.use(express.static(path.join(__dirname, '../client/build')));
 
 // use for testing purposes
 // dev
-// app.use(require('body-parser').json());
+app.use(require('body-parser').json());
+
+// dev
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, '../client/public/index.html')));
+// prod
+// app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
 app.use('/api', require('./routes/index'));
 
-// dev
-// app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../client/public/index.html')));
-// prod
-app.use('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
-
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
-// app.get('*', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, './public/index.html'));
-// });
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../public/index.html'));
+});
 
 // production
 // app.get('*', (req, res) => {
