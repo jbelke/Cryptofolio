@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Container, Header, Divider, Responsive } from 'semantic-ui-react';
+import { Container, Header, Divider, Responsive, Loader } from 'semantic-ui-react';
 import classes from './HomePage.scss';
 import * as actions from '../../store/actions/index';
 import CurrentNews from '../../components/News/News';
@@ -25,6 +25,10 @@ class HomePage extends Component {
   }
 
   render() {
+    let news = <Loader active />;
+    if (this.props.currentTopTenNews.length > 0) {
+      news = <CurrentNews currentTopTenNews={this.props.currentTopTenNews} />;
+    }
     return (
       <Aux>
         <Container fluid>
@@ -38,8 +42,9 @@ class HomePage extends Component {
           <Header as="h1" textAlign="center" inverted color="grey">News</Header>
         </div>
         <Divider className={classes.Divider} />
+        <br />
         <Container fluid className={classes.HomePage}>
-          <CurrentNews currentTopTenNews={this.props.currentTopTenNews} />
+          { news }
         </Container>
       </Aux>
     );
