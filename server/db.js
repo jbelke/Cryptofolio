@@ -81,7 +81,11 @@ Coins.hasMany(UserTransactions);
 
 // sync db
 const sync = () => {
-  const syncDatabase = db.sync({ force: true });
+  let prodCheck = true;
+  if (process.env.SYNCPROD) {
+    prodCheck = false;
+  }
+  const syncDatabase = db.sync({ force: prodCheck });
   return syncDatabase;
 };
 

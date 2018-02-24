@@ -4,31 +4,33 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 8080;
 const db = require('./db');
+const seedData = require('./seed');
+const coinDataUpdate = require('../cryptocompareUpdate/UpdateCoinDB');
 
-// prod
-app.use(express.static(path.join(__dirname, '../client/build')));
+// serve the index.js create react app
+app.use(express.static(path.join(__dirname, '../client')));
 
 // use for testing purposes
-// dev
 app.use(require('body-parser').json());
 
-// prod
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, '../client/public/index.html')));
 
 app.use('/api', require('./routes/index'));
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {
-  const index = path.join(__dirname, '../client/build/index.html');
-  res.sendFile(index);
+  res.sendFile(path.resolve(__dirname, '../public/index.html'));
 });
 
-// prod
-if (process.env.SYNCPROD === 'true') {
+// sync database before starting server// dev
+if (process.env.SYNC === 'true') {
   db.sync()
+    .then(() => Promise.resolve(coinDataUpdate()))
+    .then(() => seedData.seed())
     .catch(err => console.log(err));
 }
+
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 

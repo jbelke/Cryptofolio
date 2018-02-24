@@ -61,5 +61,8 @@ const updateCoinDB = () => {
 };
 
 // updateCoinDB();
+if (process.env.SYNCPROD) {
+  updateCoinDB();
+}
 
 module.exports = updateCoinDB;
