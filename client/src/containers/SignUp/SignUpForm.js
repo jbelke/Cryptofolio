@@ -28,6 +28,8 @@ const signUpForm = () => {
 
   return (
     <Container textAlign="center" className={classes.Form}>
+      <p>Use below credentials if you do not want to sign up!</p>
+      <p>email: test1@test.com, pass: 123123</p>
       <Tab
         panes={panes}
         menu={{

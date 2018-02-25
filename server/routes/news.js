@@ -1,10 +1,6 @@
 const router = require('express').Router();
 const NewsAPI = require('newsapi');
-let key = require('../env/development').NEWS_API;
-
-if (process.env.SYNCPROD) {
-  key = process.env.NEWS_API;
-}
+const key = process.env.SYNCPROD ? process.env.NEWS_API : require('../env/development').NEWS_API;
 
 const newsapi = new NewsAPI(key);
 router.get('/topHeadlines', (req, res, next) => {

@@ -13,7 +13,6 @@ class TransactionList extends Component {
     }
   }
 
-
   render() {
     let list = <Table.Row><Table.Cell colSpan="16" textAlign="center">Add a Transaction</Table.Cell></Table.Row>;
 

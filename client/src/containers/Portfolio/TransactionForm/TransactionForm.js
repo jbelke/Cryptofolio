@@ -20,8 +20,11 @@ class TransactionForm extends Component {
   }
 
   addTransactionHandler = async (values) => {
+    // update marketValue on first transaction
+    await this.props.getMarketValue([{ coinName: values.coinName }]);
     const data = { ...values, firebaseUID: this.props.firebaseUID };
     await this.props.addTransaction(data);
+
     this.props.reset();
   }
 
@@ -212,6 +215,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   addTransaction: values => dispatch(actions.addTransaction(values)),
   getList: () => dispatch(actions.getCoinList()),
+  getMarketValue: symbols => dispatch(actions.getMarketValues(symbols)),
 });
 
 export default reduxForm({

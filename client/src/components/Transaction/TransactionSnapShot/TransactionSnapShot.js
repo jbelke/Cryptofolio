@@ -23,9 +23,9 @@ class TransactionSnapShot extends Component {
         totalPortfolioValue += (currentValue * trx.coinAmount);
 
         if (trx.buyPrice === null) {
-          totalCost -= trx.sellPrice;
+          totalCost -= (trx.sellPrice * trx.coinAmount);
         } else {
-          totalCost += trx.buyPrice;
+          totalCost += (trx.buyPrice * trx.coinAmount);
         }
       });
       this.setState({
@@ -42,20 +42,20 @@ class TransactionSnapShot extends Component {
     return (
       <List as={Container}>
         <List.Item>
-          <List.Header>${numFormat(totalPortfolioValue.toFixed(2))}</List.Header>
           Current Market Value
+          <List.Header>${numFormat(totalPortfolioValue.toFixed(2))}</List.Header>
         </List.Item>
         <List.Item>
-          <List.Header>${numFormat(totalCost.toFixed(2))}</List.Header>
           Total Cost
+          <List.Header>${numFormat(totalCost.toFixed(2))}</List.Header>
         </List.Item>
         <List.Item>
-          <List.Header>${numFormat(profitLoss.toFixed(2))}</List.Header>
           Profit/Loss USD
+          <List.Header>${numFormat(profitLoss.toFixed(2))}</List.Header>
         </List.Item>
         <List.Item>
-          <List.Header>{numFormat(profitLossPer.toFixed(2))}%</List.Header>
           Profit/Loss Perct.
+          <List.Header>{numFormat(profitLossPer.toFixed(2))}%</List.Header>
         </List.Item>
       </List>
     );
@@ -71,5 +71,6 @@ const mapStateToProps = state => ({
   transactions: state.transaction.transactions,
   marketValue: state.coin.coinMarketValue,
 });
+
 
 export default connect(mapStateToProps)(TransactionSnapShot);

@@ -1,11 +1,7 @@
 const router = require('express').Router();
 const axios = require('axios');
-let key = require('../env/development').FIREBASE_API;
+const key = process.env.SYNCPROD ? process.env.FIREBASE_API : require('../env/development').FIREBASE_API;
 const db = require('../db').models;
-
-if (process.env.SYNCPROD) {
-  key = process.env.FIREBASE_API;
-}
 
 router.post('/signup', (req, res, next) => {
   const url = `https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${key}`;
