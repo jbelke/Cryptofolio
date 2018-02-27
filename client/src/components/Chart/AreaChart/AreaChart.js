@@ -14,7 +14,6 @@ class AreaChart extends Component {
     this.loadChart(this.props.coin);
   }
 
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.coin !== this.state.coin) {
       this.setState({ coin: nextProps.coin });

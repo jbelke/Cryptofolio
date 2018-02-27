@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Icon, Responsive } from 'semantic-ui-react';
+import { Table, Icon, Responsive, Button, Confirm } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { numFormat } from '../../store/utility';
@@ -7,11 +7,26 @@ import * as actions from '../../store/actions/index';
 import ImageLoader from '../ImageLoader/ImageLoader';
 
 class TransactionList extends Component {
+  state = {
+    confirmShow: false,
+    id: '',
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.transactions !== this.props.transactions) {
       this.props.getMarketValue(nextProps.transactions);
     }
   }
+
+  showConfirm(trxId) {
+    this.setState({ confirmShow: true, id: trxId });
+  }
+
+  handleConfirm = () => {
+    this.props.deleteTransaction(this.state.id);
+    this.setState({ confirmShow: false, id: '' });
+  }
+  handleCancel = () => this.setState({ confirmShow: false, id: '' })
 
   render() {
     let list = <Table.Row><Table.Cell colSpan="16" textAlign="center">Add a Transaction</Table.Cell></Table.Row>;
@@ -46,6 +61,20 @@ class TransactionList extends Component {
 
         return (
           <Table.Row key={transaction.id} >
+            <Table.Cell>
+              <Button
+                icon="delete"
+                circular
+                onClick={() => this.showConfirm(transaction.id)}
+              />
+              <Confirm
+                open={this.state.confirmShow}
+                onCancel={this.handleCancel}
+                onConfirm={this.handleConfirm}
+                dimmer="blurring"
+                content="Delete this Transaction?"
+              />
+            </Table.Cell>
             <Table.Cell>{image}{transaction.coin.cryptoCoinFullName}</Table.Cell>
             <Responsive as={Table.Cell} minWidth={768}>{date}</Responsive>
             <Responsive as={Table.Cell} minWidth={768}>{type}</Responsive>
@@ -76,9 +105,10 @@ class TransactionList extends Component {
     }
 
     return (
-      <Table celled size="small" justified="true" compact selectable unstackable>
+      <Table celled size="small" justified="true" compact selectable unstackable textAlign="center">
         <Table.Header inverted="true" fullWidth>
           <Table.Row>
+            <Table.HeaderCell>Delete</Table.HeaderCell>
             <Table.HeaderCell>Name</Table.HeaderCell>
             <Responsive as={Table.HeaderCell} minWidth={768}>Date</Responsive>
             <Responsive as={Table.HeaderCell} minWidth={768}>Type</Responsive>
@@ -103,6 +133,7 @@ TransactionList.propTypes = {
   transactions: PropTypes.arrayOf(PropTypes.object).isRequired,
   marketValues: PropTypes.shape(),
   getMarketValue: PropTypes.func.isRequired,
+  deleteTransaction: PropTypes.func.isRequired,
 };
 
 TransactionList.defaultProps = {
@@ -111,10 +142,12 @@ TransactionList.defaultProps = {
 
 const mapStateToProps = state => ({
   marketValues: state.coin.coinMarketValue,
+  authFirebaseUID: state.auth.firebaseUID,
 });
 
 const mapDispatchToProps = dispatch => ({
   getMarketValue: symbols => dispatch(actions.getMarketValues(symbols)),
+  deleteTransaction: trxId => dispatch(actions.deleteTransaction(trxId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TransactionList);

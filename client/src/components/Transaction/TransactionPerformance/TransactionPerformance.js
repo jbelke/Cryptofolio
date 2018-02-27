@@ -110,7 +110,10 @@ class TransactionPerformance extends Component {
 }
 
 TransactionPerformance.propTypes = {
-  marketValue: PropTypes.objectOf(PropTypes.object).isRequired,
+  marketValue: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]).isRequired,
   transactions: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 

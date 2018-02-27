@@ -21,7 +21,6 @@ class TransactionForm extends Component {
 
   addTransactionHandler = async (values) => {
     // update marketValue on first transaction
-    await this.props.getMarketValue([{ coinName: values.coinName }]);
     const data = { ...values, firebaseUID: this.props.firebaseUID };
     await this.props.addTransaction(data);
 

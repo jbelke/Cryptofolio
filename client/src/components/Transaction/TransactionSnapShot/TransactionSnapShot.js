@@ -63,7 +63,10 @@ class TransactionSnapShot extends Component {
 }
 
 TransactionSnapShot.propTypes = {
-  marketValue: PropTypes.objectOf(PropTypes.object).isRequired,
+  marketValue: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]).isRequired,
   transactions: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 

@@ -30,7 +30,8 @@ class PieChart extends Component {
       <div><p>No Data Available.  Please Add a Transaction</p></div>
     );
     // update amount to the current data and create chart once all data is available
-    if (this.props.pieData.length > 0 && Object.keys(this.props.marketValue).length > 0) {
+    if (this.props.pieData.length > 0 && Object.keys(this.props.marketValue).length > 0 &&
+        this.props.pieData.length === Object.keys(this.props.marketValue).length) {
       const pieFormattedData = [];
       this.props.pieData.forEach((coin) => {
         // dont return coin with 0 value; Format to fit chart

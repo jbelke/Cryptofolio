@@ -67,12 +67,26 @@ router.post('/create', (req, res, next) => {
 
 // delete transaction
 router.delete('/:id', (req, res, next) => {
-  db.UserTransactions.destroy({
+  const findUserId = db.UserTransactions.findOne({
+    where: { id: req.params.id }, raw: true,
+  });
+  const destroyTrx = db.UserTransactions.destroy({
     where: {
       id: req.params.id,
     },
-  })
-    .then(() => res.sendStatus(200))
+  });
+
+  Promise.all([findUserId, destroyTrx])
+    .then((result) => {
+      db.UserTransactions.findAll({
+        where: { userId: result[0].userId },
+        include: [{
+          model: db.Coins,
+        }],
+      })
+        .then(transactions => res.send(transactions))
+        .catch(next);
+    })
     .catch(next);
 });
 

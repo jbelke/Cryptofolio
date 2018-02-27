@@ -24,4 +24,5 @@ export {
   addTransaction,
   getTransactions,
   clearTransactions,
+  deleteTransaction,
 } from './transaction';

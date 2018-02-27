@@ -60,11 +60,11 @@ const UserTransactions = db.define('transactions', {
     allowNull: false,
   },
   buyPrice: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.REAL,
     allowNull: true,
   },
   sellPrice: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.REAL,
     allowNull: true,
   },
   transactionDate: {

@@ -20,28 +20,16 @@ class App extends Component {
   }
 
   render() {
-    let routes = (
+    const routes = (
       <Switch>
         <Route path="/home" exact component={HomePage} />
         <Route path="/coins" exact component={Coins} />
         <Route path="/signup" exact component={SignUpForm} />
+        <Route path="/portfolio" exact component={Portfolio} />
         <Route path="/coins/detail/:coinSymbol" component={Coin} />
         <Redirect to="/home" />
       </Switch>
     );
-
-    if (this.props.authenticated) {
-      routes = (
-        <Switch>
-          <Route path="/home" exact component={HomePage} />
-          <Route path="/coins" exact component={Coins} />
-          <Route path="/signup" exact component={SignUpForm} />
-          <Route path="/portfolio" exact component={Portfolio} />
-          <Route path="/coins/detail/:coinSymbol" component={Coin} />
-          <Redirect to="/home" />
-        </Switch>
-      );
-    }
 
     return (
       <Aux>

@@ -37,6 +37,27 @@ export const getTransactions = (firebaseUID) => {
   };
 };
 
+export const deleteTransaction = (transactionId) => {
+  const url = `/api/transactions/${transactionId}`;
+  return async (dispatch) => {
+    try {
+      // use config data for axios to pass "request body" as config.data
+      const request = await axios.delete(url);
+      const pieData = transformToPieData(request.data);
+      dispatch({
+        type: actionTypes.GET_TRANSACTIONS,
+        payload: request,
+        pieData,
+      });
+    } catch (err) {
+      const error = 'Unable to Process Transaction.';
+      dispatch({
+        type: actionTypes.FAILED_TRANSACTION,
+        payload: error,
+      });
+    }
+  };
+};
 
 export const clearTransactions = () => ({
   type: actionTypes.CLEAR_TRANSACTION,

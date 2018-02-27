@@ -34,6 +34,20 @@ class Toolbar extends Component {
 
   render() {
     const { activeItem } = this.state;
+    let authenticatedRoutes = null;
+    if (this.props.authenticated) {
+      authenticatedRoutes = (
+        <Responsive
+          address="/portfolio"
+          as={Menu.Item}
+          minWidth={768}
+          name="portfolio"
+          active={activeItem === 'portfolio'}
+          onClick={this.handleItemClick}
+        />
+      );
+    }
+
     const toolbar = (
       <Menu pointing secondary size="massive" className={classes.Toolbar} >
         {/* mobile toolbar */}
@@ -71,14 +85,9 @@ class Toolbar extends Component {
           active={activeItem === 'coins'}
           onClick={this.handleItemClick}
         />
-        <Responsive
-          address="/portfolio"
-          as={Menu.Item}
-          minWidth={768}
-          name="portfolio"
-          active={activeItem === 'portfolio'}
-          onClick={this.handleItemClick}
-        />
+
+        {authenticatedRoutes}
+
         <Responsive
           as={Menu.Item}
           minWidth={768}

@@ -60,5 +60,9 @@ const updateCoinDB = () => {
   });
 };
 
+if (process.env.SYNCPROD) {
+  Promise.resolve(updateCoinDB())
+    .then(() => console.log('coins have been updated'));
+}
 
 module.exports = updateCoinDB;

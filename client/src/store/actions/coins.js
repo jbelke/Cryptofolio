@@ -103,7 +103,6 @@ export const getMarketValues = (transactionData) => {
 
   return async (dispatch) => {
     const request = await axios.get(url);
-
     dispatch({
       type: actionTypes.GET_MARKET_VALUE,
       payload: request,

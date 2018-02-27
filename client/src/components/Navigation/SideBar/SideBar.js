@@ -45,27 +45,28 @@ const sidebarLeftOverlay = props => (
             Coins
         </Menu.Item>
 
-        <Menu.Item
-          name="portfolio"
-          as={Link}
-          to="/portfolio"
-          onClick={props.clicked}
-        >
-          <Icon name="bar chart" />
-            Portfolio
-        </Menu.Item>
-
         {props.isAuthenticated
           ?
-            <Menu.Item
-              name="logout"
-              as={Link}
-              to="/home"
-              onClick={props.logout}
-            >
-              <Icon name="sign out" />
-              Log Out
-            </Menu.Item>
+            <Aux>
+              <Menu.Item
+                name="portfolio"
+                as={Link}
+                to="/portfolio"
+                onClick={props.clicked}
+              >
+                <Icon name="bar chart" />
+                Portfolio
+              </Menu.Item>
+              <Menu.Item
+                name="logout"
+                as={Link}
+                to="/home"
+                onClick={props.logout}
+              >
+                <Icon name="sign out" />
+                  Log Out
+              </Menu.Item>
+            </Aux>
           :
             <Menu.Item
               name="signup"
