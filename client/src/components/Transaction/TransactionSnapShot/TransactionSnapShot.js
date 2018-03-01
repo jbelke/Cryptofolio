@@ -57,6 +57,10 @@ class TransactionSnapShot extends Component {
           Profit/Loss Perct.
           <List.Header>{numFormat(profitLossPer.toFixed(2))}%</List.Header>
         </List.Item>
+        <List.Item>
+          Realized Profit/Loss
+          <List.Header>{numFormat(profitLossPer.toFixed(2))}%</List.Header>
+        </List.Item>
       </List>
     );
   }
