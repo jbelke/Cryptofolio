@@ -8,6 +8,7 @@ import {
 } from 'semantic-ui-react';
 import Aux from '../../../hoc/Aux/Aux';
 import Backdrop from '../../UI/Backdrop/Backdrop';
+import classes from './SideBar.scss';
 
 const sidebarLeftOverlay = props => (
   <Aux>
@@ -81,7 +82,7 @@ const sidebarLeftOverlay = props => (
 
       </Sidebar>
 
-      <Sidebar.Pusher>
+      <Sidebar.Pusher className={classes.Sidebar} >
         {props.children}
       </Sidebar.Pusher>
 

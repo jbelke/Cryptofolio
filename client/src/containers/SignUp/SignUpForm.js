@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Container, Tab } from 'semantic-ui-react';
+import { Container, Tab, Segment } from 'semantic-ui-react';
 import * as actions from '../../store/actions/index';
 import LogIn from './LogIn/Login';
 import SignUp from './SignUp/SignUp';
@@ -28,18 +28,20 @@ const signUpForm = () => {
 
   return (
     <Container textAlign="center" className={classes.Form}>
-      <p>Use below credentials if you do not want to sign up!</p>
-      <p>email: test1@test.com, pass: 123123</p>
-      <Tab
-        panes={panes}
-        menu={{
-          attached: true,
-          fluid: true,
-          widths: 2,
-          className: classes.MenuItem,
-          color: 'green',
-        }}
-      />
+      <Segment raised className={classes.Menu} >
+        <p>Use below credentials if you do not want to sign up!</p>
+        <p>email: test1@test.com, pass: 123123</p>
+        <Tab
+          panes={panes}
+          menu={{
+            attached: true,
+            widths: 2,
+            pointing: true,
+            className: classes.MenuItem,
+            color: 'green',
+          }}
+        />
+      </Segment>
     </Container>
   );
 };
