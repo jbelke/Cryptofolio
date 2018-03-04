@@ -19,6 +19,7 @@
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "newsapi": "^2.2.0",
+    "nodemailer": "^4.6.0",
     "pg": "^7.4.1",
     "pg-hstore": "^2.3.2",
     "react-infinite-scroll-component": "^3.0.2",

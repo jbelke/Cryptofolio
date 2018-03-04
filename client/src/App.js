@@ -12,7 +12,8 @@ import Coins from './containers/Coins/Coins';
 import Coin from './containers/Coins/Coin/Coin';
 import SignUpForm from './containers/SignUp/SignUpForm';
 import Portfolio from './containers/Portfolio/Portfolio';
-
+import About from './components/About/About';
+import Contact from './containers/Contact/Contact';
 
 class App extends Component {
   componentDidMount() {
@@ -26,6 +27,8 @@ class App extends Component {
         <Route path="/coins" exact component={Coins} />
         <Route path="/signup" exact component={SignUpForm} />
         <Route path="/portfolio" exact component={Portfolio} />
+        <Route path="/about" exact component={About} />
+        <Route path="/contact" exact component={Contact} />
         <Route path="/coins/detail/:coinSymbol" component={Coin} />
         <Redirect to="/home" />
       </Switch>

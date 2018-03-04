@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon, Grid, List } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import classes from './Footer.scss';
 
 const footer = () => (
@@ -8,8 +9,7 @@ const footer = () => (
       <Grid.Column computer={5} tablet={5}>
         <Grid.Row>
           <List celled>
-            <List.Item>About</List.Item>
-            <List.Item>Disclaimer</List.Item>
+            <List.Item><Link to="/about">About</Link></List.Item>
             <List.Item>Contact</List.Item>
           </List>
         </Grid.Row>
