@@ -21,13 +21,13 @@ router.get('/:firebaseUID', (req, res, next) => {
 router.post('/create', (req, res, next) => {
   const dateEST = new Date(`${req.body.date}T${req.body.time}:00`);
   const transactionDate = dateEST.toLocaleString('en-US', { timeZone: 'America/New_York' });
-
   Promise.all([
     utility.getCryptoCompareId(req.body.coinName),
     utility.getUserId(req.body.firebaseUID),
   ])
-    .then(([coinData, userData]) => {
+    .then((data) => {
       // save transaction to the database
+      const [coinData, userData] = data;
       const saveTrx = db.UserTransactions.create({
         coinName: coinData.symbol,
         coinAmount: req.body.coinAmount,
@@ -76,7 +76,7 @@ router.delete('/:id', (req, res, next) => {
     },
   });
 
-  Promise.all([findUserId, destroyTrx])
+  findUserId.then(result => Promise.all([result, destroyTrx]))
     .then((result) => {
       db.UserTransactions.findAll({
         where: { userId: result[0].userId },

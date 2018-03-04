@@ -209,6 +209,7 @@ const mapStateToProps = state => ({
   authError: state.transaction.error,
   isAuthenticated: state.auth.authenticated,
   list: state.coin.coinSearchList,
+  firebaseUID: state.auth.firebaseUID,
 });
 
 const mapDispatchToProps = dispatch => ({

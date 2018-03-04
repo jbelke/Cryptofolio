@@ -44,7 +44,7 @@ class TransactionList extends Component {
         && this.props.marketValues[transaction.coinName]) {
           currentValue = this.props.marketValues[transaction.coinName].USD;
         }
-        const totalMarketValue = (currentValue * transaction.coinAmount).toFixed(2);
+        const totalMarketValue = (currentValue * transaction.coinAmount).toFixed(6);
         let type = 'BUY';
         let price = transaction.buyPrice;
 
@@ -53,7 +53,7 @@ class TransactionList extends Component {
           price = transaction.sellPrice;
         }
         const initialcost = transaction.coinAmount * price;
-        const delta = (((totalMarketValue - initialcost) / initialcost) * 100).toFixed(2);
+        const delta = (((totalMarketValue - initialcost) / initialcost) * 100).toFixed(6);
         let statusIcon = <Icon name="long arrow down" size="large" color="red" />;
         if (delta > 0) {
           statusIcon = <Icon name="long arrow up" size="large" color="green" />;
@@ -69,6 +69,7 @@ class TransactionList extends Component {
               />
               <Confirm
                 open={this.state.confirmShow}
+                size="small"
                 onCancel={this.handleCancel}
                 onConfirm={this.handleConfirm}
                 dimmer="blurring"
@@ -85,17 +86,17 @@ class TransactionList extends Component {
             <Responsive as={Table.Cell} minWidth={768}>${numFormat(initialcost)}</Responsive>
 
             <Responsive as={Table.Cell} maxWidth={767}>
-              ${numFormat((totalMarketValue / 1000).toFixed(2))}K
+              ${numFormat((totalMarketValue / 1000).toFixed(3))}K
             </Responsive>
             <Responsive as={Table.Cell} minWidth={768}>
               ${numFormat(totalMarketValue)}
             </Responsive>
 
             <Responsive as={Table.Cell} maxWidth={767}>
-              ${numFormat(((totalMarketValue - initialcost) / 1000).toFixed(2))}K {statusIcon}
+              ${numFormat(((totalMarketValue - initialcost) / 1000).toFixed(3))}K {statusIcon}
             </Responsive>
             <Responsive as={Table.Cell} minWidth={768}>
-              ${numFormat((totalMarketValue - initialcost).toFixed(2))} {statusIcon}
+              ${numFormat((totalMarketValue - initialcost).toFixed(3))} {statusIcon}
             </Responsive>
 
             <Table.Cell>{numFormat(delta)}% {statusIcon}</Table.Cell>
@@ -113,10 +114,10 @@ class TransactionList extends Component {
             <Responsive as={Table.HeaderCell} minWidth={768}>Date</Responsive>
             <Responsive as={Table.HeaderCell} minWidth={768}>Type</Responsive>
             <Responsive as={Table.HeaderCell} minWidth={768}>Amount</Responsive>
-            <Responsive as={Table.HeaderCell} minWidth={768}>Price</Responsive>
+            <Responsive as={Table.HeaderCell} minWidth={768}>Price per Coin</Responsive>
             <Responsive as={Table.HeaderCell} minWidth={768}>Initial Cost</Responsive>
             <Table.HeaderCell>Market Value</Table.HeaderCell>
-            <Table.HeaderCell>$ Delta</Table.HeaderCell>
+            <Table.HeaderCell>Delta USD</Table.HeaderCell>
             <Table.HeaderCell>Delta %</Table.HeaderCell>
           </Table.Row>
         </Table.Header>

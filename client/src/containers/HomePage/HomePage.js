@@ -39,7 +39,7 @@ class HomePage extends Component {
           />
         </Container>
         <div className={classes.NewsHeader}>
-          <Header as="h1" textAlign="center" inverted color="grey">News</Header>
+          <Header as="h1" textAlign="center" inverted color="grey">Current News</Header>
         </div>
         <Divider className={classes.Divider} />
         <br />

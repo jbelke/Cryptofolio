@@ -6,7 +6,7 @@ import classes from './News.scss';
 const currentNews = (props) => {
   const topNews = props.currentTopTenNews.map(news => (
     <Container className={classes.News} key={`${news.url}${news.publishedAt}`}>
-      <Grid as="a" href={news.url} target="_blank" stackable stretched relaxed>
+      <Grid stackable stretched relaxed>
         <Grid.Row as={Segment} className={classes.NewsArticle} >
           <Grid.Column stretched width={4}>
             { news.urlToImage === null
@@ -43,6 +43,10 @@ const currentNews = (props) => {
               <Divider />
               <p>{news.description}</p>
             </Responsive>
+
+            <div>
+              <a href={news.url} target="_blank" >Read full article &gt;&gt;</a>
+            </div>
 
           </Grid.Column>
         </Grid.Row>

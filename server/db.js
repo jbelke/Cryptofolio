@@ -10,17 +10,16 @@ const db = new Sequelize(process.env.DATABASE_URL ||
 const Users = db.define('user', {
   name: {
     type: Sequelize.STRING,
-    allowNull: true,
-    unique: true,
+    allowNull: false,
   },
   firebaseUID: {
     type: Sequelize.STRING,
-    allowNull: true,
+    allowNull: false,
     unique: true,
   },
   email: {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: true,
   },
 });
 
@@ -56,7 +55,7 @@ const UserTransactions = db.define('transactions', {
     allowNull: false,
   },
   coinAmount: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.REAL,
     allowNull: false,
   },
   buyPrice: {
@@ -81,7 +80,8 @@ Coins.hasMany(UserTransactions);
 
 // sync db
 const sync = () => {
-  let prodCheck = true;
+  // change for testing purposes
+  let prodCheck = false;
   if (process.env.SYNCPROD) {
     prodCheck = false;
   }
