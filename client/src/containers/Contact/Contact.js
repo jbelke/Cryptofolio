@@ -1,19 +1,40 @@
 import React, { Component } from 'react';
-import { Field, reduxForm, propTypes } from 'redux-form';
-import { Container, Form, Message, Segment, Grid, List, Header, Divider } from 'semantic-ui-react';
+import { Field, reduxForm, propTypes, SubmissionError } from 'redux-form';
+import { Container, Form, Message, Segment, Grid, List, Header, Divider, Loader } from 'semantic-ui-react';
+import axios from 'axios';
 import classes from './Contact.scss';
 
 class Contact extends Component {
+  state = {
+    message: false,
+    loader: false,
+  };
+
+  handleDismiss = () => this.setState({ message: false });
+
   handleLogin = async (values) => {
-    await this.props.onAuthLogin(values);
+    const messageCheck = await this.sendMessage(values);
 
     // handle firebase error on reduxForm. if there is an error, code will not
     // pass this error handler
-    // if (Object.keys(this.props.authError).length > 0) {
-    //   throw new SubmissionError({ _error: this.props.authError.message });
-    // }
+    if (!messageCheck) {
+      throw new SubmissionError({ _error: 'Unable to send Message, Please Try Again' });
+    } else {
+      this.setState({ message: true });
+    }
 
+    this.setState({ loader: false });
     this.props.reset();
+  }
+
+  sendMessage = async ({ email, comment }) => {
+    this.setState({ loader: true });
+    const url = '/api/contact/';
+    const request = await axios.post(url, {
+      email,
+      message: comment,
+    });
+    return request;
   }
 
   renderField = ({
@@ -60,6 +81,14 @@ class Contact extends Component {
 
   render() {
     const { handleSubmit, error: serverError } = this.props;
+    const message = (
+      <Message
+        positive
+        onDismiss={this.handleDismiss}
+        header="Message Sent!"
+        content="Thanks for your interest.  We will get back to you ASAP!"
+      />
+    );
 
     return (
       <Container className={classes.Contact}>
@@ -67,6 +96,7 @@ class Contact extends Component {
           <Grid.Row>
             <Grid.Column textAlign="center">
               <Header size="large" textAlign="center">Contact Us!</Header>
+              {this.state.message ? message : null}
             </Grid.Column>
           </Grid.Row>
           <Divider />
@@ -110,7 +140,13 @@ class Contact extends Component {
                   disabled={this.invalid}
                   type="submit"
                   className={classes.Submit}
-                >Send
+                >
+                  {this.state.loader
+                    ?
+                      <Loader active size="mini" inline="centered" />
+                    :
+                      'Send'
+                  }
                 </Form.Button>
                 { !serverError ?
                   null
