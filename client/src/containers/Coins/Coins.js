@@ -11,11 +11,18 @@ class Coins extends Component {
   // api limit 15  request per second on certain data
   state = {
     currentCoinCount: 15,
+    loader: false,
   }
 
   componentDidMount() {
     this.props.getCoins();
     this.props.getGlobalData();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.topCoins.length > this.props.topCoins.length) {
+      this.setState({ loader: false });
+    }
   }
 
   shouldComponentUpdate(nextProps) {
@@ -27,10 +34,14 @@ class Coins extends Component {
     return update;
   }
 
+  async fetchCoins(newCount) {
+    this.setState({ loader: true });
+    this.props.getCoins(newCount);
+  }
 
   loadMoreHandler = async () => {
     const newCount = this.state.currentCoinCount + 15;
-    await this.props.getCoins(newCount);
+    await this.fetchCoins(newCount);
     this.setState({ currentCoinCount: newCount });
   }
 
@@ -47,7 +58,6 @@ class Coins extends Component {
       coins = (
         <TopCoinsList
           topCoins={this.props.topCoins}
-          loader={() => this.isLoadingHandler()}
         />
       );
     }
@@ -70,12 +80,16 @@ class Coins extends Component {
         </Container>
         <br />
         <Container>
-          <Button
-            onClick={this.loadMoreHandler}
-            fluid
-            icon="chevron down"
-            size="big"
-          />
+          { this.state.loader ?
+            <Loader active size="small" inline="centered" />
+          :
+            <Button
+              onClick={this.loadMoreHandler}
+              fluid
+              icon="chevron down"
+              size="big"
+            />
+          }
         </Container>
       </Container>
     );

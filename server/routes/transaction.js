@@ -19,6 +19,7 @@ router.get('/:firebaseUID', (req, res, next) => {
 
 // create transaction
 router.post('/create', (req, res, next) => {
+  console.log('backend', req.body.coinAmount);
   const dateEST = new Date(`${req.body.date}T${req.body.time}:00`);
   const transactionDate = dateEST.toLocaleString('en-US', { timeZone: 'America/New_York' });
   Promise.all([

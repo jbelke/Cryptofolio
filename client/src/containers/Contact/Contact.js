@@ -12,7 +12,7 @@ class Contact extends Component {
 
   handleDismiss = () => this.setState({ message: false });
 
-  handleLogin = async (values) => {
+  handleMessage = async (values) => {
     const messageCheck = await this.sendMessage(values);
 
     // handle firebase error on reduxForm. if there is an error, code will not
@@ -114,13 +114,13 @@ class Contact extends Component {
                 </List.Item>
                 <List.Item>
                   <List.Icon name="phone" />
-                  <List.Content>(123)456-7890 ext. 999</List.Content>
+                  <List.Content>(123) 456-7890</List.Content>
                 </List.Item>
               </List>
             </Grid.Column>
             <Grid.Column computer={2} mobile={16} />
             <Grid.Column as={Segment} computer={6} mobile={16}>
-              <Form onSubmit={handleSubmit(this.handleLogin)}>
+              <Form onSubmit={handleSubmit(this.handleMessage)}>
                 <Field
                   name="email"
                   component={this.renderField}

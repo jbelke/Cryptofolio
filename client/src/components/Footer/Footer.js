@@ -10,7 +10,7 @@ const footer = () => (
         <Grid.Row>
           <List celled>
             <List.Item><Link to="/about">About</Link></List.Item>
-            <List.Item>Contact</List.Item>
+            <List.Item><Link to="/contact">Contact</Link></List.Item>
           </List>
         </Grid.Row>
       </Grid.Column>
